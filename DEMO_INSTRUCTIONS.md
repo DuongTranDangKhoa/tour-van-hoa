@@ -16,45 +16,57 @@ npm start
 
 ### 2.2. Trang đặt tour sẽ mở
 - URL sẽ thay đổi thành: `http://localhost:4200/tour/1/book`
-- Giao diện tương tự như trang Fever với:
-  - **Header**: Logo "Tour Văn Hóa", navigation, search bar
-  - **Left Panel**: Hình ảnh tour, thông tin chi tiết
-  - **Right Panel**: Widget đặt tour **ĐẦY ĐỦ THÔNG TIN** như popup cũ
+- **LAYOUT MỚI**: 
+  - **Phần trên (100% chiều rộng)**: Hình ảnh tour + thông tin cơ bản
+  - **Phần dưới (chia 2 cột)**: Thông tin tour + Form đặt tour
 
-### 2.3. Test các tính năng đặt tour
-1. **Điền thông tin khách hàng (BẮT BUỘC)**:
-   - Họ và tên: Nhập tên bất kỳ
-   - Email: Nhập email hợp lệ (ví dụ: test@example.com)
-   - Số điện thoại: Nhập số điện thoại
+### 2.3. Test phần trên (100% chiều rộng)
+1. **Header**: Logo "Tour Văn Hóa", navigation, search bar, user menu
+2. **Hình ảnh tour**:
+   - Ảnh chính lớn với play button
+   - Grid 4 ảnh nhỏ bên dưới
+   - Ảnh đầu tiên có overlay "tour van hoa presents"
+   - Ảnh cuối có button "📷" (Gallery)
+3. **Thông tin tour**:
+   - Tên tour lớn
+   - Rating 4.5 với 5 sao
+   - Action buttons: Share (📤) và Like (❤)
 
-2. **Điền thông tin bổ sung (TÙY CHỌN)**:
-   - CMND/CCCD: Có thể để trống
-   - Ngày sinh: Chọn ngày sinh
-   - Giới tính: Chọn Nam/Nữ/Khác
-   - Địa chỉ: Nhập địa chỉ
+### 2.4. Test phần dưới (chia 2 cột)
+1. **Left Panel - Thông tin tour**:
+   - **Mô tả**: Mô tả chi tiết tour
+   - **Thông tin chung**: Điểm đến, thời gian, độ khó, loại tour
+   - **Chương trình tour**: Các điểm nổi bật của tour
 
-3. **Chi tiết đặt tour**:
-   - Số người: Sử dụng nút + và - để điều chỉnh (1-20)
-   - Phương thức thanh toán: Chọn từ dropdown
-   - Ngày khởi hành: Chọn ngày trong tương lai
-   - Ngày trở về: Tự động tính theo thời gian tour
-   - Yêu cầu đặc biệt: Có thể để trống
-
-4. **Thông tin liên hệ khẩn cấp (TÙY CHỌN)**:
-   - Tên người liên hệ: Có thể để trống
-   - Số điện thoại: Có thể để trống
-   - Mối quan hệ: Có thể để trống
-
-5. **Xem tóm tắt tour và thanh toán**:
-   - Thông tin tour, điểm đến, thời gian
-   - Giá gốc, số người, tổng tiền
-   - Đặt cọc (20%), số tiền còn lại
-
-6. **Click "Tiếp tục"**: 
-   - **API CALL**: Sẽ gọi `POST /bookings` thực sự
-   - **Loading State**: Button hiển thị "Đang xử lý..." và bị disable
-   - **Success**: Hiện thông báo thành công với mã booking và quay về trang chủ
-   - **Error**: Hiển thị lỗi tương ứng (400, 500, etc.)
+2. **Right Panel - Booking Widget**:
+   - **Thông tin khách hàng (BẮT BUỘC)**:
+     - Họ và tên: Nhập tên bất kỳ
+     - Email: Nhập email hợp lệ (ví dụ: test@example.com)
+     - Số điện thoại: Nhập số điện thoại
+   - **Thông tin bổ sung (TÙY CHỌN)**:
+     - CMND/CCCD: Có thể để trống
+     - Ngày sinh: Chọn ngày sinh
+     - Giới tính: Chọn Nam/Nữ/Khác
+     - Địa chỉ: Nhập địa chỉ
+   - **Chi tiết đặt tour**:
+     - Số người: Sử dụng nút + và - để điều chỉnh (1-20)
+     - Phương thức thanh toán: Chọn từ dropdown
+     - Ngày khởi hành: Chọn ngày trong tương lai
+     - Ngày trở về: Tự động tính theo thời gian tour
+     - Yêu cầu đặc biệt: Có thể để trống
+   - **Thông tin liên hệ khẩn cấp (TÙY CHỌN)**:
+     - Tên người liên hệ: Có thể để trống
+     - Số điện thoại: Có thể để trống
+     - Mối quan hệ: Có thể để trống
+   - **Tóm tắt tour và thanh toán**:
+     - Thông tin tour, điểm đến, thời gian
+     - Giá gốc, số người, tổng tiền
+     - Đặt cọc (20%), số tiền còn lại
+   - **Click "Tiếp tục"**: 
+     - **API CALL**: Sẽ gọi `POST /bookings` thực sự
+     - **Loading State**: Button hiển thị "Đang xử lý..." và bị disable
+     - **Success**: Hiện thông báo thành công với mã booking và quay về trang chủ
+     - **Error**: Hiển thị lỗi tương ứng (400, 500, etc.)
 
 ## Bước 3: Test API Integration
 1. **Mở Developer Tools** (F12) và chuyển sang tab Network
@@ -96,7 +108,8 @@ npm start
 1. Thay đổi kích thước cửa sổ trình duyệt
 2. Hoặc mở Developer Tools và chọn mobile view
 3. Quan sát:
-   - Layout thay đổi từ 2 cột sang 1 cột
+   - **Phần trên**: Vẫn chiếm 100% chiều rộng trên mọi thiết bị
+   - **Phần dưới**: Chuyển từ 2 cột sang 1 cột trên mobile
    - Form fields stack vertically
    - Booking widget không còn sticky
    - Padding và spacing thay đổi
@@ -127,6 +140,7 @@ npm start
 - [x] Loại bỏ popup cũ
 - [x] **Đã xóa phần "Chọn ngày và phiên"**
 - [x] **Đã xóa phần "Đặt tour" và "Chọn khu vực"**
+- [x] **LAYOUT MỚI**: Phần trên 100% chiều rộng, phần dưới chia 2 cột
 
 ### 🔄 Có thể mở rộng sau
 - [ ] Payment gateway integration
@@ -181,6 +195,7 @@ npm run build
 - **API Integration hoạt động**: Gọi `POST /bookings` thực sự
 - **Loading states**: Spinner + Disable button khi submit
 - **Error handling**: Xử lý API errors đầy đủ
+- **LAYOUT MỚI**: Phần trên chiếm 100% chiều rộng, phần dưới chia 2 cột
 - Responsive trên mọi thiết bị
 - Tương tác mượt mà với các form controls
 - **Tính toán giá và đặt cọc chính xác**
