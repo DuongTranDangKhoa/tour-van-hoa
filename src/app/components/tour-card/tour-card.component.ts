@@ -1,5 +1,6 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { Tour } from '../../models/tour';
 
 @Component({
@@ -11,9 +12,10 @@ import { Tour } from '../../models/tour';
 })
 export class TourCardComponent {
   @Input() tour!: Tour;
-  @Output() bookTour = new EventEmitter<Tour>();
+
+  constructor(private router: Router) {}
 
   onBookTour() {
-    this.bookTour.emit(this.tour);
+    this.router.navigate(['/tour', this.tour.id, 'book']);
   }
 }

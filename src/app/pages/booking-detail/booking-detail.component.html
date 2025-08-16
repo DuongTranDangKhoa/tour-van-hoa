@@ -1,0 +1,391 @@
+<div class="booking-detail-page" *ngIf="tour">
+  <!-- Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="logo">
+        <h1>Tour Văn Hóa</h1>
+      </div>
+      <div class="header-nav">
+        <a href="#" class="nav-link">
+          <i class="icon">📍</i>
+          <span>Việt Nam</span>
+        </a>
+        <a href="#" class="nav-link">
+          <i class="icon">📂</i>
+          <span>Danh mục</span>
+        </a>
+      </div>
+      <div class="search-bar">
+        <i class="icon">🔍</i>
+        <input type="text" placeholder="Tìm kiếm tour...">
+      </div>
+      <div class="header-actions">
+        <button class="action-btn">
+          <i class="icon">❤️</i>
+        </button>
+        <button class="action-btn">
+          <i class="icon">👤</i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <!-- Left Panel - Tour Details -->
+    <div class="tour-details-panel">
+      <!-- Media Section -->
+      <div class="media-section">
+        <div class="main-image">
+          <img [src]="tour.imageUrl" [alt]="tour.name">
+          <div class="play-button">
+            <i class="icon">▶️</i>
+          </div>
+        </div>
+        <div class="image-grid">
+          <div class="grid-item">
+            <img [src]="tour.imageUrl" [alt]="tour.name">
+            <div class="overlay-text">Tour Văn Hóa presents</div>
+          </div>
+          <div class="grid-item">
+            <img [src]="tour.imageUrl" [alt]="tour.name">
+          </div>
+          <div class="grid-item">
+            <img [src]="tour.imageUrl" [alt]="tour.name">
+          </div>
+          <div class="grid-item">
+            <img [src]="tour.imageUrl" [alt]="tour.name">
+            <div class="gallery-btn">
+              <i class="icon">📷</i>
+              <span>Thư viện</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Event Title and Actions -->
+      <div class="event-header">
+        <h1 class="event-title">{{ tour.name }}</h1>
+        <div class="event-actions">
+          <button class="action-btn">
+            <i class="icon">📤</i>
+          </button>
+          <button class="action-btn">
+            <i class="icon">❤️</i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Rating -->
+      <div class="rating-section">
+        <span class="stars">★★★★★</span>
+        <span class="rating-number">{{ tour.rating }}</span>
+        <span class="review-count">(29 đánh giá)</span>
+      </div>
+
+      <!-- Event Description -->
+      <div class="event-description">
+        <i class="icon">⭐</i>
+        <p>{{ tour.description }}</p>
+      </div>
+
+      <!-- General Info -->
+      <div class="general-info">
+        <div class="info-item">
+          <i class="icon">📍</i>
+          <span><strong>Địa điểm:</strong> {{ tour.destination }}</span>
+        </div>
+        <div class="info-item">
+          <i class="icon">📅</i>
+          <span><strong>Ngày và giờ:</strong> Chọn ngày/giờ trực tiếp trong bộ chọn vé</span>
+        </div>
+        <div class="info-item">
+          <i class="icon">⏱️</i>
+          <span><strong>Thời lượng:</strong> {{ tour.duration }}. Cửa mở 30 phút trước khi bắt đầu và đóng 5 phút trước khi bắt đầu.</span>
+        </div>
+        <div class="info-item">
+          <i class="icon">👥</i>
+          <span><strong>Yêu cầu độ tuổi:</strong> Từ 8 tuổi trở lên. Trẻ em dưới 16 tuổi phải có người lớn đi kèm.</span>
+        </div>
+        <div class="info-item">
+          <i class="icon">♿</i>
+          <span><strong>Khả năng tiếp cận:</strong> Địa điểm này có thể tiếp cận bằng xe lăn. Vui lòng xem FAQ.</span>
+        </div>
+        <div class="info-item">
+          <i class="icon">❓</i>
+          <span><strong>FAQ:</strong> Xem <a href="#">FAQ cho sự kiện này tại đây</a></span>
+        </div>
+        <div class="info-item">
+          <i class="icon">🪑</i>
+          <span><strong>Chỗ ngồi:</strong> Chỗ ngồi được sắp xếp theo thứ tự đến trước được phục vụ trước trong mỗi khu vực.</span>
+        </div>
+        <div class="info-item">
+          <i class="icon">🔔</i>
+          <span><strong>Đặt nhóm/Tư nhân:</strong> Nếu bạn muốn đặt tour riêng hoặc mua vé thường cho nhóm lớn (+30 người), <a href="#">nhấp vào đây</a></span>
+        </div>
+        <div class="info-item">
+          <i class="icon">🎵</i>
+          <span><strong>Tour khác:</strong> Xem tất cả <a href="#">các tour văn hóa tại Việt Nam</a></span>
+        </div>
+        <div class="info-item">
+          <i class="icon">🎁</i>
+          <span><strong>Thẻ quà tặng:</strong> Để tặng bạn bè và gia đình <a href="#">thẻ quà tặng tour, nhấp vào đây</a></span>
+        </div>
+      </div>
+
+      <!-- Programme Section -->
+      <div class="programme-section">
+        <h3>Chương trình tour:</h3>
+        <ul class="programme-list">
+          <li *ngFor="let highlight of tour.highlights">{{ highlight }}</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Right Panel - Booking Widget -->
+    <div class="booking-widget">
+      <form [formGroup]="bookingForm" (ngSubmit)="onBookTour()">
+        <!-- Customer Information Section -->
+        <div class="customer-info-section">
+          <h4>Thông tin khách hàng</h4>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="customerName">Họ và tên *</label>
+              <input 
+                type="text" 
+                id="customerName"
+                formControlName="customerName"
+                placeholder="Nhập họ và tên"
+                [class.error]="isFieldInvalid('customerName')"
+              >
+              <div class="error-message" *ngIf="isFieldInvalid('customerName')">
+                {{ getFieldError('customerName') }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="customerEmail">Email *</label>
+              <input 
+                type="email" 
+                id="customerEmail"
+                formControlName="customerEmail"
+                placeholder="Nhập email"
+                [class.error]="isFieldInvalid('customerEmail')"
+              >
+              <div class="error-message" *ngIf="isFieldInvalid('customerEmail')">
+                {{ getFieldError('customerEmail') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="customerPhone">Số điện thoại *</label>
+              <input 
+                type="tel" 
+                id="customerPhone"
+                formControlName="customerPhone"
+                placeholder="Nhập số điện thoại"
+                [class.error]="isFieldInvalid('customerPhone')"
+              >
+              <div class="error-message" *ngIf="isFieldInvalid('customerPhone')">
+                {{ getFieldError('customerPhone') }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="customerIdCard">CMND/CCCD</label>
+              <input 
+                type="text" 
+                id="customerIdCard"
+                formControlName="customerIdCard"
+                placeholder="Nhập số CMND/CCCD"
+              >
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="customerDateOfBirth">Ngày sinh</label>
+              <input 
+                type="date" 
+                id="customerDateOfBirth"
+                formControlName="customerDateOfBirth"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="customerGender">Giới tính</label>
+              <select id="customerGender" formControlName="customerGender">
+                <option value="">Chọn giới tính</option>
+                <option value="male">Nam</option>
+                <option value="female">Nữ</option>
+                <option value="other">Khác</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="customerAddress">Địa chỉ</label>
+            <textarea 
+              id="customerAddress"
+              formControlName="customerAddress"
+              rows="2"
+              placeholder="Nhập địa chỉ"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Tour Details Section -->
+        <div class="tour-details-section">
+          <h4>Chi tiết đặt tour</h4>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="numberOfPeople">Số người *</label>
+              <div class="quantity-controls">
+                <button type="button" (click)="decreaseQuantity()" class="quantity-btn">-</button>
+                <span class="quantity-display">{{ bookingForm.get('numberOfPeople')?.value || 1 }} người</span>
+                <button type="button" (click)="increaseQuantity()" class="quantity-btn">+</button>
+              </div>
+              <div class="error-message" *ngIf="isFieldInvalid('numberOfPeople')">
+                {{ getFieldError('numberOfPeople') }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="paymentMethod">Phương thức thanh toán *</label>
+              <select id="paymentMethod" formControlName="paymentMethod">
+                <option value="bank_transfer">Chuyển khoản ngân hàng</option>
+                <option value="credit_card">Thẻ tín dụng</option>
+                <option value="cash">Tiền mặt</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="departureDate">Ngày khởi hành *</label>
+              <input 
+                type="date" 
+                id="departureDate"
+                formControlName="departureDate"
+                [class.error]="isFieldInvalid('departureDate')"
+              >
+              <div class="error-message" *ngIf="isFieldInvalid('departureDate')">
+                {{ getFieldError('departureDate') }}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="returnDate">Ngày trở về *</label>
+              <input 
+                type="date" 
+                id="returnDate"
+                formControlName="returnDate"
+                [class.error]="isFieldInvalid('returnDate')"
+              >
+              <div class="error-message" *ngIf="isFieldInvalid('returnDate')">
+                {{ getFieldError('returnDate') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="specialRequests">Yêu cầu đặc biệt</label>
+            <textarea 
+              id="specialRequests"
+              formControlName="specialRequests"
+              rows="3"
+              placeholder="Nhập yêu cầu đặc biệt (nếu có)"
+            ></textarea>
+          </div>
+        </div>
+
+        <!-- Emergency Contact Section -->
+        <div class="emergency-contact-section">
+          <h4>Thông tin liên hệ khẩn cấp</h4>
+          
+          <div class="form-row">
+            <div class="form-group">
+              <label for="emergencyContactName">Tên người liên hệ</label>
+              <input 
+                type="text" 
+                id="emergencyContactName"
+                formControlName="emergencyContactName"
+                placeholder="Tên người liên hệ khẩn cấp"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="emergencyContactPhone">Số điện thoại</label>
+              <input 
+                type="tel" 
+                id="emergencyContactPhone"
+                formControlName="emergencyContactPhone"
+                placeholder="Số điện thoại liên hệ khẩn cấp"
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="emergencyContactRelationship">Mối quan hệ</label>
+            <input 
+              type="text" 
+              id="emergencyContactRelationship"
+              formControlName="emergencyContactRelationship"
+              placeholder="Mối quan hệ với người liên hệ"
+            >
+          </div>
+        </div>
+
+        <!-- Tour Summary -->
+        <div class="tour-summary">
+          <h4>Thông tin tour và thanh toán</h4>
+          <div class="summary-item">
+            <span>Tour:</span>
+            <span>{{ tour.name }}</span>
+          </div>
+          <div class="summary-item">
+            <span>Điểm đến:</span>
+            <span>{{ tour.destination }}</span>
+          </div>
+          <div class="summary-item">
+            <span>Thời gian:</span>
+            <span>{{ tour.duration }}</span>
+          </div>
+          <div class="summary-item">
+            <span>Giá gốc:</span>
+            <span>{{ tour.price | currency:'VND':'symbol':'1.0-0' }}/người</span>
+          </div>
+          <div class="summary-item">
+            <span>Số người:</span>
+            <span>{{ bookingForm.get('numberOfPeople')?.value || 1 }}</span>
+          </div>
+          <div class="summary-item">
+            <span>Tổng tiền:</span>
+            <span>{{ getTotalPrice() | currency:'VND':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="summary-item">
+            <span>Đặt cọc (20%):</span>
+            <span>{{ getDepositAmount() | currency:'VND':'symbol':'1.0-0' }}</span>
+          </div>
+          <div class="summary-item total">
+            <span>Còn lại:</span>
+            <span>{{ getRemainingAmount() | currency:'VND':'symbol':'1.0-0' }}</span>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="book-button" [disabled]="bookingForm.invalid || isSubmitting">
+          <span *ngIf="!isSubmitting">
+            {{ getTotalPrice() | currency:'VND':'symbol':'1.0-0' }} — Tiếp tục
+          </span>
+          <span *ngIf="isSubmitting">
+            <i class="loading-spinner">⏳</i> Đang xử lý...
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

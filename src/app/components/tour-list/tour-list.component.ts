@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Tour } from '../../models/tour';
@@ -13,8 +13,6 @@ import { TourCardComponent } from '../tour-card/tour-card.component';
   styleUrl: './tour-list.component.scss'
 })
 export class TourListComponent implements OnInit {
-  @Output() bookTour = new EventEmitter<Tour>();
-  
   tours: Tour[] = [];
   filteredTours: Tour[] = [];
   
@@ -78,9 +76,5 @@ export class TourListComponent implements OnInit {
     filtered = filtered.filter(tour => tour.price <= this.maxPrice);
 
     this.filteredTours = filtered;
-  }
-
-  onBookTour(tour: Tour) {
-    this.bookTour.emit(tour);
   }
 }
