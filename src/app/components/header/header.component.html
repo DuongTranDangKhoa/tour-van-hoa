@@ -1,0 +1,25 @@
+<header class="header">
+  <div class="container">
+    <div class="header-content">
+      <div class="logo">
+        <a routerLink="/">
+          <h1>Tour Văn Hóa</h1>
+          <p>Khám phá Việt Nam</p>
+        </a>
+      </div>
+      
+      <nav class="nav-menu">
+        <ul>
+          <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Trang chủ</a></li>
+          <li><a routerLink="/bookings" routerLinkActive="active">Quản lý đặt tour</a></li>
+          <li><a href="#about">Giới thiệu</a></li>
+          <li><a href="#contact">Liên hệ</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="btn btn-primary" routerLink="/">Đặt tour ngay</button>
+      </div>
+    </div>
+  </div>
+</header>

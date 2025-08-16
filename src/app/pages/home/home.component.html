@@ -1,0 +1,9 @@
+<app-hero></app-hero>
+<app-tour-list (bookTour)="openBookingForm($event)"></app-tour-list>
+
+<app-booking-form 
+  [tour]="selectedTour" 
+  [isVisible]="showBookingForm"
+  (close)="closeBookingForm()"
+  (bookingCreated)="onBookingCreated($event)"
+></app-booking-form>

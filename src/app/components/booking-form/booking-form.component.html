@@ -1,0 +1,250 @@
+<div class="booking-form-overlay" *ngIf="isVisible" (click)="closeForm()">
+  <div class="booking-form-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Đặt tour: {{ tour?.name }}</h3>
+      <button class="close-btn" (click)="closeForm()">×</button>
+    </div>
+
+    <form [formGroup]="bookingForm" (ngSubmit)="onSubmit()" class="booking-form">
+      <!-- Thông tin khách hàng -->
+      <div class="form-section">
+        <h4>Thông tin khách hàng</h4>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customerName">Họ và tên *</label>
+            <input 
+              type="text" 
+              id="customerName"
+              formControlName="customerName"
+              placeholder="Nhập họ và tên"
+            >
+            <div class="error-message" *ngIf="bookingForm.get('customerName')?.invalid && bookingForm.get('customerName')?.touched">
+              Họ và tên là bắt buộc
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="customerEmail">Email *</label>
+            <input 
+              type="email" 
+              id="customerEmail"
+              formControlName="customerEmail"
+              placeholder="Nhập email"
+            >
+            <div class="error-message" *ngIf="bookingForm.get('customerEmail')?.invalid && bookingForm.get('customerEmail')?.touched">
+              Email không hợp lệ
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customerPhone">Số điện thoại *</label>
+            <input 
+              type="tel" 
+              id="customerPhone"
+              formControlName="customerPhone"
+              placeholder="Nhập số điện thoại"
+            >
+            <div class="error-message" *ngIf="bookingForm.get('customerPhone')?.invalid && bookingForm.get('customerPhone')?.touched">
+              Số điện thoại là bắt buộc
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="customerIdCard">CMND/CCCD</label>
+            <input 
+              type="text" 
+              id="customerIdCard"
+              formControlName="customerIdCard"
+              placeholder="Nhập số CMND/CCCD"
+            >
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="customerDateOfBirth">Ngày sinh</label>
+            <input 
+              type="date" 
+              id="customerDateOfBirth"
+              formControlName="customerDateOfBirth"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="customerGender">Giới tính</label>
+            <select id="customerGender" formControlName="customerGender">
+              <option value="">Chọn giới tính</option>
+              <option value="male">Nam</option>
+              <option value="female">Nữ</option>
+              <option value="other">Khác</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="customerAddress">Địa chỉ</label>
+          <textarea 
+            id="customerAddress"
+            formControlName="customerAddress"
+            rows="2"
+            placeholder="Nhập địa chỉ"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Chi tiết đặt tour -->
+      <div class="form-section">
+        <h4>Chi tiết đặt tour</h4>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="numberOfPeople">Số người *</label>
+            <input 
+              type="number" 
+              id="numberOfPeople"
+              formControlName="numberOfPeople"
+              min="1"
+              max="20"
+              placeholder="Nhập số người"
+            >
+            <div class="error-message" *ngIf="bookingForm.get('numberOfPeople')?.invalid && bookingForm.get('numberOfPeople')?.touched">
+              Số người phải từ 1-20
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="paymentMethod">Phương thức thanh toán *</label>
+            <select id="paymentMethod" formControlName="paymentMethod">
+              <option value="bank_transfer">Chuyển khoản ngân hàng</option>
+              <option value="credit_card">Thẻ tín dụng</option>
+              <option value="cash">Tiền mặt</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="departureDate">Ngày khởi hành *</label>
+            <input 
+              type="date" 
+              id="departureDate"
+              formControlName="departureDate"
+            >
+            <div class="error-message" *ngIf="bookingForm.get('departureDate')?.invalid && bookingForm.get('departureDate')?.touched">
+              Ngày khởi hành là bắt buộc
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="returnDate">Ngày trở về *</label>
+            <input 
+              type="date" 
+              id="returnDate"
+              formControlName="returnDate"
+            >
+            <div class="error-message" *ngIf="bookingForm.get('returnDate')?.invalid && bookingForm.get('returnDate')?.touched">
+              Ngày trở về là bắt buộc
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="specialRequests">Yêu cầu đặc biệt</label>
+          <textarea 
+            id="specialRequests"
+            formControlName="specialRequests"
+            rows="3"
+            placeholder="Nhập yêu cầu đặc biệt (nếu có)"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Thông tin liên hệ khẩn cấp -->
+      <div class="form-section">
+        <h4>Thông tin liên hệ khẩn cấp</h4>
+        
+        <div class="form-row">
+          <div class="form-group">
+            <label for="emergencyContactName">Tên người liên hệ</label>
+            <input 
+              type="text" 
+              id="emergencyContactName"
+              formControlName="emergencyContactName"
+              placeholder="Tên người liên hệ khẩn cấp"
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="emergencyContactPhone">Số điện thoại</label>
+            <input 
+              type="tel" 
+              id="emergencyContactPhone"
+              formControlName="emergencyContactPhone"
+              placeholder="Số điện thoại liên hệ khẩn cấp"
+            >
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="emergencyContactRelationship">Mối quan hệ</label>
+          <input 
+            type="text" 
+            id="emergencyContactRelationship"
+            formControlName="emergencyContactRelationship"
+            placeholder="Mối quan hệ với người liên hệ"
+          >
+        </div>
+      </div>
+
+      <!-- Tóm tắt tour và thanh toán -->
+      <div class="tour-summary">
+        <h4>Thông tin tour và thanh toán</h4>
+        <div class="summary-item">
+          <span>Tour:</span>
+          <span>{{ tour?.name }}</span>
+        </div>
+        <div class="summary-item">
+          <span>Điểm đến:</span>
+          <span>{{ tour?.destination }}</span>
+        </div>
+        <div class="summary-item">
+          <span>Thời gian:</span>
+          <span>{{ tour?.duration }}</span>
+        </div>
+        <div class="summary-item">
+          <span>Giá gốc:</span>
+          <span>{{ tour?.price | currency:'VND':'symbol':'1.0-0' }}/người</span>
+        </div>
+        <div class="summary-item">
+          <span>Số người:</span>
+          <span>{{ bookingForm.get('numberOfPeople')?.value || 1 }}</span>
+        </div>
+        <div class="summary-item">
+          <span>Tổng tiền:</span>
+          <span>{{ calculateTotalPrice() | currency:'VND':'symbol':'1.0-0' }}</span>
+        </div>
+        <div class="summary-item">
+          <span>Đặt cọc (20%):</span>
+          <span>{{ calculateDepositAmount() | currency:'VND':'symbol':'1.0-0' }}</span>
+        </div>
+        <div class="summary-item total">
+          <span>Còn lại:</span>
+          <span>{{ calculateRemainingAmount() | currency:'VND':'symbol':'1.0-0' }}</span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn btn-secondary" (click)="closeForm()">
+          Hủy
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="bookingForm.invalid || isSubmitting">
+          <span *ngIf="!isSubmitting">Xác nhận đặt tour</span>
+          <span *ngIf="isSubmitting">Đang xử lý...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

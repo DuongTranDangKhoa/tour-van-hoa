@@ -1,0 +1,170 @@
+<div class="booking-list-container" id="bookings">
+  <div class="container">
+    <!-- Header -->
+    <div class="section-header">
+      <h2>Danh sách đặt tour</h2>
+      <p>Quản lý tất cả các đặt tour của khách hàng</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters-section">
+      <div class="search-box">
+        <input 
+          type="text" 
+          placeholder="Tìm kiếm theo tên, email, phone..." 
+          [(ngModel)]="searchQuery"
+          (input)="onSearch()"
+        >
+        <i class="search-icon">🔍</i>
+      </div>
+
+      <div class="filter-options">
+        <select [(ngModel)]="selectedPaymentMethod" (change)="onPaymentMethodChange()">
+          <option value="">Tất cả phương thức thanh toán</option>
+          <option value="bank_transfer">Chuyển khoản</option>
+          <option value="credit_card">Thẻ tín dụng</option>
+          <option value="cash">Tiền mặt</option>
+        </select>
+
+        <button class="btn btn-primary" (click)="loadBookings()">
+          🔄 Làm mới
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="isLoading">
+      <div class="spinner"></div>
+      <p>Đang tải danh sách đặt tour...</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-state" *ngIf="error && !isLoading">
+      <p class="error-message">{{ error }}</p>
+      <button class="btn btn-primary" (click)="loadBookings()">Thử lại</button>
+    </div>
+
+    <!-- Bookings Table -->
+    <div class="bookings-table" *ngIf="!isLoading && !error">
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Khách hàng</th>
+              <th>Thông tin liên hệ</th>
+              <th>Chi tiết tour</th>
+              <th>Thanh toán</th>
+              <th>Ngày tạo</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let booking of filteredBookings" class="booking-row">
+              <!-- Customer Info -->
+              <td class="customer-info">
+                <div class="customer-name">{{ booking.fullName }}</div>
+                <div class="customer-details">
+                  <span class="gender">{{ getGenderLabel(booking.gender) }}</span>
+                  <span class="id-card">CMND: {{ booking.idCard }}</span>
+                </div>
+                <div class="customer-address">{{ booking.address }}</div>
+              </td>
+
+              <!-- Contact Info -->
+              <td class="contact-info">
+                <div class="email">{{ booking.email }}</div>
+                <div class="phone">{{ booking.phone }}</div>
+                <div class="emergency-contact" *ngIf="booking.emergency_contact_name">
+                  <small>Liên hệ khẩn cấp: {{ booking.emergency_contact_name }} ({{ booking.emergency_contact_phone }})</small>
+                </div>
+              </td>
+
+              <!-- Tour Details -->
+              <td class="tour-details">
+                <div class="people-count">{{ booking.numberOfPeople }} người</div>
+                <div class="dates">
+                  <div>Đi: {{ formatDate(booking.departureDate) }}</div>
+                  <div>Về: {{ formatDate(booking.returnDate) }}</div>
+                </div>
+                <div class="special-requests" *ngIf="booking.specialRequests">
+                  <small>Yêu cầu: {{ booking.specialRequests }}</small>
+                </div>
+              </td>
+
+              <!-- Payment Info -->
+              <td class="payment-info">
+                <div class="payment-method">{{ getPaymentMethodLabel(booking.paymentInfo_paymentMethod) }}</div>
+                <div class="amounts">
+                  <div class="total">Tổng: {{ formatCurrency(booking.paymentInfo_totalAmount) }}</div>
+                  <div class="deposit">Đặt cọc: {{ formatCurrency(booking.paymentInfo_depositAmount) }}</div>
+                  <div class="remaining">Còn lại: {{ formatCurrency(booking.paymentInfo_remainingAmount) }}</div>
+                </div>
+              </td>
+
+              <!-- Created Date -->
+              <td class="created-date">
+                {{ formatDate(booking.created_at) }}
+              </td>
+
+              <!-- Actions -->
+              <td class="actions">
+                <button class="btn btn-sm btn-info" (click)="viewBookingDetails(booking)" title="Xem chi tiết">
+                  👁️
+                </button>
+                <button class="btn btn-sm btn-warning" (click)="editBooking(booking)" title="Chỉnh sửa">
+                  ✏️
+                </button>
+                <button class="btn btn-sm btn-danger" (click)="deleteBooking(booking)" title="Xóa">
+                  🗑️
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- No Results -->
+      <div class="no-results" *ngIf="filteredBookings.length === 0 && !isLoading">
+        <p>Không tìm thấy đặt tour nào phù hợp với bộ lọc.</p>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="totalItems > itemsPerPage && !isLoading">
+      <div class="pagination-info">
+        Hiển thị {{ (currentPage - 1) * itemsPerPage + 1 }} - {{ Math.min(currentPage * itemsPerPage, totalItems) }} 
+        trong tổng số {{ totalItems }} đặt tour
+      </div>
+      
+      <div class="pagination-controls">
+        <button 
+          class="btn btn-secondary" 
+          [disabled]="currentPage === 1"
+          (click)="onPageChange(currentPage - 1)"
+        >
+          ← Trước
+        </button>
+        
+        <div class="page-numbers">
+          <button 
+            *ngFor="let page of getPageNumbers()" 
+            class="btn btn-page" 
+            [class.active]="page === currentPage"
+            (click)="onPageChange(page)"
+          >
+            {{ page }}
+          </button>
+        </div>
+        
+        <button 
+          class="btn btn-secondary" 
+          [disabled]="currentPage >= Math.ceil(totalItems / itemsPerPage)"
+          (click)="onPageChange(currentPage + 1)"
+        >
+          Sau →
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

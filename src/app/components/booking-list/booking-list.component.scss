@@ -1,0 +1,467 @@
+.booking-list-container {
+  padding: 2rem 0;
+  background: #f8f9fa;
+  min-height: 100vh;
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h2 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #666;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+
+  .filters-section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 300px;
+
+      input {
+        width: 100%;
+        padding: 0.75rem 3rem 0.75rem 1rem;
+        border: 2px solid #e9ecef;
+        border-radius: 25px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+
+        &:focus {
+          outline: none;
+          border-color: #667eea;
+          box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+      }
+
+      .search-icon {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #666;
+        font-size: 1.2rem;
+      }
+    }
+
+    .filter-options {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+
+      select {
+        padding: 0.75rem 1.5rem;
+        border: 2px solid #e9ecef;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        background: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:focus {
+          outline: none;
+          border-color: #667eea;
+        }
+      }
+    }
+  }
+
+  .loading-state {
+    text-align: center;
+    padding: 3rem;
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    p {
+      color: #666;
+      font-size: 1.1rem;
+    }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .error-state {
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+
+    .error-message {
+      color: #dc3545;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+  }
+
+  .bookings-table {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 2rem;
+
+    .table-responsive {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      th, td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #333;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .booking-row {
+        transition: background-color 0.3s ease;
+
+        &:hover {
+          background: #f8f9fa;
+        }
+
+        &:last-child td {
+          border-bottom: none;
+        }
+      }
+    }
+
+    .customer-info {
+      .customer-name {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.5rem;
+      }
+
+      .customer-details {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 0.5rem;
+        font-size: 0.85rem;
+
+        .gender {
+          color: #667eea;
+          font-weight: 500;
+        }
+
+        .id-card {
+          color: #666;
+        }
+      }
+
+      .customer-address {
+        font-size: 0.85rem;
+        color: #666;
+        line-height: 1.4;
+      }
+    }
+
+    .contact-info {
+      .email {
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 0.5rem;
+      }
+
+      .phone {
+        color: #667eea;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+      }
+
+      .emergency-contact {
+        font-size: 0.8rem;
+        color: #666;
+        line-height: 1.3;
+      }
+    }
+
+    .tour-details {
+      .people-count {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.5rem;
+      }
+
+      .dates {
+        font-size: 0.85rem;
+        color: #666;
+        margin-bottom: 0.5rem;
+
+        div {
+          margin-bottom: 0.25rem;
+        }
+      }
+
+      .special-requests {
+        font-size: 0.8rem;
+        color: #ff6b6b;
+        line-height: 1.3;
+      }
+    }
+
+    .payment-info {
+      .payment-method {
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 0.5rem;
+      }
+
+      .amounts {
+        font-size: 0.85rem;
+
+        .total {
+          color: #333;
+          font-weight: 600;
+          margin-bottom: 0.25rem;
+        }
+
+        .deposit {
+          color: #28a745;
+          margin-bottom: 0.25rem;
+        }
+
+        .remaining {
+          color: #ff6b6b;
+          font-weight: 500;
+        }
+      }
+    }
+
+    .created-date {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .actions {
+      display: flex;
+      gap: 0.5rem;
+
+      .btn-sm {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+        min-width: auto;
+      }
+    }
+  }
+
+  .no-results {
+    text-align: center;
+    padding: 3rem;
+    color: #666;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+
+    .pagination-info {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .pagination-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .page-numbers {
+        display: flex;
+        gap: 0.5rem;
+
+        .btn-page {
+          padding: 0.5rem 0.75rem;
+          min-width: auto;
+          border-radius: 8px;
+
+          &.active {
+            background: #667eea;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Button styles
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+
+  &.btn-primary {
+    background: #ff6b6b;
+    color: white;
+
+    &:hover {
+      background: #ff5252;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    }
+  }
+
+  &.btn-secondary {
+    background: #6c757d;
+    color: white;
+
+    &:hover {
+      background: #5a6268;
+      transform: translateY(-2px);
+    }
+  }
+
+  &.btn-info {
+    background: #17a2b8;
+    color: white;
+
+    &:hover {
+      background: #138496;
+    }
+  }
+
+  &.btn-warning {
+    background: #ffc107;
+    color: #212529;
+
+    &:hover {
+      background: #e0a800;
+    }
+  }
+
+  &.btn-danger {
+    background: #dc3545;
+    color: white;
+
+    &:hover {
+      background: #c82333;
+    }
+  }
+
+  &.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+}
+
+// Responsive design
+@media (max-width: 1200px) {
+  .booking-list-container {
+    .bookings-table {
+      table {
+        th, td {
+          padding: 0.75rem 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .booking-list-container {
+    padding: 1rem 0;
+
+    .section-header {
+      h2 {
+        font-size: 2rem;
+      }
+    }
+
+    .filters-section {
+      flex-direction: column;
+      align-items: stretch;
+
+      .search-box {
+        min-width: auto;
+      }
+
+      .filter-options {
+        justify-content: center;
+      }
+    }
+
+    .bookings-table {
+      .table-responsive {
+        overflow-x: auto;
+      }
+
+      table {
+        min-width: 800px;
+      }
+    }
+
+    .pagination {
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+
+      .pagination-controls {
+        justify-content: center;
+      }
+    }
+  }
+}
+

@@ -1,0 +1,66 @@
+<section class="tour-list" id="tours">
+  <div class="container">
+    <div class="section-header">
+      <h2>Khám phá các tour du lịch</h2>
+      <p>Lựa chọn từ nhiều hành trình hấp dẫn khắp Việt Nam</p>
+    </div>
+
+    <div class="filters">
+      <div class="search-box">
+        <input 
+          type="text" 
+          placeholder="Tìm kiếm tour..." 
+          [(ngModel)]="searchQuery"
+          (input)="onSearch()"
+        >
+        <i class="search-icon">🔍</i>
+      </div>
+
+      <div class="filter-options">
+        <select [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
+          <option value="">Tất cả danh mục</option>
+          <option value="Adventure">Adventure</option>
+          <option value="Cultural">Cultural</option>
+          <option value="Relaxation">Relaxation</option>
+          <option value="Nature">Nature</option>
+          <option value="City">City</option>
+        </select>
+
+        <select [(ngModel)]="selectedDifficulty" (change)="onDifficultyChange()">
+          <option value="">Tất cả độ khó</option>
+          <option value="Easy">Dễ</option>
+          <option value="Medium">Trung bình</option>
+          <option value="Hard">Khó</option>
+        </select>
+
+        <div class="price-range">
+          <label>Khoảng giá:</label>
+          <input 
+            type="range" 
+            min="0" 
+            max="5000000" 
+            step="500000"
+            [(ngModel)]="maxPrice"
+            (input)="onPriceChange()"
+          >
+          <span>{{ maxPrice | currency:'VND':'symbol':'1.0-0' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tours-grid" *ngIf="filteredTours.length > 0; else noTours">
+      <app-tour-card 
+        *ngFor="let tour of filteredTours" 
+        [tour]="tour"
+        (bookTour)="onBookTour($event)"
+      ></app-tour-card>
+    </div>
+
+    <ng-template #noTours>
+      <div class="no-tours">
+        <h3>Không tìm thấy tour nào</h3>
+        <p>Hãy thử thay đổi bộ lọc hoặc từ khóa tìm kiếm</p>
+      </div>
+    </ng-template>
+  </div>
+</section>
