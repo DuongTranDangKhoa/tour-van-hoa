@@ -67,7 +67,7 @@ categories = [
   const suggested = [
     { name: 'Tp. Hồ Chí Minh', country: 'Việt Nam', imageUrl: '/city-image/sai-gon.webp' },
     { name: 'Đà Nẵng', country: 'Việt Nam', imageUrl: '/city-image/da-nang.jpg' },
-    { name: 'Hải Phòng', country: 'Việt Nam', imageUrl: '/city-image/haiphong.png' },
+    { name: 'Hải Phòng', country: 'Việt Nam', imageUrl: '/city-image/hai-phong.webp' },
     { name: 'Cần Thơ', country: 'Việt Nam', imageUrl: '/city-image/can-tho.png' },
   ];
   
@@ -152,7 +152,7 @@ categories = [
   { name: 'Hà Nội', country: 'Việt Nam', imageUrl: '/city-image/ha-noi.png' },
   { name: 'Tp. Hồ Chí Minh', country: 'Việt Nam', imageUrl: '/city-image/sai-gon.webp' },
   { name: 'Đà Nẵng', country: 'Việt Nam', imageUrl: '/city-image/da-nang.jpg' },
-  { name: 'Hải Phòng', country: 'Việt Nam', imageUrl: '/city-image/haiphong.png' },
+  { name: 'Hải Phòng', country: 'Việt Nam', imageUrl: '/city-image/hai-phong.webp' },
   { name: 'Cần Thơ', country: 'Việt Nam', imageUrl: '/city-image/can-tho.png' },
 ];
 }

@@ -6,6 +6,7 @@ import { BookingDetailComponent } from './pages/booking-detail/booking-detail.co
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'bookings', component: BookingsComponent },
+  { path: 'booking-detail/:id', component: BookingDetailComponent },
   { path: 'tour/:id/book', component: BookingDetailComponent },
   { path: '**', redirectTo: '' }
 ];

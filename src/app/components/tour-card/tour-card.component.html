@@ -1,52 +1,30 @@
-<div class="tour-card">
-  <div class="tour-image">
-    <img [src]="tour.imageUrl" [alt]="tour.name">
-    <div class="tour-category">{{ tour.category }}</div>
-    <div class="tour-rating">
-      <span class="stars">★★★★★</span>
+<div class="event-card" (click)="onCardClick()">
+  <div class="event-image">
+    <img [src]="tour.imageUrl" [alt]="tour.name" onerror="this.src='assets/images/placeholder-event.jpg'">
+    <button class="favorite-btn" (click)="toggleWishlist(); $event.stopPropagation();">
+      <i class="fas fa-heart" [class.active]="isInWishlist()"></i>
+    </button>
+  </div>
+
+  <div class="event-content">
+    <div class="event-location">
+      <i class="fas fa-map-marker-alt"></i>
+      {{ tour.destination }}
+    </div>
+
+    <h3 class="event-name">{{ tour.name }}</h3>
+
+    <div class="event-rating" *ngIf="tour.rating">
+      <span class="rating-stars">{{ getStars() }}</span>
       <span class="rating-number">{{ tour.rating }}</span>
     </div>
-  </div>
-  
-  <div class="tour-content">
-    <div class="tour-header">
-      <h3 class="tour-name">{{ tour.name }}</h3>
-      <p class="tour-destination">{{ tour.destination }}</p>
+
+    <div class="event-date" *ngIf="tour.duration">
+      {{ formatDate() }}
     </div>
-    
-    <p class="tour-description">{{ tour.description }}</p>
-    
-    <div class="tour-details">
-      <div class="detail-item">
-        <i class="icon">⏱️</i>
-        <span>{{ tour.duration }}</span>
-      </div>
-      <div class="detail-item">
-        <i class="icon">👥</i>
-        <span>Tối đa {{ tour.maxGroupSize }} người</span>
-      </div>
-      <div class="detail-item">
-        <i class="icon">🏔️</i>
-        <span>{{ tour.difficulty }}</span>
-      </div>
-    </div>
-    
-    <div class="tour-highlights">
-      <h4>Điểm nổi bật:</h4>
-      <ul>
-        <li *ngFor="let highlight of tour.highlights.slice(0, 3)">{{ highlight }}</li>
-      </ul>
-    </div>
-    
-    <div class="tour-footer">
-      <div class="tour-price">
-        <span class="price-amount">{{ tour.price | currency:'VND':'symbol':'1.0-0' }}</span>
-        <span class="price-per">/ người</span>
-      </div>
-      
-      <button class="btn btn-primary" (click)="onBookTour()">
-        Đặt tour ngay
-      </button>
+
+    <div class="event-price">
+      {{ formatPrice() }}
     </div>
   </div>
 </div>

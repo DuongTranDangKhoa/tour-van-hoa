@@ -1,320 +1,177 @@
-
-
-<!-- Phần trên: 100% chiều rộng với hình ảnh tour -->
-<div class="tour-hero-section" *ngIf="tour">
-  <div class="media-section">
-    <div class="main-image">
-      <img [src]="tour.imageUrl" [alt]="tour.name" class="hero-image">
-      <button class="play-button">
-        <i class="icon">▶️</i>
-      </button>
-    </div>
-    <div class="image-grid">
-      <div class="grid-item">
-        <img [src]="tour.imageUrl" [alt]="tour.name">
-        <div class="overlay-text">Tour Văn Hóa presents</div>
+<div class="booking-detail-page">
+  <!-- Phần trên: Hình ảnh tour -->
+  <div class="tour-hero-section" *ngIf="tour">
+    <div class="media-section">
+      <div class="main-image">
+        <img [src]="tour.imageUrl" [alt]="tour.name" class="hero-image">
+        <button class="play-button">
+          <i class="icon">▶️</i>
+        </button>
       </div>
-      <div class="grid-item">
-        <img [src]="tour.imageUrl" [alt]="tour.name">
-      </div>
-      <div class="grid-item">
-        <img [src]="tour.imageUrl" [alt]="tour.name">
-      </div>
-      <div class="grid-item">
-        <img [src]="tour.imageUrl" [alt]="tour.name">
-        <div class="gallery-btn">
-          <i class="icon">📷</i>
-          <span>Thư viện</span>
+      <div class="image-grid">
+        <div class="grid-item">
+          <img [src]="tour.imageUrl" [alt]="tour.name">
+          <div class="overlay-text">Tour Văn Hóa presents</div>
+        </div>
+        <div class="grid-item">
+          <img [src]="tour.imageUrl" [alt]="tour.name">
+        </div>
+        <div class="grid-item">
+          <img [src]="tour.imageUrl" [alt]="tour.name">
+        </div>
+        <div class="grid-item">
+          <img [src]="tour.imageUrl" [alt]="tour.name">
+          <div class="gallery-btn">
+            <i class="icon">📷</i>
+            <span>Thư viện</span>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  
-
-</div>
-
-<!-- Phần dưới: Chia 2 cột -->
-<div class="main-content" *ngIf="tour">
-  <!-- Left Panel: Thông tin tour -->
- 
-  <div class="tour-details-panel">
-     <div class="event-title-section">
-    <h1>{{ tour.name }}</h1>
-    <div class="rating">
-      <i class="icon">⭐</i>
-      <i class="icon">⭐</i>
-      <i class="icon">⭐</i>
-      <i class="icon">⭐</i>
-      <i class="icon">⭐</i>
-      <span>(4.5)</span>
-    </div>
-  </div>
-    <div class="description-section">
-      <h2>Mô tả</h2>
-      <p>{{ tour.description }}</p>
-    </div>
-
-    <div class="general-info-section">
-      <h2>Thông tin chung</h2>
-      <ul>
-        <li><i class="icon">📍</i> <strong>Điểm đến:</strong> {{ tour.destination }}</li>
-        <li><i class="icon">⏰</i> <strong>Thời lượng:</strong> {{ tour.duration }}</li>
-        <li><i class="icon">👥</i> <strong>Số người tối đa:</strong> {{ tour.maxGroupSize }}</li>
-        <li><i class="icon">💰</i> <strong>Giá:</strong> {{ tour.price | currency:'VND':'symbol':'1.0-0' }}</li>
-        <li><i class="icon">📅</i> <strong>Ngày khởi hành:</strong> Hàng ngày</li>
-        <li><i class="icon">🌐</i> <strong>Ngôn ngữ:</strong> Tiếng Việt, Tiếng Anh</li>
-        <li><i class="icon">⭐</i> <strong>Độ khó:</strong> {{ tour.difficulty }}</li>
-      </ul>
-    </div>
-
-    <div class="programme-section">
-      <h2>Chương trình tour</h2>
-      <p>Chi tiết chương trình tour sẽ được cung cấp khi xác nhận đặt chỗ.</p>
     </div>
   </div>
 
-  <!-- Right Panel: Booking Widget -->
-  <div class="booking-widget">
-    <form [formGroup]="bookingForm" (ngSubmit)="onBookTour()">
-      <!-- Customer Information Section -->
-      <div class="customer-info-section">
-        <h4>Thông tin khách hàng</h4>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="customerName">Họ và tên *</label>
-            <input
-              type="text"
-              id="customerName"
-              formControlName="customerName"
-              placeholder="Nhập họ và tên"
-              [class.error]="isFieldInvalid('customerName')"
-            >
-            <div class="error-message" *ngIf="isFieldInvalid('customerName')">
-              {{ getFieldError('customerName') }}
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="customerEmail">Email *</label>
-            <input
-              type="email"
-              id="customerEmail"
-              formControlName="customerEmail"
-              placeholder="Nhập email"
-              [class.error]="isFieldInvalid('customerEmail')"
-            >
-            <div class="error-message" *ngIf="isFieldInvalid('customerEmail')">
-              {{ getFieldError('customerEmail') }}
-            </div>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="customerPhone">Số điện thoại *</label>
-            <input
-              type="tel"
-              id="customerPhone"
-              formControlName="customerPhone"
-              placeholder="Nhập số điện thoại"
-              [class.error]="isFieldInvalid('customerPhone')"
-            >
-            <div class="error-message" *ngIf="isFieldInvalid('customerPhone')">
-              {{ getFieldError('customerPhone') }}
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="customerIdCard">Số CMND/CCCD</label>
-            <input
-              type="text"
-              id="customerIdCard"
-              formControlName="customerIdCard"
-              placeholder="Nhập số CMND/CCCD"
-            >
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="customerDateOfBirth">Ngày sinh</label>
-            <input
-              type="date"
-              id="customerDateOfBirth"
-              formControlName="customerDateOfBirth"
-            >
-          </div>
-
-          <div class="form-group">
-            <label for="customerGender">Giới tính</label>
-            <select id="customerGender" formControlName="customerGender">
-              <option value="">Chọn giới tính</option>
-              <option value="male">Nam</option>
-              <option value="female">Nữ</option>
-              <option value="other">Khác</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="customerAddress">Địa chỉ</label>
-          <textarea
-            id="customerAddress"
-            formControlName="customerAddress"
-            placeholder="Nhập địa chỉ của bạn"
-          ></textarea>
+  <!-- Phần dưới: Chia 2 cột -->
+  <div class="main-content" *ngIf="tour">
+    <!-- Left Panel: Thông tin tour -->
+    <div class="tour-details-panel">
+      <div class="event-title-section">
+        <h1>{{ tour.name }}</h1>
+        <div class="rating">
+          <i class="icon">⭐</i>
+          <i class="icon">⭐</i>
+          <i class="icon">⭐</i>
+          <i class="icon">⭐</i>
+          <i class="icon">⭐</i>
+          <span>(4.5)</span>
         </div>
       </div>
-
-      <!-- Tour Details Section -->
-      <div class="tour-details-section">
-        <h4>Chi tiết đặt tour</h4>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="numberOfPeople">Số người *</label>
-            <div class="quantity-controls">
-              <button type="button" (click)="decreaseQuantity()" class="quantity-btn">-</button>
-              <span class="quantity-display">{{ bookingForm.get('numberOfPeople')?.value || 1 }} người</span>
-              <button type="button" (click)="increaseQuantity()" class="quantity-btn">+</button>
-            </div>
-            <div class="error-message" *ngIf="isFieldInvalid('numberOfPeople')">
-              {{ getFieldError('numberOfPeople') }}
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="paymentMethod">Phương thức thanh toán *</label>
-            <select id="paymentMethod" formControlName="paymentMethod">
-              <option value="bank_transfer">Chuyển khoản ngân hàng</option>
-              <option value="credit_card">Thẻ tín dụng</option>
-              <option value="cash">Tiền mặt</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="departureDate">Ngày khởi hành *</label>
-            <input
-              type="date"
-              id="departureDate"
-              formControlName="departureDate"
-              [class.error]="isFieldInvalid('departureDate')"
-            >
-            <div class="error-message" *ngIf="isFieldInvalid('departureDate')">
-              {{ getFieldError('departureDate') }}
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="returnDate">Ngày kết thúc *</label>
-            <input
-              type="date"
-              id="returnDate"
-              formControlName="returnDate"
-              [class.error]="isFieldInvalid('returnDate')"
-            >
-            <div class="error-message" *ngIf="isFieldInvalid('returnDate')">
-              {{ getFieldError('returnDate') }}
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label for="specialRequests">Yêu cầu đặc biệt</label>
-          <textarea
-            id="specialRequests"
-            formControlName="specialRequests"
-            placeholder="Ví dụ: yêu cầu ăn chay, hỗ trợ xe lăn..."
-          ></textarea>
-        </div>
+      <div class="description-section">
+        <h2>Mô tả</h2>
+        <p>{{ tour.description }}</p>
       </div>
+      <div class="general-info-section">
+        <h2>Thông tin chung</h2>
+        <ul>
+          <li><i class="icon">📍</i> <strong>Điểm đến:</strong> {{ tour.destination }}</li>
+          <li><i class="icon">⏰</i> <strong>Thời lượng:</strong> {{ tour.duration }}</li>
+          <li><i class="icon">👥</i> <strong>Số người tối đa:</strong> {{ tour.maxGroupSize }}</li>
+          <li><i class="icon">💰</i> <strong>Giá:</strong> {{ tour.price | currency:'VND':'symbol':'1.0-0' }}</li>
+          <li><i class="icon">📅</i> <strong>Ngày khởi hành:</strong> Hàng ngày</li>
+          <li><i class="icon">🌐</i> <strong>Ngôn ngữ:</strong> Tiếng Việt, Tiếng Anh</li>
+          <li><i class="icon">⭐</i> <strong>Độ khó:</strong> {{ tour.difficulty }}</li>
+        </ul>
+      </div>
+      <div class="programme-section">
+        <h2>Chương trình tour</h2>
+        <p>Chi tiết chương trình tour sẽ được cung cấp khi xác nhận đặt chỗ.</p>
+      </div>
+    </div>
 
-      <!-- Emergency Contact Section -->
-      <div class="emergency-contact-section">
-        <h4>Thông tin liên hệ khẩn cấp</h4>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="emergencyContactName">Họ và tên</label>
-            <input
-              type="text"
-              id="emergencyContactName"
-              formControlName="emergencyContactName"
-              placeholder="Tên người liên hệ khẩn cấp"
-            >
+    <!-- Right Panel: Booking Widget - feverup style -->
+    <div class="booking-widget">
+      <form [formGroup]="bookingForm" (ngSubmit)="onBookTour()">
+        <!-- Calendar Section -->
+        <div class="calendar-section">
+          <h3>Chọn ngày và giờ</h3>
+          <div class="month-nav">
+            <button type="button" (click)="prevMonth()" class="nav-btn">‹</button>
+            <button type="button" (click)="selectMonth(0)" [class.active]="currentMonth === 0">THG 8 2025</button>
+            <button type="button" (click)="selectMonth(1)" [class.active]="currentMonth === 1">THG 9 2025</button>
+            <button type="button" (click)="selectMonth(2)" [class.active]="currentMonth === 2">THG 10 2025</button>
+            <button type="button" (click)="nextMonth()" class="nav-btn">›</button>
           </div>
 
-          <div class="form-group">
-            <label for="emergencyContactPhone">Số điện thoại</label>
-            <input
-              type="tel"
-              id="emergencyContactPhone"
-              formControlName="emergencyContactPhone"
-              placeholder="Số điện thoại người liên hệ khẩn cấp"
-            >
+          <div class="weekdays">
+            <div class="day">T2</div>
+            <div class="day">T3</div>
+            <div class="day">T4</div>
+            <div class="day">T5</div>
+            <div class="day">T6</div>
+            <div class="day">T7</div>
+            <div class="day">CN</div>
+          </div>
+
+          <div class="calendar-days">
+            <div class="day-cell" *ngFor="let day of days" 
+                 [class.selected]="day.selected"
+                 [class.low-availability]="day.availability === 'low'"
+                 [class.best-price]="day.availability === 'best'"
+                 (click)="selectDate(day)">
+              {{ day.day }}
+            </div>
+          </div>
+
+          <!-- Session Selection -->
+          <div class="session-selection">
+            <div class="session-header">
+              <span>Các giờ có sẵn</span>
+              <div class="legend">
+                <span class="low-availability">🔴 N้อย</span>
+                <span class="best-price">🟣 Giá tốt</span>
+              </div>
+            </div>
+            <div class="session-buttons">
+              <button type="button" class="session-btn" (click)="selectSession('13:00')">13:00</button>
+              <button type="button" class="session-btn" (click)="selectSession('13:30')">13:30</button>
+              <button type="button" class="session-btn" (click)="selectSession('14:00')">14:00</button>
+              <button type="button" class="session-btn" (click)="selectSession('15:30')">15:30</button>
+              <button type="button" class="session-btn active" (click)="selectSession('16:00')">16:00</button>
+              <button type="button" class="session-btn" (click)="selectSession('16:30')">16:30</button>
+            </div>
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="emergencyContactRelationship">Mối quan hệ</label>
-          <input
-            type="text"
-            id="emergencyContactRelationship"
-            formControlName="emergencyContactRelationship"
-            placeholder="Ví dụ: Bố, Mẹ, Anh, Chị..."
-          >
-        </div>
-      </div>
+        <!-- Ticket Selection -->
+        <div class="ticket-selection">
+          <div class="ticket-item" *ngFor="let ticket of tickets">
+            <div class="ticket-header">
+              <h4>{{ ticket.name }}</h4>
+              <a href="#" class="more-info">Chi tiết</a>
+            </div>
+            <div class="ticket-desc">
+              <p>Ticket for 1 person, includes:</p>
+              <ul>
+                <li>Admission into the experience</li>
+              </ul>
+            </div>
+            <div class="ticket-price">
+              <span class="price">{{ ticket.price | currency:'VND':'symbol':'1.0-0' }}</span>
+              <span class="fee">+ {{ ticket.bookingFee | currency:'VND':'symbol':'1.0-0' }} phí đặt vé</span>
+            </div>
+            <div class="quantity-selector">
+              <button type="button" (click)="adjustQuantity(ticket.id, -1)" [disabled]="getTicketQuantity(ticket.id) === 0">−</button>
+              <span>{{ getTicketQuantity(ticket.id) }}</span>
+              <button type="button" (click)="adjustQuantity(ticket.id, 1)">+</button>
+            </div>
+          </div>
 
-      <!-- Tour Summary -->
-      <div class="tour-summary">
-        <h4>Thông tin tour và thanh toán</h4>
-        <div class="summary-item">
-          <span>Tour:</span>
-          <span>{{ tour.name }}</span>
-        </div>
-        <div class="summary-item">
-          <span>Điểm đến:</span>
-          <span>{{ tour.destination }}</span>
-        </div>
-        <div class="summary-item">
-          <span>Thời gian:</span>
-          <span>{{ tour.duration }}</span>
-        </div>
-        <div class="summary-item">
-          <span>Giá gốc:</span>
-          <span>{{ tour.price | currency:'VND':'symbol':'1.0-0' }}/người</span>
-        </div>
-        <div class="summary-item">
-          <span>Số người:</span>
-          <span>{{ bookingForm.get('numberOfPeople')?.value || 1 }}</span>
-        </div>
-        <div class="summary-item">
-          <span>Tổng tiền:</span>
-          <span>{{ getTotalPrice() | currency:'VND':'symbol':'1.0-0' }}</span>
-        </div>
-        <div class="summary-item">
-          <span>Đặt cọc (20%):</span>
-          <span>{{ getDepositAmount() | currency:'VND':'symbol':'1.0-0' }}</span>
-        </div>
-        <div class="summary-item total">
-          <span>Còn lại:</span>
-          <span>{{ getRemainingAmount() | currency:'VND':'symbol':'1.0-0' }}</span>
-        </div>
-      </div>
+          <!-- Add-on -->
+          <div class="add-on-item">
+            <h4>Photo Opportunity</h4>
+            <p>Capture the moment with a personalized 15x20 cm printed photo in a premium Jurassic World folder...</p>
+            <a href="#" class="read-more">Xem thêm</a>
+            <div class="add-on-price">
+              <span class="price">+ {{ addOnPrice | currency:'VND':'symbol':'1.0-0' }}</span>
+            </div>
+            <div class="quantity-selector">
+              <button type="button" (click)="adjustAddOn(-1)" [disabled]="addOnQuantity === 0">−</button>
+              <span>{{ addOnQuantity }}</span>
+              <button type="button" (click)="adjustAddOn(1)">+</button>
+            </div>
+          </div>
 
-      <!-- Submit Button -->
-      <button type="submit" class="book-button" [disabled]="bookingForm.invalid || isSubmitting">
-        <span *ngIf="!isSubmitting">
-          {{ getTotalPrice() | currency:'VND':'symbol':'1.0-0' }} — Tiếp tục
-        </span>
-        <span *ngIf="isSubmitting">
-          <i class="loading-spinner">⏳</i> Đang xử lý...
-        </span>
-      </button>
-    </form>
+          <!-- Total Price -->
+          <div class="total-price">
+            <span>Tổng cộng:</span>
+            <span class="amount">{{ getTotalPrice() | currency:'VND':'symbol':'1.0-0' }}</span>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="book-button" [disabled]="isSubmitting || !selectedDate || !selectedSession">
+            {{ getTotalPrice() | currency:'VND':'symbol':'1.0-0' }} — Đặt ngay
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
