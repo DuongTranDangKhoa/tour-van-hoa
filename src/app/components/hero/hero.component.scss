@@ -13,8 +13,6 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-                url('https://images.unsplash.com/photo-1551632811-561732d1e306?w=1920&q=80');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -26,7 +24,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
+    background: linear-gradient(135deg, rgba(188, 184, 184, 0.8) 0%, rgba(0, 0, 0, 0.8) 100%);
   }
 
   .hero-content {

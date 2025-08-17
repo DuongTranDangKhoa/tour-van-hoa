@@ -1,25 +1,154 @@
 <header class="header">
   <div class="container">
     <div class="header-content">
+      <!-- Logo -->
       <div class="logo">
         <a routerLink="/">
           <h1>Tour Văn Hóa</h1>
-          <p>Khám phá Việt Nam</p>
         </a>
       </div>
-      
-      <nav class="nav-menu">
-        <ul>
-          <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Trang chủ</a></li>
-          <li><a routerLink="/bookings" routerLinkActive="active">Quản lý đặt tour</a></li>
-          <li><a href="#about">Giới thiệu</a></li>
-          <li><a href="#contact">Liên hệ</a></li>
-        </ul>
-      </nav>
 
+      <!-- Location & Categories -->
+      <div class="location-categories">
+        <div class="location-selector" (click)="changeLocation()">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>{{ currentLocation }}</span>
+        </div>
+        <button class="categories-btn" (click)="openCategories()">
+          <i class="fas fa-th-large"></i>
+          <span>Phân loại</span>
+        </button>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="search-bar-container">
+        <div class="search-bar" (click)="toggleSearch()">
+          <i class="fas fa-search"></i>
+          <input 
+            type="text" 
+            [(ngModel)]="searchQuery" 
+            (keyup.enter)="onSearchEnter()"
+            placeholder="Tìm kiếm" 
+            #searchInput/>
+        </div>
+        <!-- Suggestions dropdown -->
+        <div class="suggestions" *ngIf="showSuggestions">
+          <div class="suggestion-title">Bạn đang không biết chọn gì?</div>
+          <div class="suggestion-tags">
+            <span class="tag" (click)="selectSuggestion('Concerts')">Nhạc giao hưởng</span>
+            <span class="tag" (click)="selectSuggestion('Candlelight')">Show âm nhạc</span>
+            <span class="tag" (click)="selectSuggestion('Exhibitions')">Khách sạn</span>
+            <span class="tag" (click)="selectSuggestion('Restaurants')">Nhà hàng</span>
+            <span class="tag" (click)="selectSuggestion('Cinema')">Rạp chiếu phim</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right actions: Language, Wishlist, User -->
       <div class="header-actions">
-        <button class="btn btn-primary" routerLink="/">Đặt tour ngay</button>
+        <div class="language-selector" (click)="toggleLanguage()">
+          <i class="fas fa-globe"></i>
+          <span>{{ currentLanguage }}</span>
+        </div>
+        <div class="wishlist" (click)="toggleWishlist()">
+          <i class="fas fa-heart"></i>
+        </div>
+        <div class="user-profile" (click)="openUserProfile()">
+          <img src="assets/images/default-avatar.png" alt="User profile" />
+        </div>
       </div>
     </div>
   </div>
 </header>
+
+<!-- Modal City Selector -->
+<div class="modal-overlay" *ngIf="showCityModal" (click)="closeCityModal()">
+  <div class="city-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Chọn thành phố của bạn</h3>
+      <button class="close-btn" (click)="closeCityModal()">×</button>
+    </div>
+
+    <div class="search-box">
+      <i class="fas fa-search"></i>
+      <input 
+        type="text" 
+        [(ngModel)]="citySearchQuery"
+        placeholder="Tìm kiếm thành phố..." />
+    </div>
+
+    <div class="cities-list">
+      <!-- Nearby cities -->
+      <div class="section-title">Thành phố gần đây</div>
+      <div class="city-item" *ngFor="let city of getFilteredCities()" (click)="selectCity(city)">
+        <span>{{ city.name }}</span>
+        <small>{{ city.country }}</small>
+      </div>
+
+      <!-- Suggested cities -->
+      <div class="section-title">Gợi ý thành phố</div>
+      <div class="city-item" *ngFor="let city of getSuggestedCities()" (click)="selectCity(city)">
+        <span>{{ city.name }}</span>
+        <small>{{ city.country }}</small>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Categories Sidebar -->
+<!-- Sidebar Categories -->
+<div class="categories-sidebar" *ngIf="showCategories">
+  <div class="sidebar-header">
+    <h3>Categories</h3>
+    <button class="close-btn" (click)="closeCategories()">×</button>
+  </div>
+
+  <div class="categories-list">
+    <div class="category-item" *ngFor="let category of categories" (click)="selectCategory(category)">
+      <img [src]="category.icon" alt="{{ category.name }}" />
+      <span>{{ category.name }}</span>
+      <i class="fas fa-chevron-right"></i>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar Sub-Categories -->
+<!-- Sidebar Categories -->
+<div class="categories-sidebar" *ngIf="showCategories">
+  <div class="sidebar-header">
+    <h3>Categories</h3>
+    <button class="close-btn" (click)="closeCategories()">×</button>
+  </div>
+
+  <div class="categories-list">
+    <div class="category-item" *ngFor="let category of categories" (click)="selectCategory(category)">
+      <img [src]="category.icon" alt="{{ category.name }}" />
+      <span>{{ category.name }}</span>
+      <i class="fas fa-chevron-right"></i>
+    </div>
+  </div>
+</div>
+
+<!-- Sidebar Sub-Categories -->
+<div class="sub-categories-sidebar" *ngIf="showSubCategory">
+  <div class="sidebar-header">
+    <button class="back-btn" (click)="closeSubCategory()">←</button>
+    <h3>{{ selectedCategory }}</h3>
+    <button class="close-btn" (click)="closeSubCategory()">×</button>
+  </div>
+
+  <!-- Sidebar Sub-Categories -->
+<div class="sub-categories-sidebar" *ngIf="showSubCategory">
+  <div class="sidebar-header">
+    <button class="back-btn" (click)="closeSubCategory()">←</button>
+    <h3>{{ selectedCategory }}</h3>
+    <button class="close-btn" (click)="closeSubCategory()">×</button>
+  </div>
+
+  <div class="sub-categories-list">
+    <div class="sub-category-item" *ngFor="let subCategory of getSubCategories()" (click)="selectSubCategory(subCategory)">
+      <img [src]="subCategory.icon" alt="{{ subCategory.name }}" />
+      <span>{{ subCategory.name }}</span>
+    </div>
+  </div>
+</div>
