@@ -10,7 +10,7 @@
   grid-template-columns: 2fr 1fr;
   gap: 40px;
   padding: 0 24px 40px;
-  max-width: 1200px;
+  max-width: 1120px;
   margin: 0 auto;
 }
 
@@ -25,7 +25,7 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 
   .header-content {
-    max-width: 1200px;
+    max-width: 1120px;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -83,18 +83,20 @@
 .tour-hero-section {
   width: 100%;
   background-color: #f0f2f5;
-  padding: 24px 0;
+  padding: 0;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   margin-bottom: 24px;
 
   .media-section {
-    max-width: 900px;
+    max-width: 1120px;
     margin: 0 auto 20px;
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 16px;
-    height: 400px;
+    grid-template-columns: 3fr 1fr;
+    gap: 12px;
+    height: auto;
+    padding: 0 24px;
+    align-items: stretch;
   }
 
   .main-image {
@@ -102,6 +104,7 @@
     border-radius: 12px;
     overflow: hidden;
     background-color: #f0f0f0;
+    height: 420px;
 
     img {
       width: 100%;
@@ -135,7 +138,9 @@
   .image-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    grid-template-rows: 1fr 1fr;
+    gap: 12px;
+    height: 420px;
   }
 
   .grid-item {
@@ -171,8 +176,8 @@
   }
 
   .event-title-section {
-    max-width: 900px;
-    margin: 0 auto;
+    max-width: 1120px;
+    margin: 12px auto 0;
     padding: 0 24px;
 
     h1 {
@@ -198,9 +203,9 @@
 /* Tour Details Panel */
 .tour-details-panel {
   background: #fff;
-  padding: 24px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: none;
+  border: none;
 
   h2 {
     font-size: 24px;

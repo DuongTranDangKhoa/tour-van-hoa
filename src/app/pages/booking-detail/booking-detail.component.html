@@ -104,13 +104,13 @@
           </div>
 
           <div class="weekdays">
-            <div class="day">T2</div>
-            <div class="day">T3</div>
-            <div class="day">T4</div>
-            <div class="day">T5</div>
-            <div class="day">T6</div>
-            <div class="day">T7</div>
-            <div class="day">CN</div>
+            <div class="day">SU</div>
+            <div class="day">MO</div>
+            <div class="day">TU</div>
+            <div class="day">WE</div>
+            <div class="day">TH</div>
+            <div class="day">FR</div>
+            <div class="day">SA</div>
           </div>
 
           <div class="calendar-days">
@@ -118,8 +118,12 @@
                  [class.selected]="day.selected"
                  [class.low-availability]="day.availability === 'low'"
                  [class.best-price]="day.availability === 'best'"
+                 [class.empty]="!day.day"
                  (click)="selectDate(day)">
-              {{ day.day }}
+              <div class="corner-ribbon" *ngIf="day.selected"></div>
+              <div class="day-number">{{ day.day }}</div>
+              <div class="day-price" *ngIf="day.day">${{ day.price }}</div>
+              <div class="bottom-indicator"></div>
             </div>
           </div>
 
@@ -128,8 +132,8 @@
             <div class="session-header">
               <span>Các giờ có sẵn</span>
               <div class="legend">
-                <span class="low-availability">🔴 Khả Dụng Thấp</span>
-                <span class="best-price">🟣 Giá tốt</span>
+                <span class="legend-item"><span class="legend-line low"></span> Khả dụng thấp</span>
+                <span class="legend-item"><span class="legend-line best"></span> Giá tốt</span>
               </div>
             </div>
             <div class="session-navigation">

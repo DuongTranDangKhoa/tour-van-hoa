@@ -17,6 +17,7 @@ interface CalendarDay {
   day: string;
   availability: 'none' | 'low' | 'best';
   selected?: boolean;
+  price?: number;
 }
 
 interface MonthOption {
@@ -148,11 +149,13 @@ export class BookingDetailComponent implements OnInit {
       const date = new Date(year, month, day);
       const isWeekend = date.getDay() === 0 || date.getDay() === 6;
       const availability = Math.random() > 0.3 ? 'best' : 'low';
+      const price = Math.floor(50 + Math.random() * 50); // Random price for demo
 
       this.days.push({
         day: day.toString(),
         availability: availability,
-        selected: false
+        selected: false,
+        price: price
       });
     }
   }
