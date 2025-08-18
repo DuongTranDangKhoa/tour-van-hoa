@@ -74,11 +74,33 @@
         <div class="calendar-section">
           <h3>Chọn ngày và giờ</h3>
           <div class="month-nav">
-            <button type="button" (click)="prevMonth()" class="nav-btn">‹</button>
-            <button type="button" (click)="selectMonth(0)" [class.active]="currentMonth === 0">THG 8 2025</button>
-            <button type="button" (click)="selectMonth(1)" [class.active]="currentMonth === 1">THG 9 2025</button>
-            <button type="button" (click)="selectMonth(2)" [class.active]="currentMonth === 2">THG 10 2025</button>
-            <button type="button" (click)="nextMonth()" class="nav-btn">›</button>
+            <button type="button" (click)="prevMonth()" class="nav-btn" [disabled]="!canGoPrevMonth()">‹</button>
+            
+            <!-- Hiển thị 3 tháng: prev, current, next -->
+            <div class="month-buttons">
+              <button type="button" 
+                      (click)="selectMonth(availableMonths[getCurrentIndex() - 1]?.value || 0, availableMonths[getCurrentIndex() - 1]?.year || currentYear)" 
+                      [disabled]="!canGoPrevMonth()"
+                      class="month-btn">
+                {{ canGoPrevMonth() ? availableMonths[getCurrentIndex() - 1]?.label : '---' }}
+              </button>
+              
+              <button type="button" 
+                      (click)="selectMonth(currentMonth, currentYear)" 
+                      [class.active]="true"
+                      class="month-btn">
+                {{ getMonthLabel(currentMonth, currentYear) }}
+              </button>
+              
+              <button type="button" 
+                      (click)="selectMonth(availableMonths[getCurrentIndex() + 1]?.value || 0, availableMonths[getCurrentIndex() + 1]?.year || currentYear)" 
+                      [disabled]="!canGoNextMonth()"
+                      class="month-btn">
+                {{ canGoNextMonth() ? availableMonths[getCurrentIndex() + 1]?.label : '---' }}
+              </button>
+            </div>
+            
+            <button type="button" (click)="nextMonth()" class="nav-btn" [disabled]="!canGoNextMonth()">›</button>
           </div>
 
           <div class="weekdays">
@@ -106,17 +128,34 @@
             <div class="session-header">
               <span>Các giờ có sẵn</span>
               <div class="legend">
-                <span class="low-availability">🔴 N้อย</span>
+                <span class="low-availability">🔴 Khả Dụng Thấp</span>
                 <span class="best-price">🟣 Giá tốt</span>
               </div>
             </div>
-            <div class="session-buttons">
-              <button type="button" class="session-btn" (click)="selectSession('13:00')">13:00</button>
-              <button type="button" class="session-btn" (click)="selectSession('13:30')">13:30</button>
-              <button type="button" class="session-btn" (click)="selectSession('14:00')">14:00</button>
-              <button type="button" class="session-btn" (click)="selectSession('15:30')">15:30</button>
-              <button type="button" class="session-btn active" (click)="selectSession('16:00')">16:00</button>
-              <button type="button" class="session-btn" (click)="selectSession('16:30')">16:30</button>
+            <div class="session-navigation">
+              <button type="button" 
+                      class="session-nav-btn" 
+                      (click)="prevSession()" 
+                      [disabled]="!canGoPrevSession()">
+                ‹
+              </button>
+              
+              <div class="session-buttons">
+                <button type="button" 
+                        class="session-btn" 
+                        *ngFor="let session of getVisibleSessions()"
+                        (click)="selectSession(session)"
+                        [class.active]="selectedSession === session">
+                  {{ session }}
+                </button>
+              </div>
+              
+              <button type="button" 
+                      class="session-nav-btn" 
+                      (click)="nextSession()" 
+                      [disabled]="!canGoNextSession()">
+                ›
+              </button>
             </div>
           </div>
         </div>

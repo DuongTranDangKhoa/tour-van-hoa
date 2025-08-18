@@ -10,13 +10,19 @@ interface TicketType {
   name: string;
   price: number;
   bookingFee: number;
-  quantity: number; // Thêm quantity
+  quantity: number;
 }
 
 interface CalendarDay {
   day: string;
   availability: 'none' | 'low' | 'best';
   selected?: boolean;
+}
+
+interface MonthOption {
+  value: number;
+  label: string;
+  year: number;
 }
 
 @Component({
@@ -32,9 +38,17 @@ export class BookingDetailComponent implements OnInit {
   isSubmitting = false;
 
   // Calendar data
-  currentMonth = 1;
+  currentMonth = 0;
+  currentYear = new Date().getFullYear();
   selectedDate: Date | null = null;
   selectedSession: string | null = '16:00';
+  
+  // Available months (từ hiện tại đến 2 năm sau)
+  availableMonths: MonthOption[] = [];
+  
+  // Available sessions (từ 7h đến 18h, mỗi giờ cách nhau 30 phút)
+  availableSessions: string[] = [];
+  currentSessionIndex = 18; // Index của 16:00 trong mảng sessions
 
   // Tickets
   tickets: TicketType[] = [
@@ -69,6 +83,8 @@ export class BookingDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.generateAvailableMonths();
+    this.generateAvailableSessions();
     const tourId = this.route.snapshot.paramMap.get('id');
     if (tourId) {
       this.tourService.getTourById(parseInt(tourId)).subscribe(tour => {
@@ -80,8 +96,42 @@ export class BookingDetailComponent implements OnInit {
     }
   }
 
+  generateAvailableMonths(): void {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+    
+    this.availableMonths = [];
+    
+    // Tạo danh sách các tháng từ hiện tại đến 2 năm sau
+    for (let year = currentYear; year <= currentYear + 2; year++) {
+      const startMonth = year === currentYear ? currentMonth : 0;
+      const endMonth = year === currentYear + 2 ? 11 : 11;
+      
+      for (let month = startMonth; month <= endMonth; month++) {
+        this.availableMonths.push({
+          value: month,
+          label: this.getMonthLabel(month, year),
+          year: year
+        });
+      }
+    }
+    
+    // Set tháng hiện tại
+    this.currentMonth = currentMonth;
+    this.currentYear = currentYear;
+  }
+
+  getMonthLabel(month: number, year: number): string {
+    const monthNames = [
+      'THG 1', 'THG 2', 'THG 3', 'THG 4', 'THG 5', 'THG 6',
+      'THG 7', 'THG 8', 'THG 9', 'THG 10', 'THG 11', 'THG 12'
+    ];
+    return `${monthNames[month]} ${year}`;
+  }
+
   generateCalendar(): void {
-    const year = 2025;
+    const year = this.currentYear;
     const month = this.currentMonth;
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
@@ -107,26 +157,63 @@ export class BookingDetailComponent implements OnInit {
     }
   }
 
-  selectMonth(monthIndex: number): void {
+  selectMonth(monthIndex: number, year: number): void {
     this.currentMonth = monthIndex;
+    this.currentYear = year;
     this.generateCalendar();
   }
 
   prevMonth(): void {
-    this.currentMonth = (this.currentMonth - 1 + 3) % 3;
-    this.generateCalendar();
+    const currentIndex = this.availableMonths.findIndex(m => 
+      m.value === this.currentMonth && m.year === this.currentYear
+    );
+    
+    if (currentIndex > 0) {
+      const prevMonth = this.availableMonths[currentIndex - 1];
+      this.currentMonth = prevMonth.value;
+      this.currentYear = prevMonth.year;
+      this.generateCalendar();
+    }
   }
 
   nextMonth(): void {
-    this.currentMonth = (this.currentMonth + 1) % 3;
-    this.generateCalendar();
+    const currentIndex = this.availableMonths.findIndex(m => 
+      m.value === this.currentMonth && m.year === this.currentYear
+    );
+    
+    if (currentIndex < this.availableMonths.length - 1) {
+      const nextMonth = this.availableMonths[currentIndex + 1];
+      this.currentMonth = nextMonth.value;
+      this.currentYear = nextMonth.year;
+      this.generateCalendar();
+    }
+  }
+
+  canGoPrevMonth(): boolean {
+    const currentIndex = this.availableMonths.findIndex(m => 
+      m.value === this.currentMonth && m.year === this.currentYear
+    );
+    return currentIndex > 0;
+  }
+
+  canGoNextMonth(): boolean {
+    const currentIndex = this.availableMonths.findIndex(m => 
+      m.value === this.currentMonth && m.year === this.currentYear
+    );
+    return currentIndex < this.availableMonths.length - 1;
+  }
+
+  getCurrentIndex(): number {
+    return this.availableMonths.findIndex(m => 
+      m.value === this.currentMonth && m.year === this.currentYear
+    );
   }
 
   selectDate(day: CalendarDay): void {
     if (day.day) {
       this.days.forEach(d => d.selected = false);
       day.selected = true;
-      this.selectedDate = new Date(2025, this.currentMonth, parseInt(day.day));
+      this.selectedDate = new Date(this.currentYear, this.currentMonth, parseInt(day.day));
     }
   }
 
@@ -175,5 +262,53 @@ export class BookingDetailComponent implements OnInit {
       this.isSubmitting = false;
       alert('Đặt tour thành công!');
     }
+  }
+
+  generateAvailableSessions(): void {
+    this.availableSessions = [];
+    
+    // Tạo sessions từ 7:00 đến 18:00, mỗi giờ cách nhau 30 phút
+    for (let hour = 7; hour <= 18; hour++) {
+      // Giờ chẵn (7:00, 8:00, 9:00, ...)
+      this.availableSessions.push(`${hour.toString().padStart(2, '0')}:00`);
+      
+      // Giờ lẻ (7:30, 8:30, 9:30, ...) - trừ 18:30
+      if (hour < 18) {
+        this.availableSessions.push(`${hour.toString().padStart(2, '0')}:30`);
+      }
+    }
+    
+    // Set session mặc định là 16:00
+    this.selectedSession = '16:00';
+    this.currentSessionIndex = this.availableSessions.indexOf('16:00');
+  }
+
+  canGoPrevSession(): boolean {
+    return this.currentSessionIndex > 0;
+  }
+
+  canGoNextSession(): boolean {
+    return this.currentSessionIndex < this.availableSessions.length - 1;
+  }
+
+  prevSession(): void {
+    if (this.canGoPrevSession()) {
+      this.currentSessionIndex--;
+      this.selectedSession = this.availableSessions[this.currentSessionIndex];
+    }
+  }
+
+  nextSession(): void {
+    if (this.canGoNextSession()) {
+      this.currentSessionIndex++;
+      this.selectedSession = this.availableSessions[this.currentSessionIndex];
+    }
+  }
+
+  getVisibleSessions(): string[] {
+    // Hiển thị 6 sessions xung quanh session hiện tại
+    const startIndex = Math.max(0, this.currentSessionIndex - 2);
+    const endIndex = Math.min(this.availableSessions.length, startIndex + 6);
+    return this.availableSessions.slice(startIndex, endIndex);
   }
 }
