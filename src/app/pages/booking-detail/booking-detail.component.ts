@@ -18,6 +18,7 @@ interface CalendarDay {
   availability: 'none' | 'low' | 'best';
   selected?: boolean;
   price?: number;
+  disabled?: boolean;
 }
 
 interface MonthOption {
@@ -145,17 +146,25 @@ export class BookingDetailComponent implements OnInit {
       this.days.push({ day: '', availability: 'none' });
     }
 
+    // Lấy ngày hiện tại để so sánh
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Reset giờ về 00:00:00 để so sánh chính xác
+
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
       const isWeekend = date.getDay() === 0 || date.getDay() === 6;
       const availability = Math.random() > 0.3 ? 'best' : 'low';
       const price = Math.floor(50 + Math.random() * 50); // Random price for demo
+      
+      // Kiểm tra xem ngày này đã qua chưa
+      const isPastDate = date < today;
 
       this.days.push({
         day: day.toString(),
         availability: availability,
         selected: false,
-        price: price
+        price: price,
+        disabled: isPastDate
       });
     }
   }
@@ -213,7 +222,7 @@ export class BookingDetailComponent implements OnInit {
   }
 
   selectDate(day: CalendarDay): void {
-    if (day.day) {
+    if (day.day && !day.disabled) {
       this.days.forEach(d => d.selected = false);
       day.selected = true;
       this.selectedDate = new Date(this.currentYear, this.currentMonth, parseInt(day.day));

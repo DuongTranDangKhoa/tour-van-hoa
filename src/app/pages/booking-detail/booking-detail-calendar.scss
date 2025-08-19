@@ -113,6 +113,30 @@
 
       &:hover { border-color: #1e88e5; background: #e6f2ff; }
       &.selected { background: #e6f2ff; border-color: #1e88e5; box-shadow: inset 0 0 0 2px #1e88e5; }
+      
+      &.disabled {
+        background: transparent;
+        border: none;
+        cursor: not-allowed;
+        opacity: 0.6;
+        
+        &:hover {
+          border: none;
+          background: transparent;
+        }
+        
+        .day-number {
+          color: #999;
+        }
+        
+        .day-price {
+          color: #ccc;
+        }
+        
+        .bottom-indicator {
+          display: none;
+        }
+      }
 
       .corner-ribbon {
         position: absolute;

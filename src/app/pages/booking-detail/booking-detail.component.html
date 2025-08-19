@@ -119,10 +119,11 @@
                  [class.low-availability]="day.availability === 'low'"
                  [class.best-price]="day.availability === 'best'"
                  [class.empty]="!day.day"
+                 [class.disabled]="day.disabled"
                  (click)="selectDate(day)">
               <div class="corner-ribbon" *ngIf="day.selected"></div>
               <div class="day-number">{{ day.day }}</div>
-              <div class="day-price" *ngIf="day.day">${{ day.price }}</div>
+              <div class="day-price" *ngIf="day.day && !day.disabled">${{ day.price }}</div>
               <div class="bottom-indicator"></div>
             </div>
           </div>
