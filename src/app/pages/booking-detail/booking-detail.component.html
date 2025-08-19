@@ -79,10 +79,10 @@
             <!-- Hiển thị 3 tháng: prev, current, next -->
             <div class="month-buttons">
               <button type="button" 
-                      (click)="selectMonth(availableMonths[getCurrentIndex() - 1]?.value || 0, availableMonths[getCurrentIndex() - 1]?.year || currentYear)" 
+                      (click)="selectMonth(availableMonths[getCurrentIndex() - 1].value || 0, availableMonths[getCurrentIndex() - 1].year || currentYear)" 
                       [disabled]="!canGoPrevMonth()"
                       class="month-btn">
-                {{ canGoPrevMonth() ? availableMonths[getCurrentIndex() - 1]?.label : '---' }}
+                {{ canGoPrevMonth() ? availableMonths[getCurrentIndex() - 1].label : '---' }}
               </button>
               
               <button type="button" 
@@ -93,10 +93,10 @@
               </button>
               
               <button type="button" 
-                      (click)="selectMonth(availableMonths[getCurrentIndex() + 1]?.value || 0, availableMonths[getCurrentIndex() + 1]?.year || currentYear)" 
+                      (click)="selectMonth(availableMonths[getCurrentIndex() + 1].value || 0, availableMonths[getCurrentIndex() + 1].year || currentYear)" 
                       [disabled]="!canGoNextMonth()"
                       class="month-btn">
-                {{ canGoNextMonth() ? availableMonths[getCurrentIndex() + 1]?.label : '---' }}
+                {{ canGoNextMonth() ? availableMonths[getCurrentIndex() + 1].label : '---' }}
               </button>
             </div>
             
