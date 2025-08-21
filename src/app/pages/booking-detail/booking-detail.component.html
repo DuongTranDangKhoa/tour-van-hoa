@@ -2,24 +2,27 @@
   <!-- Phần trên: Hình ảnh tour -->
   <div class="tour-hero-section" *ngIf="tour">
     <div class="media-section">
-      <div class="main-image">
+      <!-- Left section - 50% -->
+      <div class="main-image-section">
         <img [src]="tour.imageUrl" [alt]="tour.name" class="hero-image">
         <button class="play-button">
           <i class="icon">▶️</i>
         </button>
       </div>
-      <div class="image-grid">
+      
+      <!-- Right section - 50% divided into 4 equal parts -->
+      <div class="image-grid-section">
         <div class="grid-item">
           <img [src]="tour.imageUrl" [alt]="tour.name">
           <div class="overlay-text">Tour Văn Hóa presents</div>
         </div>
-        <div class="grid-item">
+        <div class="grid-item top-right-border">
           <img [src]="tour.imageUrl" [alt]="tour.name">
         </div>
         <div class="grid-item">
           <img [src]="tour.imageUrl" [alt]="tour.name">
         </div>
-        <div class="grid-item">
+        <div class="grid-item bot-right-border">
           <img [src]="tour.imageUrl" [alt]="tour.name">
           <div class="gallery-btn">
             <i class="icon">📷</i>
@@ -65,6 +68,74 @@
         <h2>Chương trình tour</h2>
         <p>Chi tiết chương trình tour sẽ được cung cấp khi xác nhận đặt chỗ.</p>
       </div>
+      <div class="user-reviews-section">
+        <h2>User reviews</h2>
+        <div class="reviews-header">
+          <div class="score">
+            <span class="score-value">4.8</span><span class="score-out-of">/5</span>
+          </div>
+          <div class="stars" aria-label="rating 5 stars">
+            <i class="star">★</i>
+            <i class="star">★</i>
+            <i class="star">★</i>
+            <i class="star">★</i>
+            <i class="star">★</i>
+          </div>
+          <div class="based-on">based on 29 reviews</div>
+        </div>
+
+        <div class="reviews-list">
+          <div class="review-card">
+            <div class="review-card-header">
+              <div class="reviewer">Maechel D.</div>
+              <div class="date">Jul 2025</div>
+              <div class="stars small">
+                <i>★</i><i>★</i><i>★</i><i>★</i><i>★</i>
+              </div>
+            </div>
+            <div class="review-text">
+              Its magical and really breathless. The musical had really enjoying music, hope the time is more than one hour..
+            </div>
+          </div>
+
+          <div class="review-card">
+            <div class="review-card-header">
+              <div class="reviewer">Alexandr...</div>
+              <div class="date">Jul 2025</div>
+              <div class="stars small">
+                <i>★</i><i>★</i><i>★</i><i>★</i><i>★</i>
+              </div>
+            </div>
+            <div class="review-text">
+              Very good and well organized. Great place and good music always match well.
+            </div>
+          </div>
+
+          <div class="review-card">
+            <div class="review-card-header">
+              <div class="reviewer">Jun 2025</div>
+              <div class="date">—</div>
+              <div class="stars small">
+                <i>★</i><i>★</i><i>★</i><i>★</i><i>★</i>
+              </div>
+            </div>
+            <div class="review-text">
+              It was one of the most beautiful string concerts that I have ever gone to.
+            </div>
+          </div>
+        </div>
+
+        <div class="reviews-actions">
+          <button type="button" class="view-all">View all reviews</button>
+        </div>
+      </div>
+      <div class="map-section">
+        <h2>Bản đồ</h2>
+        <div class="map-embed">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d236225.41396791287!2d103.74160180208737!3d22.315004187869228!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x36cd40a503ec6395%3A0x49032814dedb2fb8!2zU2EgUGEsIEzDoG8gQ2FpLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1755762959879!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+      
     </div>
 
     <!-- Right Panel: Booking Widget - feverup style -->
