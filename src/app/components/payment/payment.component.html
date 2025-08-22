@@ -1,0 +1,358 @@
+<!-- src/app/components/payment/payment.component.html -->
+<div class="booking-checkout-container">
+  <!-- Header -->
+  <div class="checkout-header">
+    <div class="logo">
+      <h2>GET YOUR GUIDE</h2>
+    </div>
+    
+    <div class="progress-steps">
+      <div class="step completed">
+        <span class="step-number">1</span>
+        <span class="step-label">Ẩm thực</span>
+      </div>
+      <div class="step completed">
+        <span class="step-number">2</span>
+        <span class="step-label">Thông tin</span>
+      </div>
+      <div class="step active">
+        <span class="step-number">3</span>
+        <span class="step-label">Thanh toán</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkout-content">
+    <!-- Left Column - Payment Form -->
+    <div class="form-section">
+      <!-- Timer Warning -->
+      <div class="timer-warning">
+        <i class="fas fa-clock"></i>
+        <span>Chúng tôi sẽ giữ chỗ cho bạn trong <strong>{{ formatTime(timeLeft) }} phút</strong></span>
+      </div>
+
+      <!-- Security Badge -->
+      <div class="security-badge">
+        <i class="fas fa-shield-alt"></i>
+        <span>Thanh toán nhanh chóng và bảo mật</span>
+      </div>
+
+      <!-- Payment Form -->
+      <form [formGroup]="paymentForm" class="payment-form">
+        <h2>Hoàn tất đặt chỗ của bạn</h2>
+        
+        <!-- Payment Methods -->
+        <div class="payment-methods-section">
+          <h3>Chọn phương thức thanh toán</h3>
+          
+          <div class="payment-methods">
+            <div 
+              *ngFor="let method of paymentMethods" 
+              class="payment-method"
+              [class.active]="selectedPaymentMethod === method.id"
+              (click)="selectPaymentMethod(method.id)"
+            >
+              <div class="method-icon">
+                <i [class]="method.icon"></i>
+              </div>
+              <div class="method-info">
+                <div class="method-name">{{ method.name }}</div>
+                <div class="method-description">{{ method.description }}</div>
+              </div>
+              <div class="method-radio">
+                <input 
+                  type="radio" 
+                  [value]="method.id" 
+                  formControlName="paymentMethod"
+                  [id]="'payment-' + method.id"
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Credit Card Details (shown when card method is selected) -->
+        <div *ngIf="selectedPaymentMethod === 'card'" class="card-details-section">
+          <h3>Chi tiết thẻ</h3>
+          
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="cardNumber">Số thẻ *</label>
+              <input 
+                id="cardNumber"
+                type="text" 
+                formControlName="cardNumber"
+                placeholder="1234 5678 9012 3456"
+                (input)="formatCardNumber($event)"
+                [class.error]="isFieldInvalid('cardNumber')"
+              >
+              <div class="field-error" *ngIf="getFieldError('cardNumber')">
+                {{ getFieldError('cardNumber') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group half-width">
+              <label for="expiryDate">Ngày hết hạn *</label>
+              <input 
+                id="expiryDate"
+                type="text" 
+                formControlName="expiryDate"
+                placeholder="MM/YY"
+                maxlength="5"
+                (input)="formatExpiryDate($event)"
+                [class.error]="isFieldInvalid('expiryDate')"
+              >
+              <div class="field-error" *ngIf="getFieldError('expiryDate')">
+                {{ getFieldError('expiryDate') }}
+              </div>
+            </div>
+            
+            <div class="form-group half-width">
+              <label for="cvv">CVV *</label>
+              <input 
+                id="cvv"
+                type="text" 
+                formControlName="cvv"
+                placeholder="123"
+                maxlength="4"
+                [class.error]="isFieldInvalid('cvv')"
+              >
+              <div class="field-error" *ngIf="getFieldError('cvv')">
+                {{ getFieldError('cvv') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="cardholderName">Tên chủ thẻ *</label>
+              <input 
+                id="cardholderName"
+                type="text" 
+                formControlName="cardholderName"
+                placeholder="Nguyen Van A"
+                [class.error]="isFieldInvalid('cardholderName')"
+              >
+              <div class="field-error" *ngIf="getFieldError('cardholderName')">
+                {{ getFieldError('cardholderName') }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alternative Payment Methods Info -->
+        <div *ngIf="selectedPaymentMethod !== 'card'" class="alternative-payment-info">
+          <div class="info-box">
+            <i class="fas fa-info-circle"></i>
+            <div>
+              <strong>Hướng dẫn thanh toán</strong>
+              <p *ngIf="selectedPaymentMethod === 'momo'">
+                Bạn sẽ được chuyển hướng đến ví MoMo để hoàn tất thanh toán.
+              </p>
+              <p *ngIf="selectedPaymentMethod === 'banking'">
+                Thông tin chuyển khoản sẽ được gửi qua email sau khi xác nhận đặt chỗ.
+              </p>
+              <p *ngIf="selectedPaymentMethod === 'paypal'">
+                Bạn sẽ được chuyển hướng đến PayPal để hoàn tất thanh toán.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Billing Address -->
+        <div *ngIf="selectedPaymentMethod === 'card'" class="billing-section">
+          <h3>Địa chỉ thanh toán</h3>
+          
+          <div class="form-row">
+            <div class="form-group full-width">
+              <label for="billingAddress">Địa chỉ *</label>
+              <input 
+                id="billingAddress"
+                type="text" 
+                formControlName="billingAddress"
+                placeholder="123 Đường ABC"
+                [class.error]="isFieldInvalid('billingAddress')"
+              >
+              <div class="field-error" *ngIf="getFieldError('billingAddress')">
+                {{ getFieldError('billingAddress') }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group half-width">
+              <label for="billingCity">Thành phố *</label>
+              <input 
+                id="billingCity"
+                type="text" 
+                formControlName="billingCity"
+                placeholder="Hồ Chí Minh"
+                [class.error]="isFieldInvalid('billingCity')"
+              >
+              <div class="field-error" *ngIf="getFieldError('billingCity')">
+                {{ getFieldError('billingCity') }}
+              </div>
+            </div>
+            
+            <div class="form-group half-width">
+              <label for="billingZip">Mã bưu điện *</label>
+              <input 
+                id="billingZip"
+                type="text" 
+                formControlName="billingZip"
+                placeholder="700000"
+                [class.error]="isFieldInvalid('billingZip')"
+              >
+              <div class="field-error" *ngIf="getFieldError('billingZip')">
+                {{ getFieldError('billingZip') }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div class="terms-section">
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input 
+                type="checkbox" 
+                formControlName="agreeTerms"
+                [class.error]="isFieldInvalid('agreeTerms')"
+              >
+              <span class="checkbox-custom"></span>
+              <span class="checkbox-text">
+                Tôi đồng ý với <a href="#" target="_blank">Điều khoản & Điều kiện</a> và 
+                <a href="#" target="_blank">Chính sách hủy bỏ</a> *
+              </span>
+            </label>
+            <div class="field-error" *ngIf="getFieldError('agreeTerms')">
+              {{ getFieldError('agreeTerms') }}
+            </div>
+          </div>
+
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input 
+                type="checkbox" 
+                formControlName="agreePrivacy"
+                [class.error]="isFieldInvalid('agreePrivacy')"
+              >
+              <span class="checkbox-custom"></span>
+              <span class="checkbox-text">
+                Tôi đồng ý với <a href="#" target="_blank">Chính sách bảo mật</a> *
+              </span>
+            </label>
+            <div class="field-error" *ngIf="getFieldError('agreePrivacy')">
+              {{ getFieldError('agreePrivacy') }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" (click)="onBack()">
+            <i class="fas fa-arrow-left"></i>
+            Quay lại
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-primary" 
+            (click)="onSubmit()"
+            [disabled]="paymentForm.invalid"
+          >
+            Hoàn tất đặt chỗ
+            <span class="amount">{{ formatCurrency(calculateTotal()) }}</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right Column - Order Summary -->
+    <div class="order-summary">
+      <div class="summary-card">
+        <h3>Tóm tắt đơn hàng</h3>
+        
+        <div class="tour-summary" *ngIf="tour">
+          <img [src]="tour.imageUrl" [alt]="tour.name" class="tour-image">
+          <div class="tour-info">
+            <h4>{{ tour.name }}</h4>
+            <div class="rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-text">{{ tour.rating }} ({{ tour.maxGroupSize }})</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customer Info Summary -->
+        <div class="customer-summary" *ngIf="customerData">
+          <h4>Thông tin liên hệ</h4>
+          <div class="customer-info">
+            <div class="info-row">
+              <span class="label">Tên:</span>
+              <span class="value">{{ customerData.fullName }}</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Email:</span>
+              <span class="value">{{ customerData.email }}</span>
+            </div>
+            <div class="info-row">
+              <span class="label">Điện thoại:</span>
+              <span class="value">{{ customerData.country }} {{ customerData.phone }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dietary Summary -->
+        <div class="dietary-summary" *ngIf="dietaryData">
+          <h4>Sở thích ẩm thực</h4>
+          <div class="dietary-info">
+            <div class="info-row">
+              <span class="label">Loại:</span>
+              <span class="value">
+                {{ dietaryData.dietaryType === 'meat' ? 'Ăn mặc' : 'Ăn chay' }}
+              </span>
+            </div>
+            <div class="info-row" *ngIf="dietaryData.allergies && dietaryData.allergies.length > 0">
+              <span class="label">Dị ứng:</span>
+              <span class="value">{{ dietaryData.allergies.join(', ') }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Price Breakdown -->
+        <div class="price-breakdown">
+          <div class="price-row">
+            <span class="label">Giá tour</span>
+            <span class="value">{{ formatCurrency(getSubtotal()) }}</span>
+          </div>
+          <div class="price-row">
+            <span class="label">Phí dịch vụ</span>
+            <span class="value">{{ formatCurrency(getServiceFee()) }}</span>
+          </div>
+          <div class="price-row">
+            <span class="label">Thuế</span>
+            <span class="value">{{ formatCurrency(getTaxes()) }}</span>
+          </div>
+          <div class="price-row total">
+            <span class="label">Tổng cộng</span>
+            <span class="value">{{ formatCurrency(calculateTotal()) }}</span>
+          </div>
+        </div>
+
+        <!-- Security Info -->
+        <div class="security-info">
+          <div class="security-item">
+            <i class="fas fa-shield-alt"></i>
+            <span>Thanh toán an toàn với mã hóa SSL</span>
+          </div>
+          <div class="security-item">
+            <i class="fas fa-calendar-times"></i>
+            <span>Hủy miễn phí đến 24 giờ trước</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

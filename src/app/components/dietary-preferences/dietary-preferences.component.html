@@ -1,0 +1,222 @@
+<!-- src/app/components/dietary-preferences/dietary-preferences.component.html -->
+<style>
+  .checkout-header {
+    /* Giữ cố định header ở đầu trang khi cuộn */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: white; /* Đảm bảo header có nền */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Thêm bóng mờ để tách biệt */
+
+    /* Căn giữa các bước tiến trình */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
+  }
+</style>
+<div class="booking-checkout-container">
+  <!-- Header -->
+  <div class="checkout-header">
+    <div class="progress-steps">
+      <div class="step active">
+        <span class="step-number">1</span>
+        <span class="step-label">Ẩm thực</span>
+      </div>
+      <div class="step">
+        <span class="step-number">2</span>
+        <span class="step-label">Thông tin</span>
+      </div>
+      <div class="step">
+        <span class="step-number">3</span>
+        <span class="step-label">Thanh toán</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkout-content">
+    <!-- Left Column - Form -->
+    <div class="form-section">
+      <!-- Timer Warning -->
+      <div class="timer-warning">
+        <i class="fas fa-clock"></i>
+        <span>Chúng tôi sẽ giữ chỗ cho bạn trong <strong>{{ formatTime(timeLeft) }} phút</strong></span>
+      </div>
+
+      <!-- Security Badge -->
+      <div class="security-badge">
+        <i class="fas fa-shield-alt"></i>
+        <span>Thanh toán nhanh chóng và bảo mật</span>
+      </div>
+
+      <!-- Tour Info -->
+      <div class="tour-info-brief" *ngIf="tour">
+        <img [src]="tour.imageUrl" [alt]="tour.name" class="tour-thumbnail">
+        <div class="tour-details">
+          <h3>{{ tour.name }}</h3>
+          <p>{{ tour.duration }}</p>
+        </div>
+      </div>
+
+      <!-- Dietary Preferences Form -->
+      <form [formGroup]="dietaryForm" class="dietary-form">
+        <h2>Bạn có biết nơi bạn muốn được đón không?</h2>
+        
+        <!-- Dietary Type Selection -->
+        <div class="dietary-type-section">
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" formControlName="dietaryType" value="meat">
+              <span class="radio-custom"></span>
+              <span class="radio-label">Ăn mặc (bao gồm thịt, cá)</span>
+            </label>
+            
+            <label class="radio-option">
+              <input type="radio" formControlName="dietaryType" value="vegetarian">
+              <span class="radio-custom"></span>
+              <span class="radio-label">Ăn chay (không thịt, cá)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Allergies Section -->
+        <div class="allergies-section">
+          <h3>Bạn có dị ứng với món ăn nào không? (Chọn tất cả các loại thức ăn bạn dị ứng)</h3>
+          
+          <div class="allergies-grid">
+            <label 
+              *ngFor="let allergy of commonAllergies; let i = index" 
+              class="allergy-checkbox"
+              [class.checked]="getAllergyControlAt(i).value"
+            >
+              <input 
+                type="checkbox" 
+                [formControl]="getAllergyControlAt(i)"
+              >
+              <span class="checkbox-custom">
+                <i class="fas fa-check"></i>
+              </span>
+              <span class="allergy-name">{{ allergy }}</span>
+            </label>
+          </div>
+
+          <!-- Add Custom Allergy -->
+          <div class="custom-allergy-input">
+            <div class="input-group">
+              <input 
+                type="text"
+                formControlName="customAllergy"
+                placeholder="Thêm dị ứng khác..."
+                class="custom-input"
+              >
+              <button 
+                type="button"
+                (click)="addCustomAllergy()"
+                class="add-btn"
+                [disabled]="!dietaryForm.get('customAllergy')?.value?.trim()"
+              >
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Additional Notes -->
+        <div class="notes-section">
+          <label for="additionalNotes">Ghi chú thêm về ẩm thực (không bắt buộc)</label>
+          <textarea 
+            id="additionalNotes"
+            formControlName="additionalNotes"
+            placeholder="Ví dụ: Không ăn được đồ cay, thích món ngọt..."
+            rows="3"
+          ></textarea>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" (click)="onBack()">
+            <i class="fas fa-arrow-left"></i>
+            Quay lại
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-primary" 
+            (click)="onNext()"
+            [disabled]="dietaryForm.invalid"
+          >
+            Tiếp theo: Thông tin cá nhân
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right Column - Order Summary -->
+    <div class="order-summary">
+      <div class="summary-card">
+        <h3>Tóm tắt đơn hàng</h3>
+        
+        <div class="tour-summary" *ngIf="tour">
+          <img [src]="tour.imageUrl" [alt]="tour.name" class="tour-image">
+          <div class="tour-info">
+            <h4>{{ tour.name }}</h4>
+            <div class="rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-text">{{ tour.rating }} ({{ tour.maxGroupSize }})</span>
+            </div>
+            <div class="urgency-notice">
+              <i class="fas fa-exclamation-circle"></i>
+              <span>Chỉ còn 8 giờ để đặt</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-details">
+          <div class="detail-row">
+            <i class="fas fa-user-friends"></i>
+            <span>Tour riêng • Ngôn ngữ: Tiếng Việt</span>
+          </div>
+          <div class="detail-row">
+            <i class="fas fa-calendar"></i>
+            <span>Thứ 6, 22 tháng 8, 2025 lúc 17:30</span>
+          </div>
+          <div class="detail-row">
+            <i class="fas fa-user"></i>
+            <span>1 người lớn (0 - 99 tuổi)</span>
+          </div>
+          <div class="detail-row change-link">
+            <i class="fas fa-edit"></i>
+            <a href="#">Thay đổi ngày hoặc số người tham gia</a>
+          </div>
+        </div>
+
+        <div class="pricing-section">
+          <div class="free-cancellation">
+            <i class="fas fa-calendar-times"></i>
+            <div>
+              <strong>Hủy miễn phí</strong>
+              <small>Đến 17:30 ngày 21 tháng 8</small>
+            </div>
+          </div>
+
+          <div class="promo-section">
+            <button class="promo-btn">
+              <i class="fas fa-tag"></i>
+              Nhập mã khuyến mãi, tín dụng hoặc thẻ quà tặng
+            </button>
+          </div>
+
+          <div class="total-section">
+            <div class="total-row">
+              <span class="total-label">Tổng cộng</span>
+              <div class="total-amount">
+                <span class="amount">₫3.865.400</span>
+                <small>Đã bao gồm tất cả thuế và phí</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

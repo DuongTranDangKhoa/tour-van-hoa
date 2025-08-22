@@ -1,0 +1,239 @@
+<!-- src/app/components/customer-details/customer-details.component.html -->
+<div class="booking-checkout-container">
+  <!-- Header -->
+  <div class="checkout-header">
+    <div class="logo">
+      <h2>GET YOUR GUIDE</h2>
+    </div>
+    
+    <div class="progress-steps">
+      <div class="step completed">
+        <span class="step-number">✓</span>
+        <span class="step-label">Ẩm thực</span>
+      </div>
+      <div class="step active">
+        <span class="step-number">2</span>
+        <span class="step-label">Thông tin</span>
+      </div>
+      <div class="step">
+        <span class="step-number">3</span>
+        <span class="step-label">Thanh toán</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkout-content">
+    <!-- Left Column - Form -->
+    <div class="form-section">
+      <!-- Timer Warning -->
+      <div class="timer-warning">
+        <i class="fas fa-clock"></i>
+        <span>Chúng tôi sẽ giữ chỗ cho bạn trong <strong>{{ formatTime(timeLeft) }} phút</strong></span>
+      </div>
+
+      <!-- Security Badge -->
+      <div class="security-badge">
+        <i class="fas fa-shield-alt"></i>
+        <span>Thanh toán nhanh chóng và bảo mật</span>
+      </div>
+
+      <!-- Customer Details Form -->
+      <form [formGroup]="customerForm" class="customer-form">
+        <h2>Nhập thông tin cá nhân của bạn</h2>
+        
+        <!-- Required Fields Notice -->
+        <p class="required-notice">
+          <span class="required-asterisk">*</span> Các trường bắt buộc
+        </p>
+
+        <!-- Full Name Field -->
+        <div class="form-group">
+          <label for="fullName">
+            Họ và tên<span class="required-asterisk">*</span>
+          </label>
+          <input 
+            type="text"
+            id="fullName"
+            formControlName="fullName"
+            [class.error]="getFieldError('fullName')"
+            placeholder="Duy Phan"
+          >
+          <div class="success-indicator" *ngIf="customerForm.get('fullName')?.valid && customerForm.get('fullName')?.touched">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="error-message" *ngIf="getFieldError('fullName')">
+            {{ getFieldError('fullName') }}
+          </div>
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email">
+            Email<span class="required-asterisk">*</span>
+          </label>
+          <input 
+            type="email"
+            id="email"
+            formControlName="email"
+            [class.error]="getFieldError('email')"
+            placeholder="duyphan.nit@gmail.com"
+          >
+          <div class="success-indicator" *ngIf="customerForm.get('email')?.valid && customerForm.get('email')?.touched">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="error-message" *ngIf="getFieldError('email')">
+            {{ getFieldError('email') }}
+          </div>
+        </div>
+
+        <!-- Country Field -->
+        <div class="form-group">
+          <label for="country">
+            Quốc gia<span class="required-asterisk">*</span>
+          </label>
+          <select 
+            id="country"
+            formControlName="country"
+            [class.error]="getFieldError('country')"
+          >
+            <option *ngFor="let country of countries" [value]="country.code">
+              {{ country.flag }} {{ country.name }} ({{ country.code }})
+            </option>
+          </select>
+          <div class="success-indicator" *ngIf="customerForm.get('country')?.valid">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="error-message" *ngIf="getFieldError('country')">
+            {{ getFieldError('country') }}
+          </div>
+        </div>
+
+        <!-- Mobile Phone Field -->
+        <div class="form-group">
+          <label for="phone">
+            Số điện thoại di động<span class="required-asterisk">*</span>
+          </label>
+          <input 
+            type="tel"
+            id="phone"
+            formControlName="phone"
+            [class.error]="getFieldError('phone')"
+            placeholder="0903 102 269"
+          >
+          <div class="success-indicator" *ngIf="customerForm.get('phone')?.valid && customerForm.get('phone')?.touched">
+            <i class="fas fa-check"></i>
+          </div>
+          <div class="error-message" *ngIf="getFieldError('phone')">
+            {{ getFieldError('phone') }}
+          </div>
+          <p class="field-help">
+            Chúng tôi sẽ chỉ liên hệ với bạn qua các cập nhật quan trọng hoặc thay đổi về đặt chỗ của bạn
+          </p>
+        </div>
+
+        <!-- Marketing Consent -->
+        <div class="consent-section">
+          <p class="consent-intro">
+            Đôi khi bạn có thể nhận được email khuyến mãi từ chúng tôi liên quan đến các hoạt động đã đặt hoặc các dịch vụ khác của GetYourGuide. 
+            Chọn không tham gia bằng cách nhấp vào
+            <a href="#" class="link">đây</a> hoặc bất kỳ lúc nào, như được nêu chi tiết trong
+            <a href="#" class="link">Chính sách Bảo mật</a> của chúng tôi.
+          </p>
+
+          <label class="consent-checkbox">
+            <input type="checkbox" formControlName="marketingConsent">
+            <span class="checkbox-custom">
+              <i class="fas fa-check"></i>
+            </span>
+            <span class="consent-text">Đăng ký nhận tin</span>
+          </label>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" (click)="onBack()">
+            <i class="fas fa-arrow-left"></i>
+            Quay lại
+          </button>
+          <button 
+            type="button" 
+            class="btn btn-primary" 
+            (click)="onNext()"
+            [disabled]="customerForm.invalid"
+          >
+            Đi tới thanh toán
+            <i class="fas fa-arrow-right"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right Column - Order Summary -->
+    <div class="order-summary">
+      <div class="summary-card">
+        <h3>Tóm tắt đơn hàng</h3>
+        
+        <div class="tour-summary" *ngIf="tour">
+          <img [src]="tour.imageUrl" [alt]="tour.name" class="tour-image">
+          <div class="tour-info">
+            <h4>{{ tour.name }}</h4>
+            <div class="rating">
+              <span class="stars">★★★★☆</span>
+              <span class="rating-text">{{ tour.rating }} ({{ tour.maxGroupSize }})</span>
+            </div>
+            <div class="urgency-notice">
+              <i class="fas fa-exclamation-circle"></i>
+              <span>Chỉ còn 8 giờ để đặt</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-details">
+          <div class="detail-row">
+            <i class="fas fa-user-friends"></i>
+            <span>Tour riêng • Ngôn ngữ: Tiếng Việt</span>
+          </div>
+          <div class="detail-row">
+            <i class="fas fa-calendar"></i>
+            <span>Thứ 6, 22 tháng 8, 2025 lúc 17:30</span>
+          </div>
+          <div class="detail-row">
+            <i class="fas fa-user"></i>
+            <span>1 người lớn (0 - 99 tuổi)</span>
+          </div>
+          <div class="detail-row change-link">
+            <i class="fas fa-edit"></i>
+            <a href="#">Thay đổi ngày hoặc số người tham gia</a>
+          </div>
+        </div>
+
+        <div class="pricing-section">
+          <div class="free-cancellation">
+            <i class="fas fa-calendar-times"></i>
+            <div>
+              <strong>Hủy miễn phí</strong>
+              <small>Đến 17:30 ngày 21 tháng 8</small>
+            </div>
+          </div>
+
+          <div class="promo-section">
+            <button class="promo-btn">
+              <i class="fas fa-tag"></i>
+              Nhập mã khuyến mãi, tín dụng hoặc thẻ quà tặng
+            </button>
+          </div>
+
+          <div class="total-section">
+            <div class="total-row">
+              <span class="total-label">Tổng cộng</span>
+              <div class="total-amount">
+                <span class="amount">₫3.865.400</span>
+                <small>Đã bao gồm tất cả thuế và phí</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

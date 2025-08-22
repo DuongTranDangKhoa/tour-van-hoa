@@ -1,0 +1,780 @@
+// src/app/components/dietary-preferences/dietary-preferences.component.scss
+.booking-checkout-container {
+  min-height: 100vh;
+  background: #f8f9fa;
+
+  .checkout-header {
+    background: white;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+    .logo h2 {
+      color: #ff6b6b;
+      font-weight: 700;
+      margin: 0;
+      font-size: 1.5rem;
+    }
+
+    .progress-steps {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+
+      .step {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #6c757d;
+        position: relative;
+
+        &.active {
+          color: #007bff;
+          font-weight: 600;
+
+          .step-number {
+            background: #007bff;
+            color: white;
+          }
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          right: -1.5rem;
+          width: 1rem;
+          height: 2px;
+          background: #dee2e6;
+        }
+
+        &:last-child::after {
+          display: none;
+        }
+
+        .step-number {
+          width: 2rem;
+          height: 2rem;
+          border-radius: 50%;
+          background: #dee2e6;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 600;
+          font-size: 0.9rem;
+        }
+
+        .step-label {
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+
+  .checkout-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+
+    @media (max-width: 968px) {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+    }
+  }
+
+  .form-section {
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+
+    .timer-warning {
+      background: #fff3cd;
+      border: 1px solid #ffeaa7;
+      color: #856404;
+      padding: 1rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+
+      i {
+        font-size: 1.1rem;
+      }
+    }
+
+    .security-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #28a745;
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+
+      i {
+        font-size: 1rem;
+      }
+    }
+
+    .tour-info-brief {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+
+      .tour-thumbnail {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 8px;
+      }
+
+      .tour-details h3 {
+        margin: 0 0 0.25rem;
+        font-size: 1rem;
+        color: #333;
+      }
+
+      .tour-details p {
+        margin: 0;
+        color: #666;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .dietary-form {
+    h2 {
+      color: #333;
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+    }
+
+    .dietary-type-section {
+      margin-bottom: 2.5rem;
+
+      .radio-group {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .radio-option {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          cursor: pointer;
+          padding: 0.75rem;
+          border: 2px solid #e9ecef;
+          border-radius: 8px;
+          transition: all 0.2s ease;
+
+          &:hover {
+            border-color: #007bff;
+            background: #f8f9ff;
+          }
+
+          input[type="radio"] {
+            display: none;
+
+            &:checked + .radio-custom {
+              background: #007bff;
+              border-color: #007bff;
+
+              &::after {
+                opacity: 1;
+              }
+            }
+          }
+
+          .radio-custom {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #dee2e6;
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.2s ease;
+
+            &::after {
+              content: '';
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background: white;
+              transform: translate(-50%, -50%);
+              opacity: 0;
+              transition: opacity 0.2s ease;
+            }
+          }
+
+          .radio-label {
+            font-weight: 500;
+            color: #333;
+          }
+        }
+      }
+    }
+
+    .allergies-section {
+      margin-bottom: 2.5rem;
+
+      h3 {
+        color: #333;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+      }
+
+      .allergies-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+
+        .allergy-checkbox {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          cursor: pointer;
+          padding: 0.75rem;
+          border: 1px solid #e9ecef;
+          border-radius: 6px;
+          transition: all 0.2s ease;
+
+          &:hover {
+            border-color: #007bff;
+            background: #f8f9ff;
+          }
+
+          &.checked {
+            border-color: #007bff;
+            background: #f8f9ff;
+
+            .checkbox-custom {
+              background: #007bff;
+              border-color: #007bff;
+
+              i {
+                opacity: 1;
+              }
+            }
+          }
+
+          input[type="checkbox"] {
+            display: none;
+          }
+
+          .checkbox-custom {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #dee2e6;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+
+            i {
+              color: white;
+              font-size: 0.9rem;
+              opacity: 0;
+              transition: opacity 0.2s ease;
+            }
+          }
+
+          .allergy-name {
+            font-size: 0.9rem;
+            color: #333;
+          }
+        }
+      }
+
+      .custom-allergy-input {
+        .input-group {
+          display: flex;
+          gap: 0.5rem;
+          max-width: 300px;
+
+          .custom-input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #e9ecef;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: border-color 0.2s ease;
+
+            &:focus {
+              outline: none;
+              border-color: #007bff;
+            }
+
+            &::placeholder {
+              color: #999;
+            }
+          }
+
+          .add-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+
+            &:hover:not(:disabled) {
+              background: #0056b3;
+            }
+
+            &:disabled {
+              background: #dee2e6;
+              cursor: not-allowed;
+            }
+
+            i {
+              font-size: 0.9rem;
+            }
+          }
+        }
+      }
+    }
+
+    .notes-section {
+      margin-bottom: 2.5rem;
+
+      label {
+        display: block;
+        color: #333;
+        font-weight: 500;
+        margin-bottom: 0.75rem;
+      }
+
+      textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid #e9ecef;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-family: inherit;
+        resize: vertical;
+        transition: border-color 0.2s ease;
+        box-sizing: border-box;
+
+        &:focus {
+          outline: none;
+          border-color: #007bff;
+        }
+
+        &::placeholder {
+          color: #999;
+        }
+      }
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 2rem;
+      border-top: 1px solid #e9ecef;
+
+      .btn {
+        padding: 0.875rem 2rem;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: all 0.2s ease;
+        text-decoration: none;
+
+        &.btn-secondary {
+          background: #6c757d;
+          color: white;
+
+          &:hover {
+            background: #5a6268;
+          }
+        }
+
+        &.btn-primary {
+          background: #007bff;
+          color: white;
+
+          &:hover:not(:disabled) {
+            background: #0056b3;
+            transform: translateY(-1px);
+          }
+
+          &:disabled {
+            background: #dee2e6;
+            color: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+          }
+        }
+      }
+    }
+  }
+
+  .order-summary {
+    .summary-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 2rem;
+
+      h3 {
+        margin: 0 0 1.5rem;
+        color: #333;
+        font-size: 1.2rem;
+        font-weight: 600;
+      }
+
+      .tour-summary {
+        display: flex;
+        gap: 1rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #e9ecef;
+        margin-bottom: 1.5rem;
+
+        .tour-image {
+          width: 80px;
+          height: 80px;
+          object-fit: cover;
+          border-radius: 8px;
+        }
+
+        .tour-info {
+          flex: 1;
+
+          h4 {
+            margin: 0 0 0.5rem;
+            color: #333;
+            font-size: 1rem;
+            font-weight: 600;
+          }
+
+          .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+
+            .stars {
+              color: #ffc107;
+              font-size: 0.9rem;
+            }
+
+            .rating-text {
+              color: #666;
+              font-size: 0.85rem;
+            }
+          }
+
+          .urgency-notice {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #dc3545;
+            font-size: 0.85rem;
+            font-weight: 500;
+
+            i {
+              font-size: 0.9rem;
+            }
+          }
+        }
+      }
+
+      .booking-details {
+        margin-bottom: 1.5rem;
+
+        .detail-row {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          margin-bottom: 0.75rem;
+          color: #666;
+          font-size: 0.9rem;
+
+          i {
+            color: #007bff;
+            width: 16px;
+            flex-shrink: 0;
+          }
+
+          &.change-link {
+            color: #007bff;
+
+            a {
+              color: inherit;
+              text-decoration: none;
+
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+      }
+
+      .pricing-section {
+        .free-cancellation {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.75rem;
+          padding: 1rem;
+          background: #d4edda;
+          border: 1px solid #c3e6cb;
+          border-radius: 6px;
+          margin-bottom: 1rem;
+
+          i {
+            color: #155724;
+            font-size: 1.1rem;
+            margin-top: 0.1rem;
+            flex-shrink: 0;
+          }
+
+          div {
+            flex: 1;
+
+            strong {
+              display: block;
+              color: #155724;
+              font-size: 0.9rem;
+              margin-bottom: 0.25rem;
+            }
+
+            small {
+              color: #155724;
+              font-size: 0.8rem;
+            }
+          }
+        }
+
+        .promo-section {
+          margin-bottom: 1.5rem;
+
+          .promo-btn {
+            width: 100%;
+            padding: 0.875rem;
+            background: transparent;
+            border: 1px solid #007bff;
+            color: #007bff;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s ease;
+
+            &:hover {
+              background: #f8f9ff;
+            }
+
+            i {
+              font-size: 0.9rem;
+            }
+          }
+        }
+
+        .total-section {
+          border-top: 1px solid #e9ecef;
+          padding-top: 1rem;
+
+          .total-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            .total-label {
+              font-size: 1.1rem;
+              font-weight: 600;
+              color: #333;
+            }
+
+            .total-amount {
+              text-align: right;
+
+              .amount {
+                font-size: 1.3rem;
+                font-weight: 700;
+                color: #333;
+                display: block;
+              }
+
+              small {
+                color: #666;
+                font-size: 0.8rem;
+                margin-top: 0.25rem;
+                display: block;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Mobile Responsive
+@media (max-width: 768px) {
+  .booking-checkout-container {
+    .checkout-header {
+      padding: 1rem;
+      flex-direction: column;
+      gap: 1rem;
+      text-align: center;
+
+      .progress-steps {
+        gap: 1rem;
+
+        .step {
+          .step-label {
+            display: none;
+          }
+
+          &::after {
+            right: -0.75rem;
+            width: 0.5rem;
+          }
+        }
+      }
+    }
+
+    .checkout-content {
+      padding: 1rem;
+      gap: 1rem;
+    }
+
+    .form-section {
+      padding: 1.5rem;
+    }
+
+    .dietary-form {
+      .allergies-section .allergies-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-actions {
+        flex-direction: column-reverse;
+
+        .btn {
+          justify-content: center;
+          width: 100%;
+        }
+      }
+    }
+
+    .order-summary .summary-card {
+      position: static;
+      margin-top: 2rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .booking-checkout-container {
+    .form-section {
+      padding: 1rem;
+    }
+
+    .dietary-form {
+      h2 {
+        font-size: 1.2rem;
+      }
+
+      .custom-allergy-input .input-group {
+        max-width: 100%;
+      }
+
+      .form-actions .btn {
+        padding: 1rem 1.5rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    .order-summary .summary-card {
+      padding: 1rem;
+
+      .tour-summary {
+        flex-direction: column;
+        text-align: center;
+
+        .tour-image {
+          align-self: center;
+        }
+      }
+    }
+  }
+}
+
+// Animation for checkboxes and radio buttons
+.allergy-checkbox,
+.radio-option {
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+// Focus states for accessibility
+.custom-input:focus,
+textarea:focus {
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.btn:focus {
+  outline: 2px solid rgba(0, 123, 255, 0.5);
+  outline-offset: 2px;
+}
+
+// Loading state for buttons
+.btn.loading {
+  position: relative;
+  color: transparent !important;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.8s linear infinite;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

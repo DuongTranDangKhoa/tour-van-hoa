@@ -27,6 +27,17 @@ interface MonthOption {
   year: number;
 }
 
+// Interface for checkout data
+interface CheckoutData {
+  tourId: string;
+  tourName: string;
+  selectedDate: string;
+  selectedSession: string;
+  tickets: TicketType[];
+  addOnQuantity: number;
+  totalPrice: number;
+}
+
 @Component({
   selector: 'app-booking-detail',
   standalone: true,
@@ -261,19 +272,41 @@ export class BookingDetailComponent implements OnInit {
     return ticket?.quantity || 0;
   }
 
+  // Updated method to start checkout flow instead of submitting directly
   onBookTour(): void {
     if (!this.selectedDate || !this.selectedSession) {
       alert('Vui lòng chọn ngày và giờ!');
       return;
     }
 
-    if (this.bookingForm.valid && !this.isSubmitting) {
-      this.isSubmitting = true;
-      // Gọi API tạo booking...
-      console.log('Booking:', this.bookingForm.value, this.selectedDate, this.selectedSession);
-      this.isSubmitting = false;
-      alert('Đặt tour thành công!');
+    // Check if any tickets are selected
+    const totalTickets = this.tickets.reduce((sum, ticket) => sum + ticket.quantity, 0);
+    if (totalTickets === 0) {
+      alert('Vui lòng chọn ít nhất một vé!');
+      return;
     }
+
+    if (!this.tour) {
+      alert('Không tìm thấy thông tin tour!');
+      return;
+    }
+
+    // Prepare checkout data
+    const checkoutData: CheckoutData = {
+      tourId: this.tour.id.toString(),
+      tourName: this.tour.name,
+      selectedDate: this.selectedDate.toISOString(),
+      selectedSession: this.selectedSession,
+      tickets: this.tickets.filter(t => t.quantity > 0), // Only include tickets with quantity > 0
+      addOnQuantity: this.addOnQuantity,
+      totalPrice: this.getTotalPrice()
+    };
+
+    // Store checkout data in sessionStorage (temporary storage for checkout flow)
+    sessionStorage.setItem('checkoutData', JSON.stringify(checkoutData));
+
+    // Navigate to checkout flow - start with dietary preferences
+    this.router.navigate(['/checkout', this.tour.id, 'dietary']);
   }
 
   generateAvailableSessions(): void {
