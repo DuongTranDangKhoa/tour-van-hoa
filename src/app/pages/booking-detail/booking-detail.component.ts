@@ -27,17 +27,6 @@ interface MonthOption {
   year: number;
 }
 
-// Interface for checkout data
-interface CheckoutData {
-  tourId: string;
-  tourName: string;
-  selectedDate: string;
-  selectedSession: string;
-  tickets: TicketType[];
-  addOnQuantity: number;
-  totalPrice: number;
-}
-
 @Component({
   selector: 'app-booking-detail',
   standalone: true,
@@ -59,6 +48,9 @@ export class BookingDetailComponent implements OnInit {
   // Available months (từ hiện tại đến 2 năm sau)
   availableMonths: MonthOption[] = [];
   
+  // Month navigation - hiển thị 3 tháng một lần
+  visibleMonthStartIndex = 0;
+  
   // Available sessions (từ 7h đến 18h, mỗi giờ cách nhau 30 phút)
   availableSessions: string[] = [];
   currentSessionIndex = 18; // Index của 16:00 trong mảng sessions
@@ -71,6 +63,9 @@ export class BookingDetailComponent implements OnInit {
     { id: 'group', name: 'Nhóm (tối thiểu 6 vé)', price: 309500, bookingFee: 29500, quantity: 0 },
     { id: 'premium', name: 'Premium - Ưu tiên vào cửa', price: 479500, bookingFee: 29500, quantity: 0 }
   ];
+
+  // Ticket info visibility tracking
+  visibleTicketInfo: Set<string> = new Set();
 
   // Add-on
   addOnPrice = 150000;
@@ -137,8 +132,8 @@ export class BookingDetailComponent implements OnInit {
 
   getMonthLabel(month: number, year: number): string {
     const monthNames = [
-      'THG 1', 'THG 2', 'THG 3', 'THG 4', 'THG 5', 'THG 6',
-      'THG 7', 'THG 8', 'THG 9', 'THG 10', 'THG 11', 'THG 12'
+      '1', '2', '3', '4', '5', '6',
+      '7', '8', '9', '10', '11', '12'
     ];
     return `${monthNames[month]} ${year}`;
   }
@@ -180,56 +175,54 @@ export class BookingDetailComponent implements OnInit {
     }
   }
 
-  selectMonth(monthIndex: number, year: number): void {
-    this.currentMonth = monthIndex;
-    this.currentYear = year;
-    this.generateCalendar();
-  }
-
   prevMonth(): void {
-    const currentIndex = this.availableMonths.findIndex(m => 
-      m.value === this.currentMonth && m.year === this.currentYear
-    );
-    
-    if (currentIndex > 0) {
-      const prevMonth = this.availableMonths[currentIndex - 1];
-      this.currentMonth = prevMonth.value;
-      this.currentYear = prevMonth.year;
+    if (this.visibleMonthStartIndex >= 3) {
+      this.visibleMonthStartIndex -= 3;
+      // Không thay đổi currentMonth và currentYear, chỉ thay đổi visible months
       this.generateCalendar();
     }
   }
 
   nextMonth(): void {
-    const currentIndex = this.availableMonths.findIndex(m => 
-      m.value === this.currentMonth && m.year === this.currentYear
-    );
-    
-    if (currentIndex < this.availableMonths.length - 1) {
-      const nextMonth = this.availableMonths[currentIndex + 1];
-      this.currentMonth = nextMonth.value;
-      this.currentYear = nextMonth.year;
+    if (this.visibleMonthStartIndex + 3 < this.availableMonths.length) {
+      this.visibleMonthStartIndex += 3;
+      // Không thay đổi currentMonth và currentYear, chỉ thay đổi visible months
       this.generateCalendar();
     }
   }
 
   canGoPrevMonth(): boolean {
-    const currentIndex = this.availableMonths.findIndex(m => 
-      m.value === this.currentMonth && m.year === this.currentYear
-    );
-    return currentIndex > 0;
+    return this.visibleMonthStartIndex >= 3;
   }
 
   canGoNextMonth(): boolean {
-    const currentIndex = this.availableMonths.findIndex(m => 
-      m.value === this.currentMonth && m.year === this.currentYear
-    );
-    return currentIndex < this.availableMonths.length - 1;
+    return this.visibleMonthStartIndex + 3 < this.availableMonths.length;
   }
 
-  getCurrentIndex(): number {
-    return this.availableMonths.findIndex(m => 
-      m.value === this.currentMonth && m.year === this.currentYear
+  getVisibleMonths(): MonthOption[] {
+    return this.availableMonths.slice(this.visibleMonthStartIndex, this.visibleMonthStartIndex + 3);
+  }
+
+  selectMonth(monthIndex: number, year: number): void {
+    this.currentMonth = monthIndex;
+    this.currentYear = year;
+    
+    // Tự động điều chỉnh visibleMonthStartIndex để tháng được chọn luôn hiển thị
+    const selectedMonthIndex = this.availableMonths.findIndex(m => 
+      m.value === monthIndex && m.year === year
     );
+    
+    if (selectedMonthIndex !== -1) {
+      // Tính toán vị trí mới để tháng được chọn nằm ở giữa (index 1) của 3 tháng hiển thị
+      this.visibleMonthStartIndex = Math.max(0, selectedMonthIndex - 1);
+      
+      // Đảm bảo không vượt quá giới hạn
+      if (this.visibleMonthStartIndex + 3 > this.availableMonths.length) {
+        this.visibleMonthStartIndex = Math.max(0, this.availableMonths.length - 3);
+      }
+    }
+    
+    this.generateCalendar();
   }
 
   selectDate(day: CalendarDay): void {
@@ -272,41 +265,34 @@ export class BookingDetailComponent implements OnInit {
     return ticket?.quantity || 0;
   }
 
-  // Updated method to start checkout flow instead of submitting directly
   onBookTour(): void {
     if (!this.selectedDate || !this.selectedSession) {
       alert('Vui lòng chọn ngày và giờ!');
       return;
     }
 
-    // Check if any tickets are selected
-    const totalTickets = this.tickets.reduce((sum, ticket) => sum + ticket.quantity, 0);
-    if (totalTickets === 0) {
-      alert('Vui lòng chọn ít nhất một vé!');
-      return;
+    if (this.bookingForm.valid && !this.isSubmitting) {
+      this.isSubmitting = true;
+      const orderState = {
+        tourId: this.tour?.id || 0,
+        tourName: this.tour?.name || 'Tour',
+        imageUrl: this.tour?.imageUrl,
+        selectedDate: this.selectedDate.toDateString(),
+        selectedSession: this.selectedSession,
+        participants: this.tickets.map(t => ({
+          type: t.id,
+          name: t.name,
+          price: t.price,
+          fee: t.bookingFee,
+          quantity: t.quantity
+        })).filter(t => t.quantity > 0),
+        addOn: this.addOnQuantity > 0 ? { name: 'Photo Opportunity', price: this.addOnPrice, quantity: this.addOnQuantity } : undefined,
+        totalPrice: this.getTotalPrice()
+      };
+
+      this.router.navigate(['/checkout'], { state: orderState });
+      this.isSubmitting = false;
     }
-
-    if (!this.tour) {
-      alert('Không tìm thấy thông tin tour!');
-      return;
-    }
-
-    // Prepare checkout data
-    const checkoutData: CheckoutData = {
-      tourId: this.tour.id.toString(),
-      tourName: this.tour.name,
-      selectedDate: this.selectedDate.toISOString(),
-      selectedSession: this.selectedSession,
-      tickets: this.tickets.filter(t => t.quantity > 0), // Only include tickets with quantity > 0
-      addOnQuantity: this.addOnQuantity,
-      totalPrice: this.getTotalPrice()
-    };
-
-    // Store checkout data in sessionStorage (temporary storage for checkout flow)
-    sessionStorage.setItem('checkoutData', JSON.stringify(checkoutData));
-
-    // Navigate to checkout flow - start with dietary preferences
-    this.router.navigate(['/checkout', this.tour.id, 'dietary']);
   }
 
   generateAvailableSessions(): void {
@@ -339,14 +325,14 @@ export class BookingDetailComponent implements OnInit {
   prevSession(): void {
     if (this.canGoPrevSession()) {
       this.currentSessionIndex--;
-      this.selectedSession = this.availableSessions[this.currentSessionIndex];
+      // Không thay đổi selectedSession, chỉ để scroll qua các sessions
     }
   }
 
   nextSession(): void {
     if (this.canGoNextSession()) {
       this.currentSessionIndex++;
-      this.selectedSession = this.availableSessions[this.currentSessionIndex];
+      // Không thay đổi selectedSession, chỉ để scroll qua các sessions
     }
   }
 
@@ -355,5 +341,23 @@ export class BookingDetailComponent implements OnInit {
     const startIndex = Math.max(0, this.currentSessionIndex - 2);
     const endIndex = Math.min(this.availableSessions.length, startIndex + 6);
     return this.availableSessions.slice(startIndex, endIndex);
+  }
+
+  openImageGallery(): void {
+    if (this.tour) {
+      this.router.navigate(['/tour', this.tour.id, 'gallery']);
+    }
+  }
+
+  toggleTicketInfo(ticketId: string): void {
+    if (this.visibleTicketInfo.has(ticketId)) {
+      this.visibleTicketInfo.delete(ticketId);
+    } else {
+      this.visibleTicketInfo.add(ticketId);
+    }
+  }
+
+  isTicketInfoVisible(ticketId: string): boolean {
+    return this.visibleTicketInfo.has(ticketId);
   }
 }

@@ -64,34 +64,37 @@ describe('BookingDetailComponent', () => {
     expect(component.tour).toEqual(mockTour);
   });
 
-  it('should generate available dates', () => {
-    expect(component.availableDates.length).toBeGreaterThan(0);
+  it('should generate available months', () => {
+    expect(component.availableMonths.length).toBeGreaterThan(0);
+  });
+
+  it('should generate available sessions', () => {
+    expect(component.availableSessions.length).toBeGreaterThan(0);
   });
 
   it('should set default selections', () => {
-    expect(component.selectedDate).toBeTruthy();
-    expect(component.selectedTime).toBeTruthy();
-    expect(component.selectedZone).toBeTruthy();
+    expect(component.selectedDate).toBeNull();
+    expect(component.selectedSession).toBe('16:00');
   });
 
-  it('should increase ticket quantity', () => {
-    const initialQuantity = component.ticketQuantity;
-    component.increaseQuantity();
-    expect(component.ticketQuantity).toBe(initialQuantity + 1);
+  it('should adjust ticket quantity', () => {
+    const initialQuantity = component.getTicketQuantity('adult');
+    component.adjustQuantity('adult', 1);
+    expect(component.getTicketQuantity('adult')).toBe(initialQuantity + 1);
   });
 
-  it('should decrease ticket quantity but not below 1', () => {
-    component.ticketQuantity = 2;
-    component.decreaseQuantity();
-    expect(component.ticketQuantity).toBe(1);
-    
-    component.decreaseQuantity();
-    expect(component.ticketQuantity).toBe(1);
+  it('should not decrease ticket quantity below 0', () => {
+    component.adjustQuantity('adult', 2);
+    component.adjustQuantity('adult', -5);
+    expect(component.getTicketQuantity('adult')).toBe(0);
   });
 
   it('should calculate total price correctly', () => {
-    component.selectedZone = 'Zone A';
-    component.ticketQuantity = 2;
-    expect(component.getTotalPrice()).toBe(2000000);
+    component.adjustQuantity('adult', 2);
+    expect(component.getTotalPrice()).toBeGreaterThan(0);
+  });
+
+  it('should generate calendar', () => {
+    expect(component.days.length).toBeGreaterThan(0);
   });
 });

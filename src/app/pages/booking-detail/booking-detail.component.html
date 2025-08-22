@@ -1,6 +1,6 @@
 <div class="booking-detail-page">
   <!-- Phần trên: Hình ảnh tour -->
-  <div class="tour-hero-section" *ngIf="tour">
+  <div class="tour-hero-section" *ngIf="tour" (click)="openImageGallery()">
     <div class="media-section">
       <!-- Left section - 50% -->
       <div class="main-image-section">
@@ -68,6 +68,36 @@
         <h2>Chương trình tour</h2>
         <p>Chi tiết chương trình tour sẽ được cung cấp khi xác nhận đặt chỗ.</p>
       </div>
+      <div class="user-photo-gallery">
+        <h2>User Photo Gallery</h2>
+        <div class="photo-grid">
+          <div class="photo-item">
+            <img src="assets/minecraft-experience.jpg" alt="Minecraft Experience Screen">
+            <div class="photo-overlay">
+              <span class="photo-title">Minecraft Experience</span>
+            </div>
+          </div>
+          <div class="photo-item">
+            <img src="assets/minecraft-bee.jpg" alt="Minecraft Bee Statue">
+            <div class="photo-overlay">
+              <span class="photo-title">Minecraft Bee</span>
+            </div>
+          </div>
+          <div class="photo-item">
+            <img src="assets/minecraft-creeper.jpg" alt="Boy on Creeper Statue">
+            <div class="photo-overlay">
+              <span class="photo-title">Creeper Adventure</span>
+            </div>
+          </div>
+          <div class="photo-item">
+            <img src="assets/minecraft-structure.jpg" alt="Minecraft Blue Structure">
+            <div class="photo-overlay">
+              <span class="photo-title">Mysterious Structure</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="user-reviews-section">
         <h2>User reviews</h2>
         <div class="reviews-header">
@@ -129,10 +159,63 @@
           <button type="button" class="view-all">View all reviews</button>
         </div>
       </div>
-      <div class="map-section">
-        <h2>Bản đồ</h2>
-        <div class="map-embed">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d236225.41396791287!2d103.74160180208737!3d22.315004187869228!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x36cd40a503ec6395%3A0x49032814dedb2fb8!2zU2EgUGEsIEzDoG8gQ2FpLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1755762959879!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <div class="map-and-info-section">
+        <!-- Left Column: Info Sections -->
+        <div class="info-column">
+          <!-- Need Help Section -->
+          <div class="help-section">
+            <div class="info-header">
+              <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="11" stroke="#333" stroke-width="1.5" fill="none"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="#333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="12" cy="17" r="1" fill="#333"/>
+              </svg>
+              <div class="info-content">
+                <h3>Need help?</h3>
+                <p>Contact Support <a href="#" class="link">here</a></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Getting There Section -->
+          <div class="getting-there-section">
+            <div class="info-header">
+              <svg class="icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Base -->
+                <rect x="2" y="18" width="20" height="4" fill="#333"/>
+                <!-- Columns -->
+                <rect x="3" y="8" width="2" height="10" stroke="#333" stroke-width="1.5" fill="none"/>
+                <rect x="7" y="8" width="2" height="10" stroke="#333" stroke-width="1.5" fill="none"/>
+                <rect x="15" y="8" width="2" height="10" stroke="#333" stroke-width="1.5" fill="none"/>
+                <rect x="19" y="8" width="2" height="10" stroke="#333" stroke-width="1.5" fill="none"/>
+                <!-- Entablature -->
+                <rect x="2" y="8" width="20" height="2" fill="#333"/>
+                <!-- Roof/Pediment -->
+                <path d="M2 8 L12 2 L22 8" stroke="#333" stroke-width="1.5" fill="none"/>
+                <!-- Arch in pediment -->
+                <path d="M8 6 Q12 4 16 6" stroke="#333" stroke-width="1" fill="none"/>
+              </svg>
+              <div class="info-content">
+                <h3>About the venue</h3>
+                <p class="address">
+                  <span class="unit">Unit 20 Fulton Road</span><br>
+                  Fulton Road Industrial Units 22-28, Wembley Park, Wembley, HA9 0NP, HA9 0NP
+                </p>
+                <div class="location-tags">
+                  <span class="tag grey"></span>
+                  <span class="tag purple"></span>
+                  <span class="location-name">Wembley Park</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Column: Google Map -->
+        <div class="map-column">
+          <div class="map-embed">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d236225.41396791287!2d103.74160180208737!3d22.315004187869228!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x36cd40a503ec6395%3A0x49032814dedb2fb8!2zU2EgUGEsIEzDoG8gQ2FpLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1755762959879!5m2!1svi!2s" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
         </div>
       </div>
       
@@ -147,27 +230,14 @@
           <div class="month-nav">
             <button type="button" (click)="prevMonth()" class="nav-btn" [disabled]="!canGoPrevMonth()">‹</button>
             
-            <!-- Hiển thị 3 tháng: prev, current, next -->
+            <!-- Hiển thị 3 tháng -->
             <div class="month-buttons">
               <button type="button" 
-                      (click)="selectMonth(availableMonths[getCurrentIndex() - 1].value || 0, availableMonths[getCurrentIndex() - 1].year || currentYear)" 
-                      [disabled]="!canGoPrevMonth()"
+                      *ngFor="let month of getVisibleMonths(); let i = index"
+                      (click)="selectMonth(month.value, month.year)" 
+                      [class.active]="month.value === currentMonth && month.year === currentYear"
                       class="month-btn">
-                {{ canGoPrevMonth() ? availableMonths[getCurrentIndex() - 1].label : '---' }}
-              </button>
-              
-              <button type="button" 
-                      (click)="selectMonth(currentMonth, currentYear)" 
-                      [class.active]="true"
-                      class="month-btn">
-                {{ getMonthLabel(currentMonth, currentYear) }}
-              </button>
-              
-              <button type="button" 
-                      (click)="selectMonth(availableMonths[getCurrentIndex() + 1].value || 0, availableMonths[getCurrentIndex() + 1].year || currentYear)" 
-                      [disabled]="!canGoNextMonth()"
-                      class="month-btn">
-                {{ canGoNextMonth() ? availableMonths[getCurrentIndex() + 1].label : '---' }}
+                {{ month.label }}
               </button>
             </div>
             
@@ -210,7 +280,7 @@
             </div>
             <div class="session-navigation">
               <button type="button" 
-                      class="session-nav-btn" 
+                      class="nav-btn" 
                       (click)="prevSession()" 
                       [disabled]="!canGoPrevSession()">
                 ‹
@@ -227,7 +297,7 @@
               </div>
               
               <button type="button" 
-                      class="session-nav-btn" 
+                      class="nav-btn" 
                       (click)="nextSession()" 
                       [disabled]="!canGoNextSession()">
                 ›
@@ -245,10 +315,15 @@
              
               </div>
               <div class="ticket-desc">
-                <p>Ticket for 1 person, includes:</p>
-                <ul>
-                  <li>Admission into the experience</li>
-                </ul>
+                <button type="button" class="more-info-btn" (click)="toggleTicketInfo(ticket.id)">
+                  {{ isTicketInfoVisible(ticket.id) ? 'Less info' : 'More info' }}
+                </button>
+                <div class="ticket-details" *ngIf="isTicketInfoVisible(ticket.id)">
+                  <p>Ticket for 1 person, includes:</p>
+                  <ul>
+                    <li>Admission into the experience</li>
+                  </ul>
+                </div>
               </div>
               <div class="ticket-price">
                 <span class="price">{{ ticket.price | currency:'VND':'symbol':'1.0-0' }}</span>
