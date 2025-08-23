@@ -2,7 +2,7 @@
 
 ## 📋 Tổng quan
 
-API này được thiết kế để quản lý việc đặt tour du lịch. Danh sách tours được để cứng trong frontend, chỉ cần lưu thông tin đặt tour của khách hàng.
+API này được thiết kế    để quản lý việc đặt tour du lịch. Danh sách tours được để cứng trong frontend, chỉ cần lưu thông tin đặt tour của khách hàng.
 
 ## 🔗 Base URL
 
