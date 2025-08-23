@@ -58,7 +58,55 @@ export class TourService {
     {
       id: 4,
       name: 'Vietnam Art & Culture Tour – This Is Home',
-      description: 'Step into the heart of Vietnam with the Vietnam Art & Culture Tour by This Is Home — an immersive cultural journey designed to connect you with the country\'s authentic heritage. From traditional craft workshops to wandering the lantern-lit streets of Hoi An, every moment reveals the timeless beauty of Vietnam\'s traditions. Guided by passionate locals, this full-day adventure blends creativity, cuisine, and community, leaving you with unforgettable memories of Vietnam\'s soul.',
+      description: `Intro Description
+
+⭐ Step into the heart of Vietnam with the Vietnam Art & Culture Tour by This Is Home — an immersive cultural journey designed to connect you with the country's authentic heritage. From traditional craft workshops to wandering the lantern-lit streets of Hoi An, every moment reveals the timeless beauty of Vietnam's traditions. Guided by passionate locals, this full-day adventure blends creativity, cuisine, and community, leaving you with unforgettable memories of Vietnam's soul.
+
+Highlights
+
+🌏 Authentic cultural immersion with local artisans.
+☕ Hands-on coffee brewing workshop at Hush Workspace.
+🏺 Pottery-making at Le Duc Ha Terra Cotta Studio, including lunch.
+🪵 Wood carving workshop at Au Lac with master artisans.
+🏮 Explore the enchanting lantern-lit Hoi An Ancient Town.
+🏖️ Relax and discover Vietnam's stunning beaches.
+🍲 Savor authentic local cuisine, rich in flavor.
+🎁 Receive a special keepsake gift set from This Is Home.
+
+General Info
+
+📅 Date & Time: Departure at 08:45 AM – Return at 5:30 PM (full-day tour).
+⏳ Duration: Approx. 9 hours.
+📍 Location: Hotel/office pick-up & drop-off in the Da Nang – Hoi An area.
+👥 Age requirement: Suitable for all ages; children under 16 must be accompanied by an adult.
+🚐 Transportation: Private coach (7-seater or 16-seater), air-conditioned.
+💰 Pricing:
+
+Package 1: 7-seater – $307/tour | 16-seater – $635/tour.
+
+Package 2: 7-seater – $42/tour | 16-seater – $35/tour.
+
+Full program: SGD $296 per person (excludes international flights).
+🏨 Accommodation (multi-day option): 3–4 star hotels, double rooms (single available upon request), with Wi-Fi & TV.
+🍴 Meals included: Hotel breakfast, 4 lunches, 3 dinners (including Welcome Dinner & Gala Dinner).
+🦽 Accessibility: Wheelchair-friendly venues.
+📌 Included: Entrance fees, English-speaking guides, all workshops, transportation, meals, and gift set.
+❌ Not included: Personal expenses, shopping, phone calls, additional drinks/meals, international flights.
+📲 Booking & Contact:
+
+Website: tih.nhi.sg
+
+Email: danh@nhi.sg
+
+WhatsApp: +84 367666618
+
+Full Description
+
+✨ This Is Home brings you a cultural journey to remember through Central Vietnam. Guided by local artisans, you'll learn the art of coffee brewing, pottery, and wood carving. Then, stroll through the vibrant lantern-lit alleys of Hoi An Ancient Town, savor local cuisine, and unwind at breathtaking beaches.
+
+Every experience is designed to connect you deeply with Vietnam's heritage — from creative workshops to heartwarming meals and meaningful keepsakes. With accommodation, transport, guides, and meals fully included, all you need to do is immerse yourself.
+
+🌿 Whether you're a culture enthusiast, a family seeking meaningful bonding, or a traveler craving authentic encounters — this tour promises lasting memories of Vietnam's soul.`,
       duration: '1 ngày (9 giờ)',
       price: 296000000, // SGD $296 converted to VND (approximately)
       imageUrl: '/city-image/da-nang.jpg',

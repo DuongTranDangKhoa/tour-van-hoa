@@ -51,13 +51,13 @@
               <div class="description-section">
           <h2>Description</h2>
           <p>{{ tour.description }}</p>
-          
-          <h3>Highlights</h3>
+  <!--     
+          <h3>Description</h3>
           <ul class="highlights-list">
-            <p *ngFor="let highlight of tour.highlights">{{ highlight }}</p>
+            <p *ngFor="let highlight of tour.description">{{ highlight }}</p>
           </ul>
         </div>
-      <div class="general-info-section">
+       <div class="general-info-section">
                   <h2>General Information</h2>
         <ul>
           <li><i class="icon">📍</i> <strong>Destination:</strong> {{ tour.destination }}</li>
@@ -72,7 +72,7 @@
       <div class="programme-section">
         <h2>Tour Program</h2>
         <pre class="tour-program-content">{{ tour.tourProgram }}</pre>
-      </div>
+      </div> -->
       <div class="user-photo-gallery">
         <h2>User Photo Gallery</h2>
         <div class="photo-grid">
