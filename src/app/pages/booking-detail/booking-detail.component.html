@@ -4,7 +4,7 @@
     <div class="media-section">
       <!-- Left section - 50% -->
       <div class="main-image-section">
-        <img [src]="tour.imageUrl" [alt]="tour.name" class="hero-image">
+        <img [src]="tour.imageUrl" [alt]="tour.name" [title]="tour.name" class="hero-image">
         <button class="play-button">
           <i class="icon">▶️</i>
         </button>
@@ -13,14 +13,14 @@
       <!-- Right section - 50% divided into 4 equal parts -->
       <div class="image-grid-section">
         <div class="grid-item">
-          <img [src]="tour.imageUrl" [alt]="tour.name">
+          <img [src]="tour.imageUrl" [alt]="tour.name" [title]="tour.name">
           <div class="overlay-text">Tour Van Hoa presents</div>
         </div>
         <div class="grid-item top-right-border">
-          <img [src]="tour.imageUrl" [alt]="tour.name">
+          <img [src]="tour.imageUrl" [alt]="tour.name" [title]="tour.name">
         </div>
         <div class="grid-item">
-          <img [src]="tour.imageUrl" [alt]="tour.name">
+          <img [src]="tour.imageUrl" [alt]="tour.name" [title]="tour.name">
         </div>
         <div class="grid-item bot-right-border">
           <img [src]="tour.imageUrl" [alt]="tour.name">
@@ -51,7 +51,7 @@
               <div class="description-section">
           <h2>Description</h2>
           <p>{{ tour.description }}</p>
-  <!--     
+    
           <h3>Description</h3>
           <ul class="highlights-list">
             <p *ngFor="let highlight of tour.description">{{ highlight }}</p>
@@ -72,7 +72,7 @@
       <div class="programme-section">
         <h2>Tour Program</h2>
         <pre class="tour-program-content">{{ tour.tourProgram }}</pre>
-      </div> -->
+      </div> 
       <div class="user-photo-gallery">
         <h2>User Photo Gallery</h2>
         <div class="photo-grid">
