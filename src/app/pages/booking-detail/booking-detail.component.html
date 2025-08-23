@@ -1,5 +1,5 @@
 <div class="booking-detail-page">
-  <!-- Phần trên: Hình ảnh tour -->
+  <!-- Top Section: Tour Images -->
   <div class="tour-hero-section" *ngIf="tour" (click)="openImageGallery()">
     <div class="media-section">
       <!-- Left section - 50% -->
@@ -14,7 +14,7 @@
       <div class="image-grid-section">
         <div class="grid-item">
           <img [src]="tour.imageUrl" [alt]="tour.name">
-          <div class="overlay-text">Tour Văn Hóa presents</div>
+          <div class="overlay-text">Tour Van Hoa presents</div>
         </div>
         <div class="grid-item top-right-border">
           <img [src]="tour.imageUrl" [alt]="tour.name">
@@ -35,7 +35,7 @@
 
   <!-- Phần dưới: Chia 2 cột -->
   <div class="main-content" *ngIf="tour">
-    <!-- Left Panel: Thông tin tour -->
+          <!-- Left Panel: Tour Information -->
     <div class="tour-details-panel">
       <div class="event-title-section">
         <h1>{{ tour.name }}</h1>
@@ -48,25 +48,30 @@
           <span>(4.5)</span>
         </div>
       </div>
-      <div class="description-section">
-        <h2>Mô tả</h2>
-        <p>{{ tour.description }}</p>
-      </div>
+              <div class="description-section">
+          <h2>Description</h2>
+          <p>{{ tour.description }}</p>
+          
+          <h3>Highlights</h3>
+          <ul class="highlights-list">
+            <li *ngFor="let highlight of tour.highlights">{{ highlight }}</li>
+          </ul>
+        </div>
       <div class="general-info-section">
-        <h2>Thông tin chung</h2>
+                  <h2>General Information</h2>
         <ul>
-          <li><i class="icon">📍</i> <strong>Điểm đến:</strong> {{ tour.destination }}</li>
-          <li><i class="icon">⏰</i> <strong>Thời lượng:</strong> {{ tour.duration }}</li>
-          <li><i class="icon">👥</i> <strong>Số người tối đa:</strong> {{ tour.maxGroupSize }}</li>
-          <li><i class="icon">💰</i> <strong>Giá:</strong> {{ tour.price | currency:'VND':'symbol':'1.0-0' }}</li>
-          <li><i class="icon">📅</i> <strong>Ngày khởi hành:</strong> Hàng ngày</li>
-          <li><i class="icon">🌐</i> <strong>Ngôn ngữ:</strong> Tiếng Việt, Tiếng Anh</li>
-          <li><i class="icon">⭐</i> <strong>Độ khó:</strong> {{ tour.difficulty }}</li>
+          <li><i class="icon">📍</i> <strong>Destination:</strong> {{ tour.destination }}</li>
+          <li><i class="icon">⏰</i> <strong>Duration:</strong> {{ tour.duration }}</li>
+          <li><i class="icon">👥</i> <strong>Max Group Size:</strong> {{ tour.maxGroupSize }}</li>
+          <li><i class="icon">💰</i> <strong>Price:</strong> {{ tour.price | currency:'VND':'symbol':'1.0-0' }}</li>
+          <li><i class="icon">📅</i> <strong>Departure Date:</strong> {{ tour.departureDate || 'Daily' }}</li>
+          <li><i class="icon">🌐</i> <strong>Languages:</strong> {{ tour.languages ? tour.languages.join(', ') : 'Vietnamese, English' }}</li>
+          <li><i class="icon">⭐</i> <strong>Difficulty:</strong> {{ tour.difficulty }}</li>
         </ul>
       </div>
       <div class="programme-section">
-        <h2>Chương trình tour</h2>
-        <p>Chi tiết chương trình tour sẽ được cung cấp khi xác nhận đặt chỗ.</p>
+        <h2>Tour Program</h2>
+        <pre class="tour-program-content">{{ tour.tourProgram }}</pre>
       </div>
       <div class="user-photo-gallery">
         <h2>User Photo Gallery</h2>
@@ -270,14 +275,20 @@
           </div>
 
           <!-- Session Selection -->
-          <div class="session-selection">
-            <div class="session-header">
-              <span>Các giờ có sẵn</span>
-              <div class="legend">
-                <span class="legend-item"><span class="legend-line low"></span> Khả dụng thấp</span>
-                <span class="legend-item"><span class="legend-line best"></span> Giá tốt</span>
+                      <div class="session-selection">
+              <div class="session-header">
+                <div class="currency-note">All prices shown in British pounds</div>
+                <div class="legend">
+                  <div class="legend-item">
+                    <span class="legend-line low"></span>
+                    <span class="legend-text">Low availability</span>
+                  </div>
+                  <div class="legend-item">
+                    <span class="legend-line best"></span>
+                    <span class="legend-text">Best price</span>
+                  </div>
+                </div>
               </div>
-            </div>
             <div class="session-navigation">
               <button type="button" 
                       class="nav-btn" 
@@ -319,15 +330,39 @@
                   {{ isTicketInfoVisible(ticket.id) ? 'Less info' : 'More info' }}
                 </button>
                 <div class="ticket-details" *ngIf="isTicketInfoVisible(ticket.id)">
-                  <p>Ticket for 1 person, includes:</p>
-                  <ul>
-                    <li>Admission into the experience</li>
+                  <p>Ticket includes:</p>
+                  <ul *ngIf="ticket.id === 'adult'">
+                    <li>Admission to all workshops & cultural activities</li>
+                    <li>Includes lunch with local cuisine</li>
+                    <li>Shared coach with a fixed itinerary</li>
+                    <li>Arrival at the departure point before the tour starts</li>
+                  </ul>
+                  <ul *ngIf="ticket.id === 'child'">
+                    <li>Admission to all workshops & cultural activities</li>
+                    <li>Includes lunch (child-friendly portion)</li>
+                    <li>Must be accompanied by an adult</li>
+                    <li>Shared coach with a fixed itinerary</li>
+                    <li>Arrival at the departure point before the tour starts</li>
+                  </ul>
+                  <ul *ngIf="ticket.id === 'small-group'">
+                    <li>Private tour for up to 5 guests</li>
+                    <li>Includes lunch with local cuisine</li>
+                    <li>Private vehicle with hotel pick-up & drop-off</li>
+                    <li>Flexible itinerary: option to replace or skip selected activities in the Art & Culture program</li>
+                    <li>Admission to all workshops & cultural activities</li>
+                  </ul>
+                  <ul *ngIf="ticket.id === 'large-group'">
+                    <li>Private tour for groups of 6–14 guests</li>
+                    <li>Includes lunch with local cuisine</li>
+                    <li>Private vehicle with hotel pick-up & drop-off</li>
+                    <li>Customizable itinerary tailored to group preferences</li>
+                    <li>Admission to all workshops & cultural activities</li>
                   </ul>
                 </div>
               </div>
               <div class="ticket-price">
-                <span class="price">{{ ticket.price | currency:'VND':'symbol':'1.0-0' }}</span>
-                <span class="fee">+ {{ ticket.bookingFee | currency:'VND':'symbol':'1.0-0' }} phí đặt vé</span>
+                <span class="price">{{ ticket.price | currency:'USD':'symbol':'1.2-2' }}</span>
+                <span class="fee" *ngIf="ticket.bookingFee > 0">+ {{ ticket.bookingFee | currency:'USD':'symbol':'1.2-2' }} booking fee</span>
               </div>
             </div>
             <div class="ticket-right">
@@ -343,9 +378,9 @@
           <div class="add-on-item">
             <h4>Photo Opportunity</h4>
             <p>Capture the moment with a personalized 15x20 cm printed photo in a premium Jurassic World folder...</p>
-            <a href="#" class="read-more">Xem thêm</a>
+            <a href="#" class="read-more">Read more</a>
             <div class="add-on-price">
-              <span class="price">+ {{ addOnPrice | currency:'VND':'symbol':'1.0-0' }}</span>
+              <span class="price">+ {{ addOnPrice | currency:'USD':'symbol':'1.2-2' }}</span>
             </div>
             <div class="quantity-selector">
               <button type="button" (click)="adjustAddOn(-1)" [disabled]="addOnQuantity === 0">−</button>
@@ -356,13 +391,13 @@
 
           <!-- Total Price -->
           <div class="total-price">
-            <span>Tổng cộng:</span>
-            <span class="amount">{{ getTotalPrice() | currency:'VND':'symbol':'1.0-0' }}</span>
+            <span>Total:</span>
+            <span class="amount">{{ getTotalPrice() | currency:'USD':'symbol':'1.2-2' }}</span>
           </div>
 
           <!-- Submit Button -->
           <button type="submit" class="book-button" [disabled]="isSubmitting || !selectedDate || !selectedSession">
-            {{ getTotalPrice() | currency:'VND':'symbol':'1.0-0' }} — Đặt ngay
+            {{ getTotalPrice() | currency:'USD':'symbol':'1.2-2' }} — Book Now
           </button>
         </div>
       </form>

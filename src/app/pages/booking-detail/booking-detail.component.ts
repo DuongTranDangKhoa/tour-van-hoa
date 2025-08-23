@@ -57,18 +57,17 @@ export class BookingDetailComponent implements OnInit {
 
   // Tickets
   tickets: TicketType[] = [
-    { id: 'adult', name: 'Người lớn (16+)', price: 350000, bookingFee: 29500, quantity: 0 },
-    { id: 'child', name: 'Trẻ em (3-15)', price: 285000, bookingFee: 29500, quantity: 0 },
-    { id: 'family', name: 'Gói gia đình (tối đa 2 người lớn)', price: 995000, bookingFee: 29500, quantity: 0 },
-    { id: 'group', name: 'Nhóm (tối thiểu 6 vé)', price: 309500, bookingFee: 29500, quantity: 0 },
-    { id: 'premium', name: 'Premium - Ưu tiên vào cửa', price: 479500, bookingFee: 29500, quantity: 0 }
+    { id: 'adult', name: 'Adult (13+)', price: 37.00, bookingFee: 0, quantity: 0 },
+    { id: 'child', name: 'Child (4–12 years old)', price: 37.00, bookingFee: 0, quantity: 0 },
+    { id: 'small-group', name: 'Private Small Group (3–5 people)', price: 305.00, bookingFee: 0, quantity: 0 },
+    { id: 'large-group', name: 'Private Large Group (6–14 people)', price: 629.00, bookingFee: 0, quantity: 0 }
   ];
 
   // Ticket info visibility tracking
   visibleTicketInfo: Set<string> = new Set();
 
   // Add-on
-  addOnPrice = 150000;
+  addOnPrice = 15.00;
   addOnQuantity = 0;
 
   // Calendar days
@@ -298,20 +297,12 @@ export class BookingDetailComponent implements OnInit {
   generateAvailableSessions(): void {
     this.availableSessions = [];
     
-    // Tạo sessions từ 7:00 đến 18:00, mỗi giờ cách nhau 30 phút
-    for (let hour = 7; hour <= 18; hour++) {
-      // Giờ chẵn (7:00, 8:00, 9:00, ...)
-      this.availableSessions.push(`${hour.toString().padStart(2, '0')}:00`);
-      
-      // Giờ lẻ (7:30, 8:30, 9:30, ...) - trừ 18:30
-      if (hour < 18) {
-        this.availableSessions.push(`${hour.toString().padStart(2, '0')}:30`);
-      }
-    }
+    // Chỉ có 1 khung thời gian là 8:45
+    this.availableSessions.push('08:45');
     
-    // Set session mặc định là 16:00
-    this.selectedSession = '16:00';
-    this.currentSessionIndex = this.availableSessions.indexOf('16:00');
+    // Set session mặc định là 8:45
+    this.selectedSession = '08:45';
+    this.currentSessionIndex = 0;
   }
 
   canGoPrevSession(): boolean {

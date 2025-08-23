@@ -13,6 +13,8 @@ export interface Tour {
   highlights: string[];
   included: string[];
   notIncluded: string[];
-  departureDate?: Date;
-  returnDate?: Date;
+  departureDate?: Date | string;
+  returnDate?: Date | string;
+  languages?: string[];
+  tourProgram?: string;
 }
