@@ -1,6 +1,7 @@
 // src/app/services/checkout.service.ts
-import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 export interface CheckoutData {
   tourId: string;
@@ -63,13 +64,31 @@ export class CheckoutService {
   private customerDataSubject = new BehaviorSubject<CustomerDetails | null>(null);
   private paymentDataSubject = new BehaviorSubject<PaymentDetails | null>(null);
 
+  // NEW: Current step tracking
+  private currentStepSubject = new BehaviorSubject<number>(1);
+  currentStep$ = this.currentStepSubject.asObservable();
+
+  // NEW: Step routes mapping
+  private stepRoutes: { [key: number]: string } = {
+    1: '/checkout/dietary',
+    2: '/checkout/details',
+    3: '/checkout/payment'
+  };
+
+  // NEW: Step names
+  private stepNames: { [key: number]: string } = {
+    1: 'Dietary Preferences',
+    2: 'Customer Details',
+    3: 'Payment'
+  };
+
   // Observable streams
   checkoutData$ = this.checkoutDataSubject.asObservable();
   dietaryData$ = this.dietaryDataSubject.asObservable();
   customerData$ = this.customerDataSubject.asObservable();
   paymentData$ = this.paymentDataSubject.asObservable();
 
-  constructor() {
+  constructor(private router: Router) {
     // Load data from sessionStorage on service initialization
     this.loadFromStorage();
   }
@@ -84,12 +103,20 @@ export class CheckoutService {
   saveDietaryPreferences(dietary: DietaryPreferences): void {
     this.dietaryDataSubject.next(dietary);
     this.saveToStorage('dietaryData', dietary);
+    // Auto advance to next step if not already there
+    if (this.currentStepSubject.value === 1) {
+      this.setCurrentStep(2);
+    }
   }
 
   // Save customer details
   saveCustomerDetails(customer: CustomerDetails): void {
     this.customerDataSubject.next(customer);
     this.saveToStorage('customerData', customer);
+    // Auto advance to next step if not already there
+    if (this.currentStepSubject.value === 2) {
+      this.setCurrentStep(3);
+    }
   }
 
   // Save payment details
@@ -116,6 +143,60 @@ export class CheckoutService {
   // Get current payment details
   getCurrentPaymentData(): PaymentDetails | null {
     return this.paymentDataSubject.value;
+  }
+
+  // NEW: Navigation methods
+  getCurrentStep(): number {
+    return this.currentStepSubject.value;
+  }
+
+  setCurrentStep(step: number): void {
+    this.currentStepSubject.next(step);
+    sessionStorage.setItem('currentStep', step.toString());
+  }
+
+  goToNextStep(): boolean {
+    const currentStep = this.currentStepSubject.value;
+    if (currentStep < 3 && this.canProceedToStep(currentStep + 1)) {
+      this.navigateToStep(currentStep + 1);
+      return true;
+    }
+    return false;
+  }
+
+  goToPreviousStep(): boolean {
+    const currentStep = this.currentStepSubject.value;
+    if (currentStep > 1) {
+      this.navigateToStep(currentStep - 1);
+      return true;
+    }
+    return false;
+  }
+
+  navigateToStep(step: number): void {
+    if (step >= 1 && step <= 3) {
+      this.setCurrentStep(step);
+      this.router.navigate([this.stepRoutes[step]]);
+    }
+  }
+
+  canNavigateToStep(step: number): boolean {
+    switch (step) {
+      case 1: return true; // Always can go to dietary
+      case 2: return this.dietaryDataSubject.value !== null;
+      case 3: return this.dietaryDataSubject.value !== null &&
+                     this.customerDataSubject.value !== null;
+      default: return false;
+    }
+  }
+
+  // NEW: Get completed steps for stepper
+  getCompletedSteps(): number[] {
+    const completed: number[] = [];
+    if (this.dietaryDataSubject.value) completed.push(1);
+    if (this.customerDataSubject.value) completed.push(2);
+    if (this.paymentDataSubject.value) completed.push(3);
+    return completed;
   }
 
   // Check if checkout can proceed to next step
@@ -237,12 +318,14 @@ export class CheckoutService {
     this.dietaryDataSubject.next(null);
     this.customerDataSubject.next(null);
     this.paymentDataSubject.next(null);
+    this.currentStepSubject.next(1);
     
     // Clear from storage
     sessionStorage.removeItem('checkoutData');
     sessionStorage.removeItem('dietaryData');
     sessionStorage.removeItem('customerData');
     sessionStorage.removeItem('paymentData');
+    sessionStorage.removeItem('currentStep');
   }
 
   // Private helper methods
@@ -252,6 +335,12 @@ export class CheckoutService {
 
   private loadFromStorage(): void {
     try {
+      // Load current step
+      const currentStep = sessionStorage.getItem('currentStep');
+      if (currentStep) {
+        this.currentStepSubject.next(parseInt(currentStep, 10));
+      }
+
       const checkoutData = sessionStorage.getItem('checkoutData');
       if (checkoutData) {
         this.checkoutDataSubject.next(JSON.parse(checkoutData));
@@ -314,12 +403,7 @@ export class CheckoutService {
 
   // Get step name
   getStepName(step: number): string {
-    switch (step) {
-      case 1: return 'Dietary Preferences';
-      case 2: return 'Customer Details';
-      case 3: return 'Payment';
-      default: return 'Unknown Step';
-    }
+    return this.stepNames[step] || 'Unknown Step';
   }
 
   // Get total number of people

@@ -2,13 +2,9 @@
 <div class="booking-checkout-container">
   <!-- Header -->
   <div class="checkout-header">
-    <div class="logo">
-      <h2>GET YOUR GUIDE</h2>
-    </div>
-    
     <div class="progress-steps">
-      <div class="step completed">
-        <span class="step-number">✓</span>
+      <div class="step active">
+        <span class="step-number">1</span>
         <span class="step-label">Ẩm thực</span>
       </div>
       <div class="step active">
@@ -38,7 +34,7 @@
       </div>
 
       <!-- Customer Details Form -->
-      <form [formGroup]="customerForm" class="customer-form">
+      <form [formGroup]="customerForm" class="customer-form" (ngSubmit)="onSubmit()">
         <h2>Nhập thông tin cá nhân của bạn</h2>
         
         <!-- Required Fields Notice -->
@@ -55,14 +51,16 @@
             type="text"
             id="fullName"
             formControlName="fullName"
-            [class.error]="getFieldError('fullName')"
-            placeholder="Duy Phan"
+            class="form-control"
+            [class.valid]="customerForm.get('fullName')?.valid && customerForm.get('fullName')?.touched"
+            [class.error]="customerForm.get('fullName')?.invalid && customerForm.get('fullName')?.touched"
+            placeholder="Nguyễn Văn Nam"
           >
           <div class="success-indicator" *ngIf="customerForm.get('fullName')?.valid && customerForm.get('fullName')?.touched">
             <i class="fas fa-check"></i>
           </div>
-          <div class="error-message" *ngIf="getFieldError('fullName')">
-            {{ getFieldError('fullName') }}
+          <div class="error-message" *ngIf="customerForm.get('fullName')?.invalid && customerForm.get('fullName')?.touched">
+            Vui lòng nhập họ và tên hợp lệ
           </div>
         </div>
 
@@ -75,14 +73,16 @@
             type="email"
             id="email"
             formControlName="email"
-            [class.error]="getFieldError('email')"
-            placeholder="duyphan.nit@gmail.com"
+            class="form-control"
+            [class.valid]="customerForm.get('email')?.valid && customerForm.get('email')?.touched"
+            [class.error]="customerForm.get('email')?.invalid && customerForm.get('email')?.touched"
+            placeholder="example@gmail.com"
           >
           <div class="success-indicator" *ngIf="customerForm.get('email')?.valid && customerForm.get('email')?.touched">
             <i class="fas fa-check"></i>
           </div>
-          <div class="error-message" *ngIf="getFieldError('email')">
-            {{ getFieldError('email') }}
+          <div class="error-message" *ngIf="customerForm.get('email')?.invalid && customerForm.get('email')?.touched">
+            Vui lòng nhập địa chỉ email hợp lệ
           </div>
         </div>
 
@@ -94,17 +94,20 @@
           <select 
             id="country"
             formControlName="country"
-            [class.error]="getFieldError('country')"
+            class="form-control"
+            [class.valid]="customerForm.get('country')?.valid"
+            [class.error]="customerForm.get('country')?.invalid && customerForm.get('country')?.touched"
           >
+            <option value="">Chọn quốc gia</option>
             <option *ngFor="let country of countries" [value]="country.code">
-              {{ country.flag }} {{ country.name }} ({{ country.code }})
+              {{ country.flag }} {{ country.name }} ({{ country.dialCode }})
             </option>
           </select>
           <div class="success-indicator" *ngIf="customerForm.get('country')?.valid">
             <i class="fas fa-check"></i>
           </div>
-          <div class="error-message" *ngIf="getFieldError('country')">
-            {{ getFieldError('country') }}
+          <div class="error-message" *ngIf="customerForm.get('country')?.invalid && customerForm.get('country')?.touched">
+            Vui lòng chọn quốc gia
           </div>
         </div>
 
@@ -117,18 +120,163 @@
             type="tel"
             id="phone"
             formControlName="phone"
-            [class.error]="getFieldError('phone')"
+            class="form-control"
+            [class.valid]="customerForm.get('phone')?.valid && customerForm.get('phone')?.touched"
+            [class.error]="customerForm.get('phone')?.invalid && customerForm.get('phone')?.touched"
             placeholder="0903 102 269"
           >
           <div class="success-indicator" *ngIf="customerForm.get('phone')?.valid && customerForm.get('phone')?.touched">
             <i class="fas fa-check"></i>
           </div>
-          <div class="error-message" *ngIf="getFieldError('phone')">
-            {{ getFieldError('phone') }}
+          <div class="error-message" *ngIf="customerForm.get('phone')?.invalid && customerForm.get('phone')?.touched">
+            Vui lòng nhập số điện thoại hợp lệ
           </div>
           <p class="field-help">
             Chúng tôi sẽ chỉ liên hệ với bạn qua các cập nhật quan trọng hoặc thay đổi về đặt chỗ của bạn
           </p>
+        </div>
+
+        <!-- Date of Birth Field -->
+        <div class="form-group">
+          <label for="dateOfBirth">
+            Ngày sinh
+          </label>
+          <input 
+            type="date"
+            id="dateOfBirth"
+            formControlName="dateOfBirth"
+            class="form-control"
+          >
+        </div>
+
+        <!-- Company Field -->
+        <div class="form-group">
+          <label for="company">
+            Công ty
+          </label>
+          <input 
+            type="text"
+            id="company"
+            formControlName="company"
+            class="form-control"
+            placeholder="Tên công ty (tùy chọn)"
+          >
+        </div>
+
+        <!-- Address Field -->
+        <div class="form-group">
+          <label for="address">
+            Địa chỉ
+          </label>
+          <input 
+            type="text"
+            id="address"
+            formControlName="address"
+            class="form-control"
+            placeholder="Địa chỉ của bạn"
+          >
+        </div>
+
+        <!-- City and Postal Code Row -->
+        <div class="form-row">
+          <div class="form-group">
+            <label for="city">
+              Thành phố
+            </label>
+            <input 
+              type="text"
+              id="city"
+              formControlName="city"
+              class="form-control"
+              placeholder="Hồ Chí Minh"
+            >
+          </div>
+          <div class="form-group">
+            <label for="postalCode">
+              Mã bưu điện
+            </label>
+            <input 
+              type="text"
+              id="postalCode"
+              formControlName="postalCode"
+              class="form-control"
+              placeholder="700000"
+            >
+          </div>
+        </div>
+
+        <!-- Preferred Language Field -->
+        <div class="form-group">
+          <label for="language">
+            Ngôn ngữ ưa thích
+          </label>
+          <select 
+            id="language"
+            formControlName="language"
+            class="form-control"
+          >
+            <option value="vi">Tiếng Việt</option>
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+            <option value="zh">中文</option>
+          </select>
+        </div>
+
+        <!-- Special Requests Field -->
+        <div class="form-group">
+          <label for="specialRequests">
+            Yêu cầu đặc biệt
+          </label>
+          <textarea 
+            id="specialRequests"
+            formControlName="specialRequests"
+            class="form-control"
+            rows="3"
+            placeholder="Có yêu cầu đặc biệt nào không? (tùy chọn)"
+          ></textarea>
+        </div>
+
+        <!-- Customer Source Tracking -->
+        <div class="form-group">
+          <label for="customerSource">
+            Bạn biết đến chúng tôi qua đâu?
+          </label>
+          <select 
+            id="customerSource"
+            formControlName="customerSource"
+            class="form-control"
+          >
+            <option value="">Chọn nguồn</option>
+            <option value="google">Google Search</option>
+            <option value="facebook">Facebook</option>
+            <option value="instagram">Instagram</option>
+            <option value="youtube">YouTube</option>
+            <option value="friend">Bạn bè giới thiệu</option>
+            <option value="blog">Blog/Website</option>
+            <option value="travel-agent">Đại lý du lịch</option>
+            <option value="other">Khác</option>
+          </select>
+        </div>
+
+        <!-- Interest Categories for Marketing -->
+        <div class="form-group">
+          <label>Sở thích du lịch của bạn (chọn nhiều):</label>
+          <div class="checkbox-group">
+            <label class="checkbox-label" *ngFor="let interest of travelInterests">
+              <input 
+                type="checkbox" 
+                [value]="interest.value"
+                (change)="onInterestChange($event)"
+              >
+              <span class="checkbox-custom">
+                <i class="fas fa-check"></i>
+              </span>
+              <span class="checkbox-text">{{ interest.label }}</span>
+            </label>
+          </div>
         </div>
 
         <!-- Marketing Consent -->
@@ -145,8 +293,25 @@
             <span class="checkbox-custom">
               <i class="fas fa-check"></i>
             </span>
-            <span class="consent-text">Đăng ký nhận tin</span>
+            <span class="consent-text">Đăng ký nhận tin khuyến mãi và cập nhật từ GetYourGuide</span>
           </label>
+        </div>
+
+        <!-- Privacy Policy Agreement -->
+        <div class="consent-section">
+          <label class="consent-checkbox">
+            <input type="checkbox" formControlName="privacyConsent">
+            <span class="checkbox-custom">
+              <i class="fas fa-check"></i>
+            </span>
+            <span class="consent-text">
+              Tôi đồng ý với <a href="#" class="link">Điều khoản dịch vụ</a> và 
+              <a href="#" class="link">Chính sách bảo mật</a> <span class="required-asterisk">*</span>
+            </span>
+          </label>
+          <div class="error-message" *ngIf="customerForm.get('privacyConsent')?.invalid && customerForm.get('privacyConsent')?.touched">
+            Vui lòng đồng ý với điều khoản dịch vụ
+          </div>
         </div>
 
         <!-- Action Buttons -->
@@ -156,9 +321,8 @@
             Quay lại
           </button>
           <button 
-            type="button" 
+            type="submit" 
             class="btn btn-primary" 
-            (click)="onNext()"
             [disabled]="customerForm.invalid"
           >
             Đi tới thanh toán
@@ -174,16 +338,16 @@
         <h3>Tóm tắt đơn hàng</h3>
         
         <div class="tour-summary" *ngIf="tour">
-          <img [src]="tour.imageUrl" [alt]="tour.name" class="tour-image">
+          <img [src]="tour.imageUrl || defaultTourImage" [alt]="tour.name" class="tour-image">
           <div class="tour-info">
             <h4>{{ tour.name }}</h4>
             <div class="rating">
               <span class="stars">★★★★☆</span>
-              <span class="rating-text">{{ tour.rating }} ({{ tour.maxGroupSize }})</span>
+              <span class="rating-text">{{ tour.rating || '4.5' }} ({{ tour.reviewCount || '120' }})</span>
             </div>
             <div class="urgency-notice">
               <i class="fas fa-exclamation-circle"></i>
-              <span>Chỉ còn 8 giờ để đặt</span>
+              <span>Chỉ còn {{ hoursLeft }} giờ để đặt</span>
             </div>
           </div>
         </div>
@@ -191,19 +355,19 @@
         <div class="booking-details">
           <div class="detail-row">
             <i class="fas fa-user-friends"></i>
-            <span>Tour riêng • Ngôn ngữ: Tiếng Việt</span>
+            <span>{{ tourType }} • Ngôn ngữ: {{ tourLanguage }}</span>
           </div>
           <div class="detail-row">
             <i class="fas fa-calendar"></i>
-            <span>Thứ 6, 22 tháng 8, 2025 lúc 17:30</span>
+            <span>{{ formatBookingDate() }}</span>
           </div>
           <div class="detail-row">
             <i class="fas fa-user"></i>
-            <span>1 người lớn (0 - 99 tuổi)</span>
+            <span>{{ numberOfPeople }} {{ numberOfPeople > 1 ? 'người' : 'người' }} ({{ ageRange }})</span>
           </div>
           <div class="detail-row change-link">
             <i class="fas fa-edit"></i>
-            <a href="#">Thay đổi ngày hoặc số người tham gia</a>
+            <a href="#" (click)="changeBookingDetails($event)">Thay đổi ngày hoặc số người tham gia</a>
           </div>
         </div>
 
@@ -212,22 +376,45 @@
             <i class="fas fa-calendar-times"></i>
             <div>
               <strong>Hủy miễn phí</strong>
-              <small>Đến 17:30 ngày 21 tháng 8</small>
+              <small>Đến {{ formatCancellationDeadline() }}</small>
             </div>
           </div>
 
           <div class="promo-section">
-            <button class="promo-btn">
+            <button class="promo-btn" (click)="togglePromoCode()">
               <i class="fas fa-tag"></i>
               Nhập mã khuyến mãi, tín dụng hoặc thẻ quà tặng
             </button>
+            <div class="promo-input" *ngIf="showPromoInput">
+              <input 
+                type="text" 
+                [(ngModel)]="promoCode" 
+                placeholder="Nhập mã khuyến mãi"
+                class="form-control"
+              >
+              <button class="btn btn-primary" (click)="applyPromoCode()">Áp dụng</button>
+            </div>
           </div>
 
           <div class="total-section">
+            <div class="price-breakdown" *ngIf="showPriceBreakdown">
+              <div class="price-row">
+                <span>Giá tour ({{ numberOfPeople }} người)</span>
+                <span>{{ formatPrice(basePriceTotal) }}</span>
+              </div>
+              <div class="price-row" *ngIf="taxes > 0">
+                <span>Thuế và phí</span>
+                <span>{{ formatPrice(taxes) }}</span>
+              </div>
+              <div class="price-row discount-row" *ngIf="discount > 0">
+                <span>Giảm giá</span>
+                <span>-{{ formatPrice(discount) }}</span>
+              </div>
+            </div>
             <div class="total-row">
               <span class="total-label">Tổng cộng</span>
               <div class="total-amount">
-                <span class="amount">₫3.865.400</span>
+                <span class="amount">{{ formatPrice(totalAmount) }}</span>
                 <small>Đã bao gồm tất cả thuế và phí</small>
               </div>
             </div>

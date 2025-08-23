@@ -216,9 +216,10 @@ export class CheckoutStepperComponent {
   @Output() stepChange = new EventEmitter<number>();
 
   steps: Step[] = [
-    { number: 1, title: 'Activity', status: 'pending' },
-    { number: 2, title: 'Contact', status: 'pending' },
-    { number: 3, title: 'Payment', status: 'pending' }
+    { number: 1, title: 'Dietary', status: 'pending' },
+    { number: 2, title: 'Details', status: 'pending' },
+    { number: 3, title: 'Payment', status: 'pending' },
+    { number: 4, title: 'Success', status: 'pending' }
   ];
 
   ngOnInit() {

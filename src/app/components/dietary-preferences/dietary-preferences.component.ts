@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angu
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormArray, FormControl } from '@angular/forms';
 import { Tour } from '../../models/tour';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dietary-preferences',
@@ -34,7 +35,7 @@ export class DietaryPreferencesComponent implements OnInit, OnDestroy {
     'Sulfit'
   ];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     // Initialize the form
     this.dietaryForm = this.fb.group({
       dietaryType: ['meat', Validators.required],
@@ -142,7 +143,8 @@ export class DietaryPreferencesComponent implements OnInit, OnDestroy {
         timestamp: new Date()
       };
 
-      this.next.emit(formData);
+      // Navigate to customer details
+      this.router.navigate(['/checkout/details'], { state: formData });
     }
   }
 

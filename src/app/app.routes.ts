@@ -12,5 +12,8 @@ export const routes: Routes = [
   { path: 'tour/:id/book', component: BookingDetailComponent },
   { path: 'tour/:id/gallery', component: TourGalleryComponent },
   { path: 'checkout', component: CheckoutComponent },
+  { path: 'checkout/dietary', loadComponent: () => import('./components/dietary-preferences/dietary-preferences.component').then(m => m.DietaryPreferencesComponent) },
+  { path: 'checkout/details', loadComponent: () => import('./components/customer-details/customer-details.component').then(m => m.CustomerDetailsComponent) },
+  { path: 'checkout/payment', loadComponent: () => import('./components/payment/payment.component').then(m => m.PaymentComponent) },
   { path: '**', redirectTo: '' }
-];
+  ];

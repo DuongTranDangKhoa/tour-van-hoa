@@ -271,7 +271,7 @@ export class BookingDetailComponent implements OnInit {
       return;
     }
 
-    if (this.bookingForm.valid && !this.isSubmitting) {
+    if (!this.isSubmitting) {
       this.isSubmitting = true;
       const orderState = {
         tourId: this.tour?.id || 0,
@@ -290,7 +290,7 @@ export class BookingDetailComponent implements OnInit {
         totalPrice: this.getTotalPrice()
       };
 
-      this.router.navigate(['/checkout'], { state: orderState });
+      this.router.navigate(['/checkout/dietary'], { state: orderState });
       this.isSubmitting = false;
     }
   }

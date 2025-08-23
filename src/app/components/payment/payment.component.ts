@@ -3,6 +3,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Tour } from '../../models/tour';
+import { Router } from '@angular/router';
 
 interface BookingData {
   tourId: number;
@@ -470,7 +471,7 @@ export class PaymentComponent {
   paymentForm: FormGroup;
   isProcessing = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.paymentForm = this.createPaymentForm();
   }
 
@@ -509,7 +510,9 @@ export class PaymentComponent {
       
       // Simulate processing delay
       setTimeout(() => {
-        this.submit.emit(paymentData);
+        // Navigate to success page or show success message
+        alert('Thanh toán thành công!');
+        this.router.navigate(['/bookings']);
         this.isProcessing = false;
       }, 1000);
     } else {
