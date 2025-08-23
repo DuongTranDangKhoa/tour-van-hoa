@@ -307,10 +307,8 @@
       }
       
       &:before {
-        content: "•";
-        color: #007bff;
-        font-weight: bold;
-        margin-right: 8px;
+        content: "";
+        margin-right: 0;
       }
     }
   }
