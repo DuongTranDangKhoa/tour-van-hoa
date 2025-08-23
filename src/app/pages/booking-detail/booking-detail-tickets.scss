@@ -219,7 +219,7 @@
   color: #007bff;
   font-size: 14px;
   cursor: pointer;
-  padding: 8px 0;
+  padding: 4px 0 2px 0;
   text-decoration: underline;
   transition: color 0.2s;
   
@@ -229,13 +229,11 @@
 }
 
 .ticket-details {
-  margin-top: 12px;
-  padding: 12px;
-
+  margin-top: 4px;
 
   
   p {
-    margin: 0 0 8px 0;
+    margin: 0 0 4px 0;
     font-size: 14px;
     color: #666;
   }

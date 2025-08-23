@@ -57,10 +57,10 @@ export class BookingDetailComponent implements OnInit {
 
   // Tickets
   tickets: TicketType[] = [
-    { id: 'adult', name: 'Adult (13+)', price: 37.00, bookingFee: 0, quantity: 0 },
-    { id: 'child', name: 'Child (4–12 years old)', price: 37.00, bookingFee: 0, quantity: 0 },
-    { id: 'small-group', name: 'Private Small Group (3–5 people)', price: 305.00, bookingFee: 0, quantity: 0 },
-    { id: 'large-group', name: 'Private Large Group (6–14 people)', price: 629.00, bookingFee: 0, quantity: 0 }
+    { id: 'adult', name: 'Adult (13+) – $37.00', price: 37.00, bookingFee: 0, quantity: 0 },
+    { id: 'child', name: 'Child (4–12 years old) – $37.00', price: 37.00, bookingFee: 0, quantity: 0 },
+    { id: 'small-group', name: 'Private Small Group', price: 305.00, bookingFee: 0, quantity: 0 },
+    { id: 'large-group', name: 'Private Large Group', price: 629.00, bookingFee: 0, quantity: 0 }
   ];
 
   // Ticket info visibility tracking

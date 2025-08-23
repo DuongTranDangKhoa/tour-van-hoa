@@ -332,31 +332,25 @@
                 <div class="ticket-details" *ngIf="isTicketInfoVisible(ticket.id)">
                   <p>Ticket includes:</p>
                   <ul *ngIf="ticket.id === 'adult'">
-                    <li>Admission to all workshops & cultural activities</li>
-                    <li>Includes lunch with local cuisine</li>
-                    <li>Shared coach with a fixed itinerary</li>
+                    <li>Shared coach, fixed itinerary</li>
                     <li>Arrival at the departure point before the tour starts</li>
                   </ul>
                   <ul *ngIf="ticket.id === 'child'">
-                    <li>Admission to all workshops & cultural activities</li>
-                    <li>Includes lunch (child-friendly portion)</li>
                     <li>Must be accompanied by an adult</li>
-                    <li>Shared coach with a fixed itinerary</li>
+                    <li>Shared coach, fixed itinerary</li>
                     <li>Arrival at the departure point before the tour starts</li>
                   </ul>
                   <ul *ngIf="ticket.id === 'small-group'">
                     <li>Private tour for up to 5 guests</li>
-                    <li>Includes lunch with local cuisine</li>
                     <li>Private vehicle with hotel pick-up & drop-off</li>
-                    <li>Flexible itinerary: option to replace or skip selected activities in the Art & Culture program</li>
-                    <li>Admission to all workshops & cultural activities</li>
+                    <li>Flexible itinerary: option to adjust or replace selected activities</li>
+                    <li>Personalized journey designed for small groups</li>
                   </ul>
                   <ul *ngIf="ticket.id === 'large-group'">
                     <li>Private tour for groups of 6–14 guests</li>
-                    <li>Includes lunch with local cuisine</li>
                     <li>Private vehicle with hotel pick-up & drop-off</li>
                     <li>Customizable itinerary tailored to group preferences</li>
-                    <li>Admission to all workshops & cultural activities</li>
+                    <li>Premium private experience for larger groups</li>
                   </ul>
                 </div>
               </div>
