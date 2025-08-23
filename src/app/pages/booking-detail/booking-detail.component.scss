@@ -4,6 +4,52 @@
 @use './booking-detail-tickets.scss';
 @use './booking-detail-widgets.scss';
 
+.description-text {
+  white-space: pre-line;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.description-content {
+  .intro-section,
+  .highlights-section,
+  .general-info-section,
+  .full-description-section {
+    margin-bottom: 30px;
+    
+    h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: #333;
+    }
+  }
+  
+  .highlights-section,
+  .general-info-section {
+    .highlights-list,
+    .general-info-list {
+      padding: 0;
+      
+      p {
+        padding: 8px 0;
+        font-size: 14px;
+        line-height: 1.5;
+        text-align: justify;
+        margin: 0;
+        
+        &.pricing-detail,
+        &.contact-detail {
+          padding-left: 20px;
+          font-size: 13px;
+          color: #666;
+          text-align: justify;
+        }
+      }
+    }
+  }
+}
+
 .tour-hero-section {
   cursor: pointer;
   transition: transform 0.2s ease;

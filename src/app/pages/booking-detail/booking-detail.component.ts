@@ -73,6 +73,43 @@ export class BookingDetailComponent implements OnInit {
   // Calendar days
   days: CalendarDay[] = [];
 
+  // Description processing methods
+  getHighlights(): string[] {
+    if (!this.tour?.description) return [];
+    const description = this.tour.description;
+    const highlightsMatch = description.match(/Highlights\s*\n\s*\n(.*?)(?=\n\s*\nGeneral Info|$)/s);
+    if (highlightsMatch) {
+      return highlightsMatch[1]
+        .split('\n')
+        .filter(line => line.trim() && line.includes('🌏') || line.includes('☕') || line.includes('🏺') || line.includes('🪵') || line.includes('🏮') || line.includes('🏖️') || line.includes('🍲') || line.includes('🎁'))
+        .map(line => line.trim());
+    }
+    return [];
+  }
+
+  getGeneralInfo(): string[] {
+    if (!this.tour?.description) return [];
+    const description = this.tour.description;
+    const generalInfoMatch = description.match(/General Info\s*\n\s*\n(.*?)(?=\n\s*\nFull Description|$)/s);
+    if (generalInfoMatch) {
+      return generalInfoMatch[1]
+        .split('\n')
+        .filter(line => line.trim() && (line.includes('📅') || line.includes('⏳') || line.includes('📍') || line.includes('👥') || line.includes('🚐') || line.includes('💰') || line.includes('🏨') || line.includes('🍴') || line.includes('🦽') || line.includes('📌') || line.includes('❌') || line.includes('📲')))
+        .map(line => line.trim());
+    }
+    return [];
+  }
+
+  getFullDescription(): string {
+    if (!this.tour?.description) return '';
+    const description = this.tour.description;
+    const fullDescMatch = description.match(/Full Description\s*\n\s*\n(.*?)(?=\n\s*🌿|$)/s);
+    if (fullDescMatch) {
+      return fullDescMatch[1].trim();
+    }
+    return '';
+  }
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,

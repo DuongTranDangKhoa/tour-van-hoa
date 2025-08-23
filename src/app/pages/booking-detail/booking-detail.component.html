@@ -4,7 +4,7 @@
     <div class="media-section">
       <!-- Left section - 50% -->
       <div class="main-image-section">
-        <img [src]="tour.imageUrl" [alt]="tour.name" [title]="tour.name" class="hero-image">
+        <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image" class="hero-image">
         <button class="play-button">
           <i class="icon">▶️</i>
         </button>
@@ -13,17 +13,17 @@
       <!-- Right section - 50% divided into 4 equal parts -->
       <div class="image-grid-section">
         <div class="grid-item">
-          <img [src]="tour.imageUrl" [alt]="tour.name" [title]="tour.name">
+          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image">
           <div class="overlay-text">Tour Van Hoa presents</div>
         </div>
         <div class="grid-item top-right-border">
-          <img [src]="tour.imageUrl" [alt]="tour.name" [title]="tour.name">
+          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image">
         </div>
         <div class="grid-item">
-          <img [src]="tour.imageUrl" [alt]="tour.name" [title]="tour.name">
+          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image">
         </div>
         <div class="grid-item bot-right-border">
-          <img [src]="tour.imageUrl" [alt]="tour.name">
+          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image">
           <div class="gallery-btn">
             <i class="icon">📷</i>
             <span>Thư viện</span>
@@ -48,31 +48,60 @@
           <span>(4.5)</span>
         </div>
       </div>
-              <div class="description-section">
+                        <div class="description-section">
           <h2>Description</h2>
-          <p>{{ tour.description }}</p>
-    
-          <h3>Description</h3>
-          <ul class="highlights-list">
-            <p *ngFor="let highlight of tour.description">{{ highlight }}</p>
-          </ul>
-        </div>
-       <div class="general-info-section">
-                  <h2>General Information</h2>
-        <ul>
-          <li><i class="icon">📍</i> <strong>Destination:</strong> {{ tour.destination }}</li>
-          <li><i class="icon">⏰</i> <strong>Duration:</strong> {{ tour.duration }}</li>
-          <li><i class="icon">👥</i> <strong>Max Group Size:</strong> {{ tour.maxGroupSize }}</li>
-          <li><i class="icon">💰</i> <strong>Price:</strong> {{ tour.price | currency:'VND':'symbol':'1.0-0' }}</li>
-          <li><i class="icon">📅</i> <strong>Departure Date:</strong> {{ tour.departureDate || 'Daily' }}</li>
-          <li><i class="icon">🌐</i> <strong>Languages:</strong> {{ tour.languages ? tour.languages.join(', ') : 'Vietnamese, English' }}</li>
-          <li><i class="icon">⭐</i> <strong>Difficulty:</strong> {{ tour.difficulty }}</li>
-        </ul>
-      </div>
-      <div class="programme-section">
-        <h2>Tour Program</h2>
-        <pre class="tour-program-content">{{ tour.tourProgram }}</pre>
-      </div> 
+          <div class="description-content">
+            <div class="intro-section">
+              <h3>Intro Description</h3>
+              <p>⭐ Step into the heart of Vietnam with the Vietnam Art & Culture Tour by This Is Home — an immersive cultural journey designed to connect you with the country's authentic heritage. From traditional craft workshops to wandering the lantern-lit streets of Hoi An, every moment reveals the timeless beauty of Vietnam's traditions. Guided by passionate locals, this full-day adventure blends creativity, cuisine, and community, leaving you with unforgettable memories of Vietnam's soul.</p>
+            </div>
+            
+            <div class="highlights-section">
+              <h3>Highlights</h3>
+              <div class="highlights-list">
+                <p>🌏 Authentic cultural immersion with local artisans.</p>
+                <p>☕ Hands-on coffee brewing workshop at Hush Workspace.</p>
+                <p>🏺 Pottery-making at Le Duc Ha Terra Cotta Studio, including lunch.</p>
+                <p>🪵 Wood carving workshop at Au Lac with master artisans.</p>
+                <p>🏮 Explore the enchanting lantern-lit Hoi An Ancient Town.</p>
+                <p>🏖️ Relax and discover Vietnam's stunning beaches.</p>
+                <p>🍲 Savor authentic local cuisine, rich in flavor.</p>
+                <p>🎁 Receive a special keepsake gift set from This Is Home.</p>
+              </div>
+            </div>
+            
+            <div class="general-info-section">
+              <h3>General Info</h3>
+              <div class="general-info-list">
+                <p>📅 Date & Time: Departure at 08:45 AM – Return at 5:30 PM (full-day tour).</p>
+                <p>⏳ Duration: Approx. 9 hours.</p>
+                <p>📍 Location: Hotel/office pick-up & drop-off in the Da Nang – Hoi An area.</p>
+                <p>👥 Age requirement: Suitable for all ages; children under 16 must be accompanied by an adult.</p>
+                <p>🚐 Transportation: Private coach (7-seater or 16-seater), air-conditioned.</p>
+                <p>💰 Pricing:</p>
+                <p class="pricing-detail">Package 1: 7-seater – $307/tour | 16-seater – $635/tour.</p>
+                <p class="pricing-detail">Package 2: 7-seater – $42/tour | 16-seater – $35/tour.</p>
+                <p class="pricing-detail">Full program: SGD $296 per person (excludes international flights).</p>
+                <p>🏨 Accommodation (multi-day option): 3–4 star hotels, double rooms (single available upon request), with Wi-Fi & TV.</p>
+                <p>🍴 Meals included: Hotel breakfast, 4 lunches, 3 dinners (including Welcome Dinner & Gala Dinner).</p>
+                <p>🦽 Accessibility: Wheelchair-friendly venues.</p>
+                <p>📌 Included: Entrance fees, English-speaking guides, all workshops, transportation, meals, and gift set.</p>
+                <p>❌ Not included: Personal expenses, shopping, phone calls, additional drinks/meals, international flights.</p>
+                <p>📲 Booking & Contact:</p>
+                <p class="contact-detail">Website: tih.nhi.sg</p>
+                <p class="contact-detail">Email: danh&#64;nhi.sg</p>
+                <p class="contact-detail">WhatsApp: +84 367666618</p>
+              </div>
+            </div>
+            
+            <div class="full-description-section">
+              <h3>Full Description</h3>
+              <p>✨ This Is Home brings you a cultural journey to remember through Central Vietnam. Guided by local artisans, you'll learn the art of coffee brewing, pottery, and wood carving. Then, stroll through the vibrant lantern-lit alleys of Hoi An Ancient Town, savor local cuisine, and unwind at breathtaking beaches.</p>
+              <p>Every experience is designed to connect you deeply with Vietnam's heritage — from creative workshops to heartwarming meals and meaningful keepsakes. With accommodation, transport, guides, and meals fully included, all you need to do is immerse yourself.</p>
+              <p>🌿 Whether you're a culture enthusiast, a family seeking meaningful bonding, or a traveler craving authentic encounters — this tour promises lasting memories of Vietnam's soul.</p>
+            </div>
+          </div>
+        </div> 
       <div class="user-photo-gallery">
         <h2>User Photo Gallery</h2>
         <div class="photo-grid">
