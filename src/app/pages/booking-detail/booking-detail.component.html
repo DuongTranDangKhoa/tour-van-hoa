@@ -104,7 +104,7 @@
         </div> 
       <div class="user-photo-gallery">
         <h2>User Photo Gallery</h2>
-        <div class="photo-grid">
+        <div class="photo-grid" (click)="openImageGallery()">
           <div class="photo-item">
             <img src="assets/minecraft-experience.jpg" alt="Minecraft Experience Screen">
             <div class="photo-overlay">
@@ -132,7 +132,7 @@
         </div>
       </div>
 
-      <div class="user-reviews-section">
+      <div class="user-reviews-section" >
         <h2>User reviews</h2>
         <div class="reviews-header">
           <div class="score">
@@ -370,16 +370,15 @@
                     <li>Arrival at the departure point before the tour starts</li>
                   </ul>
                   <ul *ngIf="ticket.id === 'small-group'">
-                    <li>Private tour for up to 5 guests</li>
-                    <li>Private vehicle with hotel pick-up & drop-off</li>
-                    <li>Flexible itinerary: option to adjust or replace selected activities</li>
-                    <li>Personalized journey designed for small groups</li>
+                    <li></li>
+                    <li>For groups of 3–5 guests</li>
+                    <li>Private vehicle with hotel pick-up & drop-offted activities</li>
+                    <li>Flexible itinerary: option to adjust or replace selected activities.</li>
                   </ul>
                   <ul *ngIf="ticket.id === 'large-group'">
-                    <li>Private tour for groups of 6–14 guests</li>
+                    <li>For groups of 6–14 guests</li>
                     <li>Private vehicle with hotel pick-up & drop-off</li>
                     <li>Customizable itinerary tailored to group preferences</li>
-                    <li>Premium private experience for larger groups</li>
                   </ul>
                 </div>
               </div>
@@ -396,21 +395,7 @@
               </div>
             </div>
           </div>
-
-          <!-- Add-on -->
-          <div class="add-on-item">
-            <h4>Photo Opportunity</h4>
-            <p>Capture the moment with a personalized 15x20 cm printed photo in a premium Jurassic World folder...</p>
-            <a href="#" class="read-more">Read more</a>
-            <div class="add-on-price">
-              <span class="price">+ {{ addOnPrice | currency:'USD':'symbol':'1.2-2' }}</span>
-            </div>
-            <div class="quantity-selector">
-              <button type="button" (click)="adjustAddOn(-1)" [disabled]="addOnQuantity === 0">−</button>
-              <span>{{ addOnQuantity }}</span>
-              <button type="button" (click)="adjustAddOn(1)">+</button>
-            </div>
-          </div>
+    
 
           <!-- Total Price -->
           <div class="total-price">
