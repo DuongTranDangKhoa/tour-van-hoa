@@ -1,222 +1,232 @@
-<!-- src/app/components/dietary-preferences/dietary-preferences.component.html -->
-<style>
-  .checkout-header {
-    /* Giữ cố định header ở đầu trang khi cuộn */
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background-color: white; /* Đảm bảo header có nền */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Thêm bóng mờ để tách biệt */
-
-    /* Căn giữa các bước tiến trình */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1rem 0;
-  }
-</style>
-<div class="booking-checkout-container">
-  <!-- Header -->
-  <div class="checkout-header">
-    <div class="progress-steps">
-      <div class="step active">
-        <span class="step-number">1</span>
-        <span class="step-label">Ẩm thực</span>
-      </div>
-      <div class="step">
-        <span class="step-number">2</span>
-        <span class="step-label">Thông tin</span>
-      </div>
-      <div class="step">
-        <span class="step-number">3</span>
-        <span class="step-label">Thanh toán</span>
-      </div>
+<div class="checkout-page-layout__container">
+  <!-- Header Navigation -->
+  <section class="checkout-page-layout__navigation">
+    <div class="step-navigation checkout-page-layout__step-navigation">
+      <ul class="step-navigation__bar" role="tablist">
+        <li id="step-item-activity" class="step-navigation__bar__step--active step-navigation__bar__step--new-color step-navigation__bar__step" role="tab" aria-current="true" aria-label="Activity">
+          <span class="step-navigation__bar__step__circle--active step-navigation__bar__step__circle--new-color step-navigation__bar__step__circle">
+            <span>1</span>
+          </span>
+          <span class="step-navigation__bar__step__name--active step-navigation__bar__step__name">Chế độ ăn</span>
+        </li>
+        <li id="step-item-personal" class="step-navigation__bar__step--new-color step-navigation__bar__step" role="tab" aria-current="false" aria-label="Contact">
+          <span class="step-navigation__bar__step__circle--new-color step-navigation__bar__step__circle">
+            <span>2</span>
+          </span>
+          <span class="step-navigation__bar__step__name">Thông tin chi tiết</span>
+        </li>
+        <li id="step-item-payment" class="step-navigation__bar__step--new-color step-navigation__bar__step" role="tab" aria-current="false" aria-label="Payment">
+          <span class="step-navigation__bar__step__circle--new-color step-navigation__bar__step__circle">
+            <span>3</span>
+          </span>
+          <span class="step-navigation__bar__step__name">Thanh toán</span>
+        </li>
+      </ul>
     </div>
-  </div>
+  </section>
 
-  <div class="checkout-content">
-    <!-- Left Column - Form -->
-    <div class="form-section">
-      <!-- Timer Warning -->
-      <div class="timer-warning">
-        <i class="fas fa-clock"></i>
-        <span>Chúng tôi sẽ giữ chỗ cho bạn trong <strong>{{ formatTime(timeLeft) }} phút</strong></span>
-      </div>
+  <div class="checkout-page-layout__content-wrapper">
+    <!-- Main Content -->
+    <section class="checkout-page-layout__main-content" data-test-id="checkout-section">
 
-      <!-- Security Badge -->
-      <div class="security-badge">
-        <i class="fas fa-shield-alt"></i>
-        <span>Thanh toán nhanh chóng và bảo mật</span>
-      </div>
-
-      <!-- Tour Info -->
-      <div class="tour-info-brief" *ngIf="tour">
-        <img [src]="tour.imageUrl" [alt]="tour.name" class="tour-thumbnail">
-        <div class="tour-details">
-          <h3>{{ tour.name }}</h3>
-          <p>{{ tour.duration }}</p>
+      <!-- Warning Box -->
+      <div class="warning-box" style="background-color: #ffebee; padding: 16px; border-radius: 4px; margin: 20px 0;">
+        <div style="display: flex; align-items: center;">
+          <span class="c-icon" style="margin-right: 8px;">
+            <span class="i-alert c-icon__c-alert" aria-hidden="true"></span>
+          </span>
+          <span>⏱️Chúng tôi sẽ giữ chỗ cho bạn trong 27:53 phút.</span>
         </div>
       </div>
 
-      <!-- Dietary Preferences Form -->
-      <form [formGroup]="dietaryForm" class="dietary-form">
-        <h2>Bạn là người ăn mặn hay ăn chay?</h2>
+      <!-- Event Info -->
+      <section>
+        <article class="activity">
+          <picture class="c-image c-image--loaded c-image--radius-1x activity__image" style="--34eb26b3:1/1;--eadecdf2:auto;--2655a9e6:64px;">
+            <img class="c-image__img c-image__img--crop" 
+                 src="https://cdn.getyourguide.com/image/format=auto,fit=crop,gravity=auto,quality=60,width=65,height=65/tour_img/5c9e27e2d47d4.jpeg" 
+                 alt="Từ Las Vegas: Chuyến đi VIP trong ngày đến Los Angeles/Hollywood" 
+                 width="64" height="64">
+          </picture>
+          <div class="activity__details">
+            <div class="activity__title">Từ Las Vegas: Chuyến đi VIP trong ngày đến Los Angeles/Hollywood</div>
+            <div class="activity__date">Thứ Bảy, ngày 6 tháng 9 năm 2025 lúc 6:00 sáng</div>
+          </div>
+        </article>
+
+        <!-- Dietary Question -->
+        <h2 class="checkout__title" style="margin-top: 30px;">Chế độ ăn của bạn là gì?</h2>
         
-        <!-- Dietary Type Selection -->
-        <div class="dietary-type-section">
-          <div class="radio-group">
-            <label class="radio-option">
-              <input type="radio" formControlName="dietaryType" value="meat">
-              <span class="radio-custom"></span>
-              <span class="radio-label">Ăn mặn (bao gồm thịt, cá)</span>
-            </label>
+        <div class="c-radio-group c-radio-group--vertical" style="margin: 20px 0;">
+          <div class="c-radio c-radio-vertical">
+            <div class="c-radio__container">
+              <input id="diet-meat" type="radio" class="c-radio__input" name="dietary-preference" value="meat" [(ngModel)]="dietaryPreference">
+              <div class="c-radio__label-container">
+                <label class="c-radio__label-text" for="diet-meat">Ăn mặn (bao gồm thịt, cá)</label>
+              </div>
+            </div>
+          </div>
+          <div class="c-radio c-radio-vertical">
+            <div class="c-radio__container">
+              <input id="diet-vegetarian" type="radio" class="c-radio__input" name="dietary-preference" value="vegetarian" [(ngModel)]="dietaryPreference">
+              <div class="c-radio__label-container">
+                <label class="c-radio__label-text" for="diet-vegetarian">Ăn chay (không thịt, cá)</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Allergy Input -->
+        <div style="margin: 30px 0;">
+          <h3>Nhập món dị ứng của bạn:</h3>
+          <div class="allergy-input-container" style="margin: 15px 0;">
+            <input type="text" 
+                   class="c-input" 
+                   placeholder="Nhập món ăn bạn bị dị ứng..." 
+                   [(ngModel)]="allergyInput"
+                   (input)="onAllergyInput()"
+                   style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px;">
             
-            <label class="radio-option">
-              <input type="radio" formControlName="dietaryType" value="vegetarian">
-              <span class="radio-custom"></span>
-              <span class="radio-label">Ăn chay (không thịt, cá)</span>
-            </label>
-          </div>
-        </div>
-
-        <!-- Allergies Section -->
-        <div class="allergies-section">
-          <h3>Bạn có dị ứng với món ăn nào không? (Chọn tất cả các loại thức ăn bạn dị ứng)</h3>
-          
-          <div class="allergies-grid">
-            <label 
-              *ngFor="let allergy of commonAllergies; let i = index" 
-              class="allergy-checkbox"
-              [class.checked]="getAllergyControlAt(i).value"
-            >
-              <input 
-                type="checkbox" 
-                [formControl]="getAllergyControlAt(i)"
-              >
-              <span class="checkbox-custom">
-                <i class="fas fa-check"></i>
-              </span>
-              <span class="allergy-name">{{ allergy }}</span>
-            </label>
+            <!-- Autocomplete Suggestions -->
+            <div class="autocomplete-suggestions" *ngIf="showSuggestions && filteredSuggestions.length > 0"
+                 style="border: 1px solid #ddd; border-top: none; max-height: 200px; overflow-y: auto;">
+              <div *ngFor="let suggestion of filteredSuggestions" 
+                   class="suggestion-item"
+                   (click)="selectAllergy(suggestion)"
+                   style="padding: 10px; cursor: pointer; border-bottom: 1px solid #eee;"
+                   onMouseOver="this.style.backgroundColor='#f5f5f5'"
+                   onMouseOut="this.style.backgroundColor='white'">
+                {{ suggestion }}
+              </div>
+            </div>
           </div>
 
-          <!-- Add Custom Allergy -->
-          <div class="custom-allergy-input">
-            <div class="input-group">
-              <input 
-                type="text"
-                formControlName="customAllergy"
-                placeholder="Thêm dị ứng khác..."
-                class="custom-input"
-              >
-              <button 
-                type="button"
-                (click)="addCustomAllergy()"
-                class="add-btn"
-                [disabled]="!dietaryForm.get('customAllergy')?.value?.trim()"
-              >
-                <i class="fas fa-plus"></i>
-              </button>
+          <!-- Selected Allergies -->
+          <div class="selected-allergies" style="margin-top: 15px;">
+            <div *ngFor="let allergy of selectedAllergies" class="allergy-tag"
+                 style="display: inline-block; background: #e3f2fd; padding: 6px 12px; margin: 4px; border-radius: 16px; font-size: 14px;">
+              {{ allergy }}
+              <span (click)="removeAllergy(allergy)" style="margin-left: 8px; cursor: pointer; color: #666;">×</span>
             </div>
           </div>
         </div>
 
-        <!-- Additional Notes -->
-        <div class="notes-section">
-          <label for="additionalNotes">Ghi chú thêm về ẩm thực (không bắt buộc)</label>
-          <textarea 
-            id="additionalNotes"
-            formControlName="additionalNotes"
-            placeholder="Ví dụ: Không ăn được đồ cay, thích món ngọt..."
-            rows="3"
-          ></textarea>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="form-actions">
-          <button type="button" class="btn btn-secondary" (click)="onBack()">
-            <i class="fas fa-arrow-left"></i>
-            Quay lại
-          </button>
-          <button 
-            type="button" 
-            class="btn btn-primary" 
-            (click)="onNext()"
-            [disabled]="dietaryForm.invalid"
-          >
-            Tiếp theo: Thông tin cá nhân
-            <i class="fas fa-arrow-right"></i>
+        <!-- Next Button -->
+        <div class="checkout-step-activity__submit">
+          <button class="c-button c-button--medium c-button--filled c-button--filled-standard checkout-step-activity__submit--button" 
+                  type="button" 
+                  (click)="goToNextStep()"
+                  data-test-id="checkout-next-button">
+            <span class="c-button__text">
+              <span class="checkout-step-activity__label">Bước tiếp theo: Thông tin chi tiết</span>
+            </span>
           </button>
         </div>
-      </form>
-    </div>
+      </section>
+    </section>
 
-    <!-- Right Column - Order Summary -->
-    <div class="order-summary">
-      <div class="summary-card">
-        <h3>Tóm tắt đơn hàng</h3>
-        
-        <div class="tour-summary" *ngIf="tour">
-          <img [src]="tour.imageUrl" [alt]="tour.name" class="tour-image">
-          <div class="tour-info">
-            <h4>{{ tour.name }}</h4>
-            <div class="rating">
-              <span class="stars">★★★★☆</span>
-              <span class="rating-text">{{ tour.rating }} ({{ tour.maxGroupSize }})</span>
-            </div>
-            <div class="urgency-notice">
-              <i class="fas fa-exclamation-circle"></i>
-              <span>Chỉ còn 8 giờ để đặt</span>
-            </div>
-          </div>
+    <!-- Order Summary Sidebar -->
+    <section class="checkout-page-layout__order-summary">
+      <div class="order-summary" data-test-id="order-summary">
+        <div class="order-summary__title">
+          <h3>Tóm tắt đơn hàng</h3>
         </div>
-
-        <div class="booking-details">
-          <div class="detail-row">
-            <i class="fas fa-user-friends"></i>
-            <span>Tour riêng • Ngôn ngữ: Tiếng Việt</span>
-          </div>
-          <div class="detail-row">
-            <i class="fas fa-calendar"></i>
-            <span>Thứ 6, 22 tháng 8, 2025 lúc 17:30</span>
-          </div>
-          <div class="detail-row">
-            <i class="fas fa-user"></i>
-            <span>1 người lớn (0 - 99 tuổi)</span>
-          </div>
-          <div class="detail-row change-link">
-            <i class="fas fa-edit"></i>
-            <a href="#">Thay đổi ngày hoặc số người tham gia</a>
-          </div>
-        </div>
-
-        <div class="pricing-section">
-          <div class="free-cancellation">
-            <i class="fas fa-calendar-times"></i>
-            <div>
-              <strong>Hủy miễn phí</strong>
-              <small>Đến 17:30 ngày 21 tháng 8</small>
+        <div class="order-summary__container">
+          <section>
+            <div class="order-summary__cart-items">
+              <div class="cart-item" data-test-id="cart-item">
+                <section class="cart-item__activity-container">
+                  <div class="cart-item__activity-container--main-info">
+                    <div class="cart-item__activity-container--main-info--image">
+                      <picture class="c-image c-image--loaded c-image--radius-1x">
+                        <img class="c-image__img c-image__img--crop" 
+                             src="https://cdn.getyourguide.com/image/format=auto,fit=crop,gravity=auto,quality=60,width=65,height=65/tour_img/5c9e27e2d47d4.jpeg" 
+                             alt="Từ Las Vegas: Chuyến đi VIP trong ngày đến Los Angeles/Hollywood" 
+                             width="64" height="64">
+                      </picture>
+                    </div>
+                    <div class="cart-item__activity-container-main-info--details">
+                      <h4 class="cart-item__activity-container--main-info--title" data-test-id="cart-item-title">
+                        Từ Las Vegas: Chuyến đi VIP trong ngày đến Los Angeles/Hollywood
+                      </h4>
+                      <div class="cart-item__description--rating">
+                        <div class="c-activity-rating c-activity-rating--compact darker-yellow-experiment">
+                          <div class="c-user-rating c-user-rating--compact">
+                            <div class="c-user-rating__stars-container">
+                              <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--full"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
+                              <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--full"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
+                              <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--full"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
+                              <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--full"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
+                              <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--empty c-user-rating__icon--half"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
+                            </div>
+                            <div class="c-activity-rating__rating">4.7</div>
+                            <div class="c-activity-rating__label">(519)</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="cart-item__description--badges">
+                        <span class="c-marketplace-badge c-marketplace-badge--primary cart-item__description--badges--n-spots-left">Chỉ còn 2 chỗ trống</span>
+                        <span class="c-marketplace-badge c-marketplace-badge--secondary cart-item__description--badges--top-rated-no-icon">Được đánh giá cao</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cart-item__description">
+                    <div class="cart-item__description--details">
+                      <div class="cart-item__description--details--entry">
+                        <span class="c-icon"><span class="i-tickets c-icon__c-tickets" aria-hidden="true"></span></span>
+                        <div>Ngôn ngữ: Tiếng Việt </div>
+                      </div>
+                      <div class="cart-item__description--details--entry">
+                        <span class="c-icon"><span class="i-clock c-icon__c-clock" aria-hidden="true"></span></span>
+                        <div>Thứ Bảy, 6 tháng 9, 2025 lúc 6:00 AM</div>
+                      </div>
+                      <div class="cart-item__description--details--entry">
+                        <span class="c-icon"><span class="i-users c-icon__c-users" aria-hidden="true"></span></span>
+                        <div>1 người lớn (Độ tuổi 30 - 69)</div>
+                      </div>
+                    </div>
+                  </div>
+                  <section class="cart-item__value-messages">
+                    <div class="cancellation-policy cart-item__description__booked-flexibility-upgrades">
+                      <div class="cancellation-policy__description">
+                        <span class="c-icon cancellation-policy__description__icon cancellation-policy__description__icon--reassuring">
+                          <span class="i-checkmark-in-circle c-icon__c-checkmark-in-circle" aria-hidden="true"></span>
+                        </span>
+                        <div class="cancellation-policy__description__text">
+                          Hủy miễn phí <div class="cancellation-policy__description__text__label">Đến 6:00 AM ngày 5 tháng 9</div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </section>
+              </div>
             </div>
-          </div>
-
-          <div class="promo-section">
-            <button class="promo-btn">
-              <i class="fas fa-tag"></i>
-              Nhập mã khuyến mãi, tín dụng hoặc thẻ quà tặng
-            </button>
-          </div>
-
-          <div class="total-section">
-            <div class="total-row">
-              <span class="total-label">Tổng cộng</span>
-              <div class="total-amount">
-                <span class="amount">₫3.865.400</span>
-                <small>Đã bao gồm tất cả thuế và phí</small>
+            <div class="order-summary__redeemable-code-slot">
+              <section>
+                <button class="c-button c-button--medium c-button--text c-button--text-standard c-button--with-icon order-summary__redeem-code-link" type="button" data-test-id="redeemable-code">
+                  <span class="c-button__icon">
+                    <span class="c-icon"><span class="i-gift c-icon__c-gift" aria-hidden="true"></span></span>
+                  </span>
+                  <span class="c-button__text">Nhập mã khuyến mãi, tín dụng hoặc mã quà tặng</span>
+                </button>
+              </section>
+            </div>
+          </section>
+          <div class="expanded order-summary__total">
+            <div class="order-summary__total__label">
+              <div>Tổng cộng</div>
+            </div>
+            <div class="order-summary__total__price">
+              <div class="price price--big" data-test-id="order-summary-total">
+                <div>₫7,670,400</div>
+              </div>
+              <div class="order-summary__total__price__no-fees">
+                <span class="taxes-included-message">Tất cả thuế và phí đã bao gồm</span>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </div>
