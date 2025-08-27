@@ -350,68 +350,35 @@
           </div>
         </div>
 
+        <!-- Divider between calendar and tickets -->
+        <div class="section-divider"></div>
+
         <!-- Ticket Selection -->
         <div class="ticket-selection">
-          <div class="ticket-item" *ngFor="let ticket of tickets">
+          <div class="ticket-item available" *ngFor="let ticket of tickets">
             <div class="ticket-left">
               <div class="ticket-header">
                 <h4>{{ ticket.name }}</h4>
-             
-              </div>
-              <div class="ticket-desc">
-                <button type="button" class="more-info-btn" (click)="toggleTicketInfo(ticket.id)">
-                  {{ isTicketInfoVisible(ticket.id) ? 'Less info' : 'More info' }}
-                </button>
-                <div class="ticket-details" *ngIf="isTicketInfoVisible(ticket.id)">
-                  <p>Ticket includes:</p>
-                  <ul *ngIf="ticket.id === 'adult'">
-                    <li>Shared coach, fixed itinerary</li>
-                    <li>Arrival at the departure point before the tour starts</li>
-                  </ul>
-                  <ul *ngIf="ticket.id === 'child'">
-                    <li>Must be accompanied by an adult</li>
-                    <li>Shared coach, fixed itinerary</li>
-                    <li>Arrival at the departure point before the tour starts</li>
-                  </ul>
-                  <ul *ngIf="ticket.id === 'small-group'">
-                    <li></li>
-                    <li>For groups of 3–5 guests</li>
-                    <li>Private vehicle with hotel pick-up & drop-offted activities</li>
-                    <li>Flexible itinerary: option to adjust or replace selected activities.</li>
-                  </ul>
-                  <ul *ngIf="ticket.id === 'large-group'">
-                    <li>For groups of 6–14 guests</li>
-                    <li>Private vehicle with hotel pick-up & drop-off</li>
-                    <li>Customizable itinerary tailored to group preferences</li>
-                  </ul>
-                </div>
               </div>
               <div class="ticket-price">
                 <span class="price">{{ ticket.price | currency:'USD':'symbol':'1.2-2' }}</span>
-                <span class="fee" *ngIf="ticket.bookingFee > 0">+ {{ ticket.bookingFee | currency:'USD':'symbol':'1.2-2' }} booking fee</span>
               </div>
             </div>
             <div class="ticket-right">
               <div class="quantity-selector">
-                <button type="button" (click)="adjustQuantity(ticket.id, -1)" [disabled]="getTicketQuantity(ticket.id) === 0">−</button>
-                <span>{{ getTicketQuantity(ticket.id) }}</span>
-                <button type="button" (click)="adjustQuantity(ticket.id, 1)">+</button>
+                <button type="button" class="quantity-btn minus" (click)="adjustQuantity(ticket.id, -1)" [disabled]="getTicketQuantity(ticket.id) === 0">−</button>
+                <span class="quantity-display">{{ getTicketQuantity(ticket.id) }}</span>
+                <button type="button" class="quantity-btn plus" (click)="adjustQuantity(ticket.id, 1)">+</button>
               </div>
             </div>
           </div>
-    
-
-          <!-- Total Price -->
-          <div class="total-price">
-            <span>Total:</span>
-            <span class="amount">{{ getTotalPrice() | currency:'USD':'symbol':'1.2-2' }}</span>
-          </div>
-
-          <!-- Submit Button -->
-          <button type="submit" class="book-button" [disabled]="isSubmitting || !selectedDate || !selectedSession">
-            {{ getTotalPrice() | currency:'USD':'symbol':'1.2-2' }} — Book Now
-          </button>
         </div>
+
+
+        <!-- Submit Button -->
+        <button type="submit" class="book-button" [disabled]="isSubmitting || !selectedDate || !selectedSession">
+          {{ getTotalPrice() | currency:'USD':'symbol':'1.2-2' }} — Book Now
+        </button>
       </form>
     </div>
   </div>

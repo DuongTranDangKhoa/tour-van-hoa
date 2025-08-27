@@ -1,3 +1,11 @@
+/* Section Divider */
+.section-divider {
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 24px 0;
+  width: 100%;
+}
+
 /* Tickets */
 .ticket-selection {
   /* Ensure ticket cards span the full available width of the widget */
@@ -10,87 +18,145 @@
     &:last-child { margin-bottom: 0; }
   }
 
-  /* Ticket-like border (notches + dashed divider) */
-  .ticket-item {
+  /* New ticket selection styling to match the image */
+  .ticket-item.sold-out,
+  .ticket-item.available {
+    border: none;
+    border-radius: 0;
+    padding: 24px 0;
+    margin-bottom: 0;
+    background: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     position: relative;
-    border: 2px solid #1e88e5;
-    border-radius: 12px;
-    background-color: #fff;
-    overflow: hidden;
-    display: grid;
-    grid-template-columns: 65% 35%;
-    gap: 0;
+    
+    &:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: repeating-linear-gradient(
+        to right,
+        #e0e0e0 0,
+        #e0e0e0 4px,
+        transparent 4px,
+        transparent 8px
+      );
+    }
   }
 
-  .ticket-item::before,
-  .ticket-item::after {
-    content: "";
-    position: absolute;
-    left: calc(65% - 1px);
-    transform: translateX(-50%);
-    width: 20px;
-    height: 20px;
-    background: #fff;
-    border: 2px solid #1e88e5;
-    border-radius: 50%;
-    z-index: 2;
+  .ticket-item.sold-out {
+    .ticket-info {
+      .ticket-name,
+      .ticket-price {
+        color: #999;
+      }
+    }
   }
 
-  .ticket-item::before { top: -11px; }
-  .ticket-item::after { bottom: -11px; }
+  .ticket-item.available {
+    .ticket-info {
+      .ticket-name,
+      .ticket-price {
+        color: #333;
+      }
+    }
+  }
 
-  .ticket-left { padding: 14px; background: #fff; }
-
-  .ticket-right {
-    position: relative;
-    background: #e6f4ff;
-    padding: 16px 16px 2px;
-    border-left: 1px dashed #1e88e5;
+  .ticket-info {
+    flex: 1;
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 8px;
+    
+    .ticket-name {
+      font-size: 16px;
+      font-weight: 500;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: inherit;
+      line-height: 1;
+    }
+    
+    .ticket-price {
+      font-size: 16px;
+      font-weight: 600;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: inherit;
+      line-height: 1;
+      
+      &::before {
+        content: '-';
+        margin: 0 4px;
+        color: #666;
+      }
+    }
   }
 
-  .ticket-right::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 0; height: 0;
-    border-top: 14px solid #1e88e5;
-    border-left: 14px solid transparent;
-    border-top-right-radius: 6px;
+  .ticket-action {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 
-  /* Quantity selector pill inside the right panel */
-  .ticket-right .quantity-selector {
-    margin-top: 0;
-    background: #fff;
-    border: 1px solid #e5e5e5;
-    border-radius: 999px;
-    padding: 4px 10px;
-    gap: 10px;
-  }
-
-  .ticket-right .quantity-selector button {
-    width: 26px;
-    height: 26px;
-    border: none;
-    background: #e6f4ff;
-    color: #1e88e5;
-    font-weight: 700;
-  }
-
-  .ticket-right .quantity-selector button:hover:not(:disabled) {
-    background: #d7ecff;
-  }
-
-  .ticket-right .quantity-selector span {
-    font-size: 13px;
+  .sold-out-badge {
+    background: #e91e63;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
     font-weight: 600;
-    color: #1a1a1a;
-    min-width: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    white-space: nowrap;
   }
+
+  .quantity-selector {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    .quantity-btn {
+      width: 28px;
+      height: 28px;
+      border: 2px solid #1976d2;
+      background: #e3f2fd;
+      color: #1976d2;
+      border-radius: 50%;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      
+      &:hover:not(:disabled) {
+        background: #bbdefb;
+      }
+      
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+    }
+    
+    .quantity-display {
+      font-size: 16px;
+      font-weight: 600;
+      color: #333;
+      min-width: 20px;
+      text-align: center;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+  }
+
+
+
+
 
   .add-on-item { background-color: #f8f9ff; }
 
