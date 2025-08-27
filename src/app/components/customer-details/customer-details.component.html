@@ -7,13 +7,13 @@
           <span class="step-navigation__bar__step__circle--active step-navigation__bar__step__circle--new-color step-navigation__bar__step__circle">
             <span>1</span>
           </span>
-          <span class="step-navigation__bar__step__name--active step-navigation__bar__step__name">Thông tin cá nhân</span>
+          <span class="step-navigation__bar__step__name--active step-navigation__bar__step__name">Personal Information</span>
         </li>
         <li id="step-item-payment" class="step-navigation__bar__step--new-color step-navigation__bar__step" role="tab" aria-current="false" aria-label="Payment">
           <span class="step-navigation__bar__step__circle--new-color step-navigation__bar__step__circle">
             <span>2</span>
           </span>
-          <span class="step-navigation__bar__step__name">Thanh toán</span>
+          <span class="step-navigation__bar__step__name">Payment</span>
         </li>
       </ul>
     </div>
@@ -26,16 +26,16 @@
       <div class="warning-box" style="background-color: #ffebee; padding: 16px; border-radius: 4px; margin: 20px 0;">
         <div style="display: flex; align-items: center;">
           <span class="c-icon" style="margin-right: 8px;"><span class="i-alert c-icon__c-alert" aria-hidden="true"></span></span>
-          <span>⏱️Chúng tôi sẽ giữ chỗ cho bạn trong 02:00 phút.</span>
+          <span>⏱️We will hold your spot for 02:00 minutes.</span>
         </div>
       </div>
 
       <div>
         <section>
-          <h2 class="checkout__title">Hãy nhập thông tin cá nhân của bạn</h2>
+          <h2 class="checkout__title">Please enter your personal information</h2>
           <div class="checkout__secure-disclaimer">
             <span class="c-icon"><span class="i-lock c-icon__c-lock" aria-hidden="true"></span></span>
-            <span class="checkout__secure-disclaimer--description">Thanh toán nhanh chóng và an toàn</span>
+            <span class="checkout__secure-disclaimer--description">Fast and secure payment</span>
           </div>
 
           <section>
@@ -47,7 +47,7 @@
                     <div class="c-form-field__container">
                       <div class="c-input c-input--with-label billing-form__field">
                         <div class="c-input__container">
-                          <label class="c-input__label" for="fullname">Họ và tên*</label>
+                          <label class="c-input__label" for="fullname">Full Name*</label>
                           <input id="fullname" class="c-input__field" data-test-id="billing-fullname" type="text" name="fullname" [(ngModel)]="customerDetails.fullName" required>
                         </div>
                       </div>
@@ -70,60 +70,112 @@
                   <div class="c-form-field c-form-field--vertical">
                     <div class="c-form-field__container">
                       <div class="phone-number-input phone-number-input--always-visible-country-input">
-                        <span class="select-label">Quốc tịch*</span>
+                        <span class="select-label">Nationality*</span>
                         <div class="gyg-select">
                           <select class="gyg-select-field" [(ngModel)]="customerDetails.country" name="country" required>
-                            <option value="VN">Việt Nam (+84)</option>
-                            <option value="US">Hoa Kỳ (+1)</option>
-                            <option value="UK">Vương quốc Anh (+44)</option>
+                            <option value="VN">Vietnam (+84)</option>
+                            <option value="US">United States (+1)</option>
+                            <option value="UK">United Kingdom (+44)</option>
                           </select>
                           <span class="gyg-select-icon gyg-select-icon-posticon"><span class="c-icon"><span class="i-chevron-down c-icon__c-chevron-down" aria-hidden="true"></span></span></span>
                         </div>
                         <div class="c-input c-input--with-label">
                           <div class="c-input__container">
-                            <label class="c-input__label" for="phone">Số điện thoại di động*</label>
+                            <label class="c-input__label" for="phone">Mobile Phone Number*</label>
                             <input id="phone" class="c-input__field" data-test-id="billing-phone-nr" type="tel" name="phone" [(ngModel)]="customerDetails.phone" required>
                           </div>
                         </div>
-                      </div>
-                      <div class="c-form-field__hint" role="alert" aria-live="polite">
-                        Chúng tôi sẽ chỉ liên hệ bạn với những cập nhật cần thiết hoặc thay đổi về đặt chỗ của bạn
                       </div>
                     </div>
                   </div>
                 </div>
 
                   <!-- Special requirement -->
-                  <div class="c-form-field c-form-field--vertical personal-details-form__email" data-test-id="billing-email-field">
-                    <div class="c-form-field__container">
-                      <div class="c-input c-input--with-label billing-form__field">
-                        <div class="c-input__container">
-                          <label class="c-input__label" for="email">Yêu cầu đặc biệt*</label>
-                          <input id="email" class="c-input__field" data-test-id="billing-email" type="email" name="email" [(ngModel)]="customerDetails.email" required>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+<div class="c-form-field c-form-field--vertical" data-test-id="billing-special-request-field">
+  <div class="c-form-field__container">
+    <div class="c-input c-input--with-label billing-form__field">
+      <div class="c-input__container">
+        <label class="c-input__label" for="special-request">
+          <span style="display: inline-flex; align-items: center; gap: 8px;">
+            Special Requests
+            <svg (click)="toggleSpecialRequestInfo()" 
+                 style="cursor: pointer; width: 16px; height: 16px;" 
+                 xmlns="http://www.w3.org/2000/svg" 
+                 height="16px" 
+                 viewBox="0 -960 960 960" 
+                 width="16px" 
+                 fill="#434343">
+              <path d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z"/>
+            </svg>
+          </span>
+        </label>
+        <textarea id="special-request" 
+                  class="c-input__field" 
+                  data-test-id="billing-special-request" 
+                  name="special-request" 
+                  [(ngModel)]="customerDetails.specialRequest"
+                  style="resize: none; height: 80px;"
+                  placeholder="e.g. No onions, need a wheelchair, etc.">
+        </textarea>
+      </div>
+      
+      <!-- Modal Info -->
+      <!-- Modal Info -->
+<div *ngIf="showSpecialRequestInfo" 
+     style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); z-index: 1000; display: flex; justify-content: center; align-items: center;">
+  <div style="background-color: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); max-width: 500px; width: 90%;">
+    <h3 style="margin-top: 0; color: #333; text-align: center;">Special Requests</h3>
+    
+    <div style="text-align: left; margin-bottom: 20px;">
+      <p style="margin: 15px 0;">
+        <strong>1. Medical Support:</strong><br>
+        Do you need us to be aware of any medical support needs? 
+        (e.g., car sick, wheelchair access, specific health conditions...)
+      </p>
+      
+      <p style="margin: 15px 0;">
+        <strong>2. Special Occasion:</strong><br>
+        Are you celebrating a special occasion? 
+        (birthday, anniversary, etc.)
+      </p>
+      
+      <p style="margin: 15px 0;">
+        <strong>3. Other Requests:</strong><br>
+        Do you have any other special requests to make your trip more comfortable?
+      </p>
+    </div>
+    
+    <div style="text-align: center;">
+      <button (click)="toggleSpecialRequestInfo()" 
+              style="padding: 12px 24px; background-color: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 500;">
+        Close
+      </button>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
 
 
                 <!-- Dietary Preferences -->
-                <span class="select-label">Chế độ ăn của bạn là gì?*</span>
+                <span class="select-label">What is your diet?*</span>
                 <div class="c-radio-group" style="margin: 20px 0; display: flex; gap: 20px;">
                   <div style="display: flex; align-items: center;">
                     <input id="diet-meat" type="radio" class="c-radio__input" name="dietary-preference" value="meat" [(ngModel)]="customerDetails.dietaryPreference" style="margin-right: 8px;">
-                    <label for="diet-meat">Ăn mặn</label>
+                    <label for="diet-meat">Meat</label>
                   </div>
                   <div style="display: flex; align-items: center;">
                     <input id="diet-vegetarian" type="radio" class="c-radio__input" name="dietary-preference" value="vegetarian" [(ngModel)]="customerDetails.dietaryPreference" style="margin-right: 8px;">
-                    <label for="diet-vegetarian">Ăn chay</label>
+                    <label for="diet-vegetarian">Vegetarian</label>
                   </div>
                 </div>
 
                 <!-- Allergy Input -->
                 <div style="margin: 30px 0;">
-                  <span class="select-label">Nhập món ăn dị ứng của bạn (nếu có): </span>
+                  <span class="select-label">Enter your food allergies (if any): </span>
                   <div class="allergy-input-container" style="margin: 15px 0;">
-                    <input type="text" class="c-input" placeholder="Nhập món ăn bạn bị dị ứng..." [(ngModel)]="allergyInput" (input)="onAllergyInput()" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px;">
+                    <input type="text" class="c-input" placeholder="Enter the food you are allergic to..." [(ngModel)]="allergyInput" (input)="onAllergyInput()" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px;">
                     <div class="autocomplete-suggestions" *ngIf="showSuggestions && filteredSuggestions.length > 0" style="border: 1px solid #ddd; border-top: none; max-height: 200px; overflow-y: auto;">
                       <div *ngFor="let suggestion of filteredSuggestions" class="suggestion-item" (click)="selectAllergy(suggestion)" style="padding: 10px; cursor: pointer; border-bottom: 1px solid #eee;" onMouseOver="this.style.backgroundColor='#f5f5f5'" onMouseOut="this.style.backgroundColor='white'">
                         {{ suggestion }}
@@ -142,7 +194,7 @@
                 <div class="billing-form__validate-billing-details-and-sri">
                   <button class="c-button c-button--medium c-button--filled c-button--filled-standard billing-form__validate-billing-details-and-sri__button" type="button" (click)="goToPayment()" data-test-id="checkout-submit-btn">
                     <span class="c-button__text">
-                      <div class="loading-button__label">Đi tới thanh toán</div>
+                      <div class="loading-button__label">Go to payment</div>
                     </span>
                   </button>
                 </div>
@@ -157,7 +209,7 @@
     <section class="checkout-page-layout__order-summary">
       <div class="order-summary" data-test-id="order-summary">
         <div class="order-summary__title">
-          <h3>Tóm tắt đơn hàng</h3>
+          <h3>Order Summary</h3>
         </div>
         <div class="order-summary__container">
           <section>
@@ -172,7 +224,7 @@
                     </div>
                     <div class="cart-item__activity-container-main-info--details">
                       <h4 class="cart-item__activity-container--main-info--title" data-test-id="cart-item-title">
-                        Art and Culture 1
+                        Art and Culture
                       </h4>
                       <div class="cart-item__description--rating">
                         <div class="c-activity-rating c-activity-rating--compact darker-yellow-experiment">
@@ -190,8 +242,8 @@
                         </div>
                       </div>
                       <div class="cart-item__description--badges">
-                        <span class="c-marketplace-badge c-marketplace-badge--primary cart-item__description--badges--n-spots-left">Chỉ còn 2 chỗ trống</span>
-                        <span class="c-marketplace-badge c-marketplace-badge--secondary cart-item__description--badges--top-rated-no-icon">Được đánh giá cao</span>
+                        <span class="c-marketplace-badge c-marketplace-badge--primary cart-item__description--badges--n-spots-left">Only 2 spots left</span>
+                        <span class="c-marketplace-badge c-marketplace-badge--secondary cart-item__description--badges--top-rated-no-icon">Top rated</span>
                       </div>
                     </div>
                   </div>
@@ -199,15 +251,15 @@
                     <div class="cart-item__description--details">
                       <div class="cart-item__description--details--entry">
                         <span class="c-icon"><span class="i-tickets c-icon__c-tickets" aria-hidden="true"></span></span>
-                        <div>ngôn ngữ: Tiếng Việt </div>
+                        <div>language: Vietnamese</div>
                       </div>
                       <div class="cart-item__description--details--entry">
                         <span class="c-icon"><span class="i-clock c-icon__c-clock" aria-hidden="true"></span></span>
-                        <div>Thứ Bảy, 6 tháng 9, 2025 lúc 6:00 AM</div>
+                        <div>Saturday, September 6, 2025 at 6:00 AM</div>
                       </div>
                       <div class="cart-item__description--details--entry">
                         <span class="c-icon"><span class="i-users c-icon__c-users" aria-hidden="true"></span></span>
-                        <div>1 người lớn (Độ tuổi 30 - 69)</div>
+                        <div>1 adult (Age 30 - 69)</div>
                       </div>
                     </div>
                   </div>
@@ -218,21 +270,21 @@
               <section>
                 <button class="c-button c-button--medium c-button--text c-button--text-standard c-button--with-icon order-summary__redeem-code-link" type="button" data-test-id="redeemable-code">
                   <span class="c-button__icon"><span class="c-icon"><span class="i-gift c-icon__c-gift" aria-hidden="true"></span></span></span>
-                  <span class="c-button__text">Nhập mã khuyến mãi, tín dụng hoặc mã quà tặng</span>
+                  <span class="c-button__text">Enter a promo code, credit, or gift code</span>
                 </button>
               </section>
             </div>
           </section>
           <div class="expanded order-summary__total">
             <div class="order-summary__total__label">
-              <div>Tổng cộng</div>
+              <div>Total</div>
             </div>
             <div class="order-summary__total__price">
               <div class="price price--big" data-test-id="order-summary-total">
                 <div>₫7,670,400</div>
               </div>
               <div class="order-summary__total__price__no-fees">
-                <span class="taxes-included-message">Tất cả thuế và phí đã bao gồm</span>
+                <span class="taxes-included-message">All taxes and fees included</span>
               </div>
             </div>
           </div>

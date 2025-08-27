@@ -14,13 +14,16 @@ import { CommonModule } from '@angular/common';
   ]
 })
 export class CustomerDetailsComponent {
+  showSpecialRequestInfo = false;
+
   customerDetails = {
     fullName: '',
     email: '',
     country: 'VN',
     phone: '',
     dietaryPreference: '',
-    allergies: [] as string[]
+    allergies: [] as string[],
+    specialRequest: ''
   };
 
   allergyInput: string = '';
@@ -32,6 +35,10 @@ export class CustomerDetailsComponent {
   filteredSuggestions: string[] = [];
 
   constructor(private router: Router) {}
+
+  toggleSpecialRequestInfo() {
+    this.showSpecialRequestInfo = !this.showSpecialRequestInfo;
+  }
 
   onAllergyInput() {
     if (this.allergyInput.length > 0) {

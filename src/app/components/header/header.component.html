@@ -9,7 +9,7 @@
         </a>
       </div>
 
-      <!-- Location & Categories -->
+      <!-- Location & Categories
       <div class="location-categories">
         <div class="location-selector" (click)="changeLocation()">
           <i class="fas fa-map-marker-alt"></i>
@@ -19,11 +19,11 @@
           <i class="fas fa-th-large"></i>
           <span>Phân loại</span>
         </button>
-      </div>
+      </div> -->
 
       <!-- Search Bar -->
       <div class="search-bar-container">
-        <div class="search-bar" (click)="toggleSearch()">
+        <!-- <div class="search-bar" (click)="toggleSearch()">
           <i class="fas fa-search"></i>
           <input 
             type="text" 
@@ -31,7 +31,7 @@
             (keyup.enter)="onSearchEnter()"
             placeholder="Tìm kiếm" 
             #searchInput/>
-        </div>
+        </div> -->
         <!-- Suggestions dropdown -->
         <div class="suggestions" *ngIf="showSuggestions">
           <div class="suggestion-title">Bạn đang không biết chọn gì?</div>
@@ -47,16 +47,16 @@
 
       <!-- Right actions: Language, Wishlist, User -->
       <div class="header-actions">
-        <div class="language-selector" (click)="toggleLanguage()">
+        <!-- <div class="language-selector" (click)="toggleLanguage()">
           <i class="fas fa-globe"></i>
           <span>{{ currentLanguage }}</span>
-        </div>
-        <div class="wishlist" (click)="toggleWishlist()">
+        </div> -->
+        <!-- <div class="wishlist" (click)="toggleWishlist()">
           <i class="fas fa-heart"></i>
-        </div>
-        <div class="user-profile" (click)="openUserProfile()">
+        </div> -->
+        <!-- <div class="user-profile" (click)="openUserProfile()">
           <img src="assets/images/default-avatar.png" alt="User profile" />
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
