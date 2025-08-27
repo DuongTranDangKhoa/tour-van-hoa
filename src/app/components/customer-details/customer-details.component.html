@@ -163,7 +163,7 @@
                 <div class="c-radio-group" style="margin: 20px 0; display: flex; gap: 20px;">
                   <div style="display: flex; align-items: center;">
                     <input id="diet-meat" type="radio" class="c-radio__input" name="dietary-preference" value="meat" [(ngModel)]="customerDetails.dietaryPreference" style="margin-right: 8px;">
-                    <label for="diet-meat">Meat</label>
+                    <label for="diet-meat">Non-vegetarian</label>
                   </div>
                   <div style="display: flex; align-items: center;">
                     <input id="diet-vegetarian" type="radio" class="c-radio__input" name="dietary-preference" value="vegetarian" [(ngModel)]="customerDetails.dietaryPreference" style="margin-right: 8px;">
@@ -265,14 +265,6 @@
                   </div>
                 </section>
               </div>
-            </div>
-            <div class="order-summary__redeemable-code-slot">
-              <section>
-                <button class="c-button c-button--medium c-button--text c-button--text-standard c-button--with-icon order-summary__redeem-code-link" type="button" data-test-id="redeemable-code">
-                  <span class="c-button__icon"><span class="c-icon"><span class="i-gift c-icon__c-gift" aria-hidden="true"></span></span></span>
-                  <span class="c-button__text">Enter a promo code, credit, or gift code</span>
-                </button>
-              </section>
             </div>
           </section>
           <div class="expanded order-summary__total">
