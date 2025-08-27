@@ -93,7 +93,7 @@
 }
 
 .checkout-page-layout__main-content {
-  flex: 3; /* Chiếm 3 phần */
+  flex: 2; /* Chiếm 2 phần */
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
@@ -131,13 +131,13 @@
 .checkout__title {
   font-size: 24px;
   margin: 20px 0;
-  text-align: center;
+  text-align: left;
 }
 
 .checkout__secure-disclaimer {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin-bottom: 30px;
   color: #4caf50;
   font-weight: 500;
@@ -259,7 +259,7 @@
 }
 
 .billing-form__validate-billing-details-and-sri {
-  text-align: center;
+  text-align: left;
   margin: 30px 0;
 }
 

@@ -1,36 +1,17 @@
 <div class="checkout-page-layout__container">
-
-  <!-- Main Content -->
-  <section class="checkout-page-layout__main-content" data-test-id="checkout-section">
-    <div>
-      <section>        
-
-
-        <section>
-          <div class="billing-form">
-            <div class="billing-form__container" data-test-id="checkout-billing-form">
-              <div>
-                <!-- Email Field -->
-                <div class="checkout-page-layout__container">
-    <!-- Header Navigation -->
+  <!-- Header Navigation -->
   <section class="checkout-page-layout__navigation">
     <div class="step-navigation checkout-page-layout__step-navigation">
       <ul class="step-navigation__bar" role="tablist">
-        <li id="step-item-activity" class="step-navigation__bar__step--active step-navigation__bar__step--new-color step-navigation__bar__step" role="tab" aria-current="true" aria-label="Activity">
+        <li id="step-item-details" class="step-navigation__bar__step--active step-navigation__bar__step--new-color step-navigation__bar__step" role="tab" aria-current="true" aria-label="Details">
           <span class="step-navigation__bar__step__circle--active step-navigation__bar__step__circle--new-color step-navigation__bar__step__circle">
             <span>1</span>
           </span>
-          <span class="step-navigation__bar__step__name--active step-navigation__bar__step__name">Chế độ ăn</span>
-        </li>
-        <li id="step-item-activity" class="step-navigation__bar__step--active step-navigation__bar__step--new-color step-navigation__bar__step" role="tab" aria-current="true" aria-label="Activity">
-          <span class="step-navigation__bar__step__circle--active step-navigation__bar__step__circle--new-color step-navigation__bar__step__circle">
-            <span>2</span>
-          </span>
-          <span class="step-navigation__bar__step__name--active step-navigation__bar__step__name">Thông tin chi tiết</span>
+          <span class="step-navigation__bar__step__name--active step-navigation__bar__step__name">Thông tin cá nhân</span>
         </li>
         <li id="step-item-payment" class="step-navigation__bar__step--new-color step-navigation__bar__step" role="tab" aria-current="false" aria-label="Payment">
           <span class="step-navigation__bar__step__circle--new-color step-navigation__bar__step__circle">
-            <span>3</span>
+            <span>2</span>
           </span>
           <span class="step-navigation__bar__step__name">Thanh toán</span>
         </li>
@@ -44,9 +25,7 @@
       <!-- Warning Box -->
       <div class="warning-box" style="background-color: #ffebee; padding: 16px; border-radius: 4px; margin: 20px 0;">
         <div style="display: flex; align-items: center;">
-          <span class="c-icon" style="margin-right: 8px;">
-            <span class="i-alert c-icon__c-alert" aria-hidden="true"></span>
-          </span>
+          <span class="c-icon" style="margin-right: 8px;"><span class="i-alert c-icon__c-alert" aria-hidden="true"></span></span>
           <span>⏱️Chúng tôi sẽ giữ chỗ cho bạn trong 02:00 phút.</span>
         </div>
       </div>
@@ -54,11 +33,8 @@
       <div>
         <section>
           <h2 class="checkout__title">Hãy nhập thông tin cá nhân của bạn</h2>
-          
           <div class="checkout__secure-disclaimer">
-            <span class="c-icon">
-              <span class="i-lock c-icon__c-lock" aria-hidden="true"></span>
-            </span>
+            <span class="c-icon"><span class="i-lock c-icon__c-lock" aria-hidden="true"></span></span>
             <span class="checkout__secure-disclaimer--description">Thanh toán nhanh chóng và an toàn</span>
           </div>
 
@@ -100,15 +76,9 @@
                             <option value="VN">Việt Nam (+84)</option>
                             <option value="US">Hoa Kỳ (+1)</option>
                             <option value="UK">Vương quốc Anh (+44)</option>
-                            <!-- Thêm các quốc gia khác nếu cần -->
                           </select>
-                          <span class="gyg-select-icon gyg-select-icon-posticon">
-                            <span class="c-icon">
-                              <span class="i-chevron-down c-icon__c-chevron-down" aria-hidden="true"></span>
-                            </span>
-                          </span>
+                          <span class="gyg-select-icon gyg-select-icon-posticon"><span class="c-icon"><span class="i-chevron-down c-icon__c-chevron-down" aria-hidden="true"></span></span></span>
                         </div>
-                        
                         <div class="c-input c-input--with-label">
                           <div class="c-input__container">
                             <label class="c-input__label" for="phone">Số điện thoại di động*</label>
@@ -123,40 +93,58 @@
                   </div>
                 </div>
 
+                  <!-- Special requirement -->
+                  <div class="c-form-field c-form-field--vertical personal-details-form__email" data-test-id="billing-email-field">
+                    <div class="c-form-field__container">
+                      <div class="c-input c-input--with-label billing-form__field">
+                        <div class="c-input__container">
+                          <label class="c-input__label" for="email">Yêu cầu đặc biệt*</label>
+                          <input id="email" class="c-input__field" data-test-id="billing-email" type="email" name="email" [(ngModel)]="customerDetails.email" required>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                <!-- Dietary Preferences -->
+                <span class="select-label">Chế độ ăn của bạn là gì?*</span>
+                <div class="c-radio-group" style="margin: 20px 0; display: flex; gap: 20px;">
+                  <div style="display: flex; align-items: center;">
+                    <input id="diet-meat" type="radio" class="c-radio__input" name="dietary-preference" value="meat" [(ngModel)]="customerDetails.dietaryPreference" style="margin-right: 8px;">
+                    <label for="diet-meat">Ăn mặn</label>
+                  </div>
+                  <div style="display: flex; align-items: center;">
+                    <input id="diet-vegetarian" type="radio" class="c-radio__input" name="dietary-preference" value="vegetarian" [(ngModel)]="customerDetails.dietaryPreference" style="margin-right: 8px;">
+                    <label for="diet-vegetarian">Ăn chay</label>
+                  </div>
+                </div>
+
+                <!-- Allergy Input -->
+                <div style="margin: 30px 0;">
+                  <span class="select-label">Nhập món ăn dị ứng của bạn (nếu có): </span>
+                  <div class="allergy-input-container" style="margin: 15px 0;">
+                    <input type="text" class="c-input" placeholder="Nhập món ăn bạn bị dị ứng..." [(ngModel)]="allergyInput" (input)="onAllergyInput()" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 4px;">
+                    <div class="autocomplete-suggestions" *ngIf="showSuggestions && filteredSuggestions.length > 0" style="border: 1px solid #ddd; border-top: none; max-height: 200px; overflow-y: auto;">
+                      <div *ngFor="let suggestion of filteredSuggestions" class="suggestion-item" (click)="selectAllergy(suggestion)" style="padding: 10px; cursor: pointer; border-bottom: 1px solid #eee;" onMouseOver="this.style.backgroundColor='#f5f5f5'" onMouseOut="this.style.backgroundColor='white'">
+                        {{ suggestion }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="selected-allergies" style="margin-top: 15px;">
+                    <div *ngFor="let allergy of customerDetails.allergies" class="allergy-tag" style="display: inline-block; background: #e3f2fd; padding: 6px 12px; margin: 4px; border-radius: 16px; font-size: 14px;">
+                      {{ allergy }}
+                      <span (click)="removeAllergy(allergy)" style="margin-left: 8px; cursor: pointer; color: #666;">×</span>
+                    </div>
+                  </div>
+                </div>
+
                 <!-- Submit Button -->
                 <div class="billing-form__validate-billing-details-and-sri">
-                  <button class="c-button c-button--medium c-button--filled c-button--filled-standard billing-form__validate-billing-details-and-sri__button" 
-                          type="button" 
-                          (click)="goToPayment()"
-                          data-test-id="checkout-submit-btn">
+                  <button class="c-button c-button--medium c-button--filled c-button--filled-standard billing-form__validate-billing-details-and-sri__button" type="button" (click)="goToPayment()" data-test-id="checkout-submit-btn">
                     <span class="c-button__text">
                       <div class="loading-button__label">Đi tới thanh toán</div>
                     </span>
                   </button>
-                </div>
-
-                <!-- Reassuring Info -->
-                <div class="disclaimer">
-                  <div class="reassuring-info disclaimer__reassuring-messages">
-                    <div class="reassuring-info__block">
-                      <span class="c-icon reassuring-info__block__icon">
-                        <span class="i-checkmark-in-circle c-icon__c-checkmark-in-circle" aria-hidden="true"></span>
-                      </span>
-                      <div class="reassuring-info__block__content">
-                        <div class="reassuring-info__block__content__title">Không phải trả tiền hôm nay</div>
-                        <div class="reassuring-info__block__content__subtitle">Đặt chỗ ngay và trả tiền sau</div>
-                      </div>
-                    </div>
-                    <div class="reassuring-info__block">
-                      <span class="c-icon reassuring-info__block__icon">
-                        <span class="i-checkmark-in-circle c-icon__c-checkmark-in-circle" aria-hidden="true"></span>
-                      </span>
-                      <div class="reassuring-info__block__content">
-                        <div class="reassuring-info__block__content__title">Hủy miễn phí</div>
-                        <div class="reassuring-info__block__content__subtitle">Cho đến 6:00 sáng ngày 5 tháng 9</div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -166,119 +154,90 @@
     </section>
 
     <!-- Order Summary Sidebar -->
-      <section class="checkout-page-layout__order-summary">
-        <div class="order-summary" data-test-id="order-summary">
-          <div class="order-summary__title">
-            <h3>Tóm tắt đơn hàng</h3>
-          </div>
-          <div class="order-summary__container">
-            <section>
-              <div class="order-summary__cart-items">
-                <div class="cart-item" data-test-id="cart-item">
-                  <section class="cart-item__activity-container">
-                    <div class="cart-item__activity-container--main-info">
-                      <div class="cart-item__activity-container--main-info--image">
-                        <picture class="c-image c-image--loaded c-image--radius-1x">
-                          <img class="c-image__img c-image__img--crop" 
-                               src="https://cdn.getyourguide.com/image/format=auto,fit=crop,gravity=auto,quality=60,width=65,height=65/tour_img/5c9e27e2d47d4.jpeg" 
-                               alt="Từ Las Vegas: Chuyến đi VIP trong ngày đến Los Angeles/Hollywood" 
-                               width="64" height="64">
-                        </picture>
-                      </div>
-                      <div class="cart-item__activity-container-main-info--details">
-                        <h4 class="cart-item__activity-container--main-info--title" data-test-id="cart-item-title">
-                          Từ Las Vegas: Chuyến đi VIP trong ngày đến Los Angeles/Hollywood
-                        </h4>
-                        <div class="cart-item__description--rating">
-                          <div class="c-activity-rating c-activity-rating--compact darker-yellow-experiment">
-                            <div class="c-user-rating c-user-rating--compact">
-                              <div class="c-user-rating__stars-container">
-                                <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--full"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
-                                <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--full"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
-                                <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--full"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
-                                <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--full"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
-                                <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--empty c-user-rating__icon--half"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
-                              </div>
-                              <div class="c-activity-rating__rating">4.7</div>
-                              <div class="c-activity-rating__label">(519)</div>
+    <section class="checkout-page-layout__order-summary">
+      <div class="order-summary" data-test-id="order-summary">
+        <div class="order-summary__title">
+          <h3>Tóm tắt đơn hàng</h3>
+        </div>
+        <div class="order-summary__container">
+          <section>
+            <div class="order-summary__cart-items">
+              <div class="cart-item" data-test-id="cart-item">
+                <section class="cart-item__activity-container">
+                  <div class="cart-item__activity-container--main-info">
+                    <div class="cart-item__activity-container--main-info--image">
+                      <picture class="c-image c-image--loaded c-image--radius-1x">
+                        <img class="c-image__img c-image__img--crop" src="https://cdn.getyourguide.com/image/format=auto,fit=crop,gravity=auto,quality=60,width=65,height=65/tour_img/5c9e27e2d47d4.jpeg" alt="Art and Culture 1" width="64" height="64">
+                      </picture>
+                    </div>
+                    <div class="cart-item__activity-container-main-info--details">
+                      <h4 class="cart-item__activity-container--main-info--title" data-test-id="cart-item-title">
+                        Art and Culture 1
+                      </h4>
+                      <div class="cart-item__description--rating">
+                        <div class="c-activity-rating c-activity-rating--compact darker-yellow-experiment">
+                          <div class="c-user-rating c-user-rating--compact">
+                            <div class="c-user-rating__stars-container">
+                              <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--full"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
+                              <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--full"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
+                              <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--full"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
+                              <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--full"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
+                              <span class="c-user-rating__star"><span class="c-icon c-user-rating__icon c-user-rating--five c-user-rating__icon--empty c-user-rating__icon--half"><span class="i-star-fill c-icon__c-star-fill" aria-hidden="true"></span></span></span>
                             </div>
-                          </div>
-                        </div>
-                        <div class="cart-item__description--badges">
-                          <span class="c-marketplace-badge c-marketplace-badge--primary cart-item__description--badges--n-spots-left">Chỉ còn 2 chỗ trống</span>
-                          <span class="c-marketplace-badge c-marketplace-badge--secondary cart-item__description--badges--top-rated-no-icon">Được đánh giá cao</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="cart-item__description">
-                      <div class="cart-item__description--details">
-                        <div class="cart-item__description--details--entry">
-                          <span class="c-icon"><span class="i-tickets c-icon__c-tickets" aria-hidden="true"></span></span>
-                          <div>ngôn ngữ: Tiếng Việt </div>
-                        </div>
-                        <div class="cart-item__description--details--entry">
-                          <span class="c-icon"><span class="i-clock c-icon__c-clock" aria-hidden="true"></span></span>
-                          <div>Thứ Bảy, 6 tháng 9, 2025 lúc 6:00 AM</div>
-                        </div>
-                        <div class="cart-item__description--details--entry">
-                          <span class="c-icon"><span class="i-users c-icon__c-users" aria-hidden="true"></span></span>
-                          <div>1 người lớn (Độ tuổi 30 - 69)</div>
-                        </div>
-                      </div>
-                    </div>
-                    <section class="cart-item__value-messages">
-                      <div class="cancellation-policy cart-item__description__booked-flexibility-upgrades">
-                        <div class="cancellation-policy__description">
-                          <span class="c-icon cancellation-policy__description__icon cancellation-policy__description__icon--reassuring">
-                            <span class="i-checkmark-in-circle c-icon__c-checkmark-in-circle" aria-hidden="true"></span>
-                          </span>
-                          <div class="cancellation-policy__description__text">
-                            Hủy miễn phí <div class="cancellation-policy__description__text__label">Đến 6:00 AM ngày 5 tháng 9</div>
+                            <div class="c-activity-rating__rating">4.7</div>
+                            <div class="c-activity-rating__label">(519)</div>
                           </div>
                         </div>
                       </div>
-                    </section>
-                  </section>
-                </div>
-              </div>
-              <div class="order-summary__redeemable-code-slot">
-                <section>
-                  <button class="c-button c-button--medium c-button--text c-button--text-standard c-button--with-icon order-summary__redeem-code-link" type="button" data-test-id="redeemable-code">
-                    <span class="c-button__icon">
-                      <span class="c-icon"><span class="i-gift c-icon__c-gift" aria-hidden="true"></span></span>
-                    </span>
-                    <span class="c-button__text">Nhập mã khuyến mãi, tín dụng hoặc mã quà tặng</span>
-                  </button>
+                      <div class="cart-item__description--badges">
+                        <span class="c-marketplace-badge c-marketplace-badge--primary cart-item__description--badges--n-spots-left">Chỉ còn 2 chỗ trống</span>
+                        <span class="c-marketplace-badge c-marketplace-badge--secondary cart-item__description--badges--top-rated-no-icon">Được đánh giá cao</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="cart-item__description">
+                    <div class="cart-item__description--details">
+                      <div class="cart-item__description--details--entry">
+                        <span class="c-icon"><span class="i-tickets c-icon__c-tickets" aria-hidden="true"></span></span>
+                        <div>ngôn ngữ: Tiếng Việt </div>
+                      </div>
+                      <div class="cart-item__description--details--entry">
+                        <span class="c-icon"><span class="i-clock c-icon__c-clock" aria-hidden="true"></span></span>
+                        <div>Thứ Bảy, 6 tháng 9, 2025 lúc 6:00 AM</div>
+                      </div>
+                      <div class="cart-item__description--details--entry">
+                        <span class="c-icon"><span class="i-users c-icon__c-users" aria-hidden="true"></span></span>
+                        <div>1 người lớn (Độ tuổi 30 - 69)</div>
+                      </div>
+                    </div>
+                  </div>
                 </section>
               </div>
-            </section>
-            <div class="expanded order-summary__total">
-              <div class="order-summary__total__label">
-                <div>Tổng cộng</div>
+            </div>
+            <div class="order-summary__redeemable-code-slot">
+              <section>
+                <button class="c-button c-button--medium c-button--text c-button--text-standard c-button--with-icon order-summary__redeem-code-link" type="button" data-test-id="redeemable-code">
+                  <span class="c-button__icon"><span class="c-icon"><span class="i-gift c-icon__c-gift" aria-hidden="true"></span></span></span>
+                  <span class="c-button__text">Nhập mã khuyến mãi, tín dụng hoặc mã quà tặng</span>
+                </button>
+              </section>
+            </div>
+          </section>
+          <div class="expanded order-summary__total">
+            <div class="order-summary__total__label">
+              <div>Tổng cộng</div>
+            </div>
+            <div class="order-summary__total__price">
+              <div class="price price--big" data-test-id="order-summary-total">
+                <div>₫7,670,400</div>
               </div>
-              <div class="order-summary__total__price">
-                <div class="price price--big" data-test-id="order-summary-total">
-                  <div>₫7,670,400</div>
-                </div>
-                <div class="order-summary__total__price__no-fees">
-                  <span class="taxes-included-message">Tất cả thuế và phí đã bao gồm</span>
-                </div>
+              <div class="order-summary__total__price__no-fees">
+                <span class="taxes-included-message">Tất cả thuế và phí đã bao gồm</span>
               </div>
             </div>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
   </div>
-</div>
-
-                <!-- Country and Phone Number Fields -->
-              </div>
-
-            </div>
-          </div>
-        </section>
-      </section>
-    </div>
-  </section>
-
 </div>

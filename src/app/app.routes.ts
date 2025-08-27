@@ -4,7 +4,6 @@ import { BookingsComponent } from './pages/bookings/bookings.component';
 import { BookingDetailComponent } from './pages/booking-detail/booking-detail.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { TourGalleryComponent } from './pages/tour-gallery/tour-gallery.component';
-import { DietaryPreferencesComponent } from './components/dietary-preferences/dietary-preferences.component';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
 import { PaymentComponent } from './components/payment/payment.component';
 
@@ -14,13 +13,14 @@ export const routes: Routes = [
   { path: 'booking-detail/:id', component: BookingDetailComponent },
   { path: 'tour/:id/book', component: BookingDetailComponent },
   { path: 'tour/:id/gallery', component: TourGalleryComponent },
-  { path: 'checkout', component: CheckoutComponent },
-  { path: '', redirectTo: '/checkout/dietary-preferences', pathMatch: 'full' }, // Trang mặc định
-  { path: 'checkout/dietary-preferences', component: DietaryPreferencesComponent },
-  { path: 'checkout/customer-details', component: CustomerDetailsComponent },
-  { path: 'checkout/payment', component: PaymentComponent },
-  { path: 'checkout/dietary', loadComponent: () => import('./components/dietary-preferences/dietary-preferences.component').then(m => m.DietaryPreferencesComponent) },
-  { path: 'checkout/details', loadComponent: () => import('./components/customer-details/customer-details.component').then(m => m.CustomerDetailsComponent) },
-  { path: 'checkout/payment', loadComponent: () => import('./components/payment/payment.component').then(m => m.PaymentComponent) },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
+    children: [
+      { path: '', redirectTo: 'details', pathMatch: 'full' },
+      { path: 'details', component: CustomerDetailsComponent },
+      { path: 'payment', component: PaymentComponent },
+    ]
+  },
   { path: '**', redirectTo: '' }
-  ];
+];

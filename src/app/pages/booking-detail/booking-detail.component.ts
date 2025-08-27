@@ -326,7 +326,7 @@ export class BookingDetailComponent implements OnInit {
         totalPrice: this.getTotalPrice()
       };
 
-      this.router.navigate(['/checkout/dietary'], { state: orderState });
+      this.router.navigate(['/checkout/details'], { state: orderState });
       this.isSubmitting = false;
     }
   }

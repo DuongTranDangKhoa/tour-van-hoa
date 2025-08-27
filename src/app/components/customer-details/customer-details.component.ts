@@ -17,26 +17,53 @@ export class CustomerDetailsComponent {
   customerDetails = {
     fullName: '',
     email: '',
-    country: 'VN', // Mặc định là Việt Nam
+    country: 'VN',
     phone: '',
-    dietaryRestrictions: ''
+    dietaryPreference: '',
+    allergies: [] as string[]
   };
+
+  allergyInput: string = '';
+  showSuggestions: boolean = false;
+  allergySuggestions: string[] = [
+    'Hải sản', 'Tôm', 'Cua', 'Ốc', 'Đậu phộng', 'Sữa', 'Trứng',
+    'Đậu nành', 'Gluten', 'Đậu xanh', 'Thịt bò', 'Thịt heo', 'Gà', 'Cá hồi', 'Cá ngừ'
+  ];
+  filteredSuggestions: string[] = [];
 
   constructor(private router: Router) {}
 
+  onAllergyInput() {
+    if (this.allergyInput.length > 0) {
+      this.showSuggestions = true;
+      this.filteredSuggestions = this.allergySuggestions.filter(suggestion =>
+        suggestion.toLowerCase().includes(this.allergyInput.toLowerCase())
+      );
+    } else {
+      this.showSuggestions = false;
+      this.filteredSuggestions = [];
+    }
+  }
+
+  selectAllergy(allergy: string) {
+    if (!this.customerDetails.allergies.includes(allergy)) {
+      this.customerDetails.allergies.push(allergy);
+    }
+    this.allergyInput = '';
+    this.showSuggestions = false;
+  }
+
+  removeAllergy(allergy: string) {
+    this.customerDetails.allergies = this.customerDetails.allergies.filter(item => item !== allergy);
+  }
+
   goToPayment() {
-    // Kiểm tra validation cơ bản nếu cần
     if (this.isFormValid()) {
       console.log('Customer Details:', this.customerDetails);
-      // Ở đây bạn có thể lưu dữ liệu vào service
-      // this.checkoutService.saveCustomerDetails(this.customerDetails);
-      
-      // Điều hướng đến trang thanh toán
+      // Logic to save data can be added here
       this.router.navigate(['/checkout/payment']);
     } else {
-      // Xử lý lỗi validation nếu cần
       console.log('Vui lòng điền đầy đủ thông tin bắt buộc');
-      // Có thể hiển thị thông báo lỗi cho người dùng
     }
   }
 
@@ -46,7 +73,6 @@ export class CustomerDetailsComponent {
       this.customerDetails.email &&
       this.customerDetails.country &&
       this.customerDetails.phone
-      // this.customerDetails.dietaryRestrictions không bắt buộc theo template
     );
   }
 }

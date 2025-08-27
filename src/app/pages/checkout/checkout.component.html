@@ -1,55 +1,9 @@
 <div class="checkout-page">
-  <div class="checkout-grid">
+  <div class="checkout-page">
     <div class="left">
-      <div class="hold-banner">We'll hold your spot for 29:59 minutes.</div>
-      <div class="secure-note">Checkout is fast and secure</div>
-
-      <h2>Enter your personal details</h2>
-
-      <form [formGroup]="personalForm" (ngSubmit)="goToPayment()" class="personal-form">
-        <label>Full name*</label>
-        <input formControlName="fullName" type="text" placeholder="Your name" />
-
-        <label>Email*</label>
-        <input formControlName="email" type="email" placeholder="you@example.com" />
-
-        <label>Country*</label>
-        <input formControlName="country" type="text" />
-
-        <label>Mobile phone number*</label>
-        <input formControlName="phone" type="tel" placeholder="0903 102 269" />
-
-        <button class="primary" type="submit">Go to payment</button>
-      </form>
+      <router-outlet></router-outlet>
     </div>
 
-    <div class="right">
-      <div class="order-summary">
-        <h3>Order summary</h3>
-        <div class="product">
-          <img *ngIf="order?.imageUrl" [src]="order?.imageUrl" alt="" />
-          <div class="info">
-            <div class="title">{{ order?.tourName }}</div>
-            <div class="rating">★★★☆☆ <span>3.8 (4)</span></div>
-            <div class="warning">Only 8 hours left to book</div>
-          </div>
-        </div>
-
-        <ul class="details">
-          <li><span>Private Tour • Language:</span> English</li>
-          <li><span>Date:</span> {{ order?.selectedDate }} at {{ order?.selectedSession }}</li>
-          <li><span>Participants:</span> {{ getParticipantsCount() }} adult (Age 0 - 99)</li>
-          <li class="link">Change date or participants</li>
-          <li><span>Free cancellation</span> <small>Until 5:30 PM on August 21</small></li>
-          <li class="link">Enter promo, credit, or gift code</li>
-        </ul>
-
-        <div class="total">
-          <div class="label">Total</div>
-          <div class="amount">{{ order?.totalPrice | currency:'VND':'symbol':'1.0-0' }}</div>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
 

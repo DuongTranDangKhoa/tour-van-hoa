@@ -73,7 +73,7 @@
 }
 
 .checkout-page-layout__main-content {
-  flex: 3;
+  flex: 2;
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
@@ -171,9 +171,6 @@
   cursor: pointer;
   width: 100%;
 }
-.payment-method-label--credit-card {
-    justify-content: space-between;
-}
 
 .payment-method-label--credit-card span {
   flex-shrink: 0;
@@ -183,12 +180,14 @@
   height: 24px;
   margin-right: 10px;
   object-fit: contain;
+  margin-right: 10px;
 }
 
 .payment-icons {
   display: flex;
   gap: 5px;
   align-items: center;
+  margin-left: auto; 
 }
 
 .payment-method-option--credit-card {
@@ -271,7 +270,7 @@
 
 /* --- Payment Actions --- */
 .payment-actions {
-  text-align: center;
+  text-align: left;
 }
 .c-button {
   background-color: #007bff;

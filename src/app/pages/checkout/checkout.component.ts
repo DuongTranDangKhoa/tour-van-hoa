@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 interface CheckoutState {
   tourId: number;
@@ -17,33 +16,19 @@ interface CheckoutState {
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
   order?: CheckoutState;
-  personalForm: FormGroup;
 
-  constructor(private router: Router, private fb: FormBuilder) {
+  constructor(private router: Router) {
     const nav = this.router.getCurrentNavigation();
     this.order = (nav?.extras?.state as CheckoutState) || undefined;
-
-    this.personalForm = this.fb.group({
-      fullName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      country: ['Vietnam (+84)', Validators.required],
-      phone: ['', Validators.required]
-    });
   }
 
   ngOnInit(): void {}
-
-  goToPayment(): void {
-    if (this.personalForm.invalid) return;
-    // For demo purpose, just alert success
-    alert('Proceeding to payment...');
-  }
 
   getParticipantsCount(): number {
     if (!this.order || !this.order.participants) return 0;
