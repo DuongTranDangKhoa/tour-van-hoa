@@ -356,15 +356,11 @@
         <!-- Ticket Selection -->
         <div class="ticket-selection">
           <div class="ticket-item available" *ngFor="let ticket of tickets">
-            <div class="ticket-left">
-              <div class="ticket-header">
-                <h4>{{ ticket.name }}</h4>
-              </div>
-              <div class="ticket-price">
-                <span class="price">{{ ticket.price | currency:'USD':'symbol':'1.2-2' }}</span>
-              </div>
+            <div class="ticket-info">
+              <h4 class="ticket-name">{{ ticket.name }}</h4>
+              <span class="ticket-price">{{ ticket.price | currency:'USD':'symbol':'1.2-2' }}</span>
             </div>
-            <div class="ticket-right">
+            <div class="ticket-action">
               <div class="quantity-selector">
                 <button type="button" class="quantity-btn minus" (click)="adjustQuantity(ticket.id, -1)" [disabled]="getTicketQuantity(ticket.id) === 0">−</button>
                 <span class="quantity-display">{{ getTicketQuantity(ticket.id) }}</span>
