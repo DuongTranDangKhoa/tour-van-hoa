@@ -97,7 +97,7 @@ export class CustomerDetailsComponent implements OnInit {
   private loadTourInformation(): void {
     if (this.tourInfo) {
       this.tourName = this.tourInfo.tourName;
-      this.tourImageUrl = this.tourInfo.imageUrl || 'https://cdn.getyourguide.com/image/format=auto,fit=crop,gravity=auto,quality=60,width=65,height=65/tour_img/5c9e27e2d47d4.jpeg';
+      this.tourImageUrl = this.tourInfo.imageUrl || '/city-image/da-nang.jpg';
       this.tourDate = this.tourInfo.selectedDate;
       this.tourSession = this.tourInfo.selectedSession;
       this.tourParticipants = this.tourInfo.participants;
@@ -112,10 +112,7 @@ export class CustomerDetailsComponent implements OnInit {
 
   // Get total price in USD
   getTotalPriceUSD(): number {
-    // Calculate total: Tour base price + selected tickets
-    const tourBasePrice = this.getTourBasePrice();
-    const ticketsTotal = this.tourParticipants.reduce((sum, p) => sum + (p.price * p.quantity), 0);
-    return tourBasePrice + ticketsTotal;
+    return this.convertVndToUsd(this.tourTotalPrice);
   }
 
   // Get formatted total price in USD
@@ -125,9 +122,7 @@ export class CustomerDetailsComponent implements OnInit {
 
   // Get total price in VND
   getFormattedTotalPriceVND(): string {
-    const totalUSD = this.getTotalPriceUSD();
-    const totalVND = Math.round(totalUSD * 24500); // Convert USD to VND
-    return `₫${totalVND.toLocaleString()}`;
+    return `₫${this.tourTotalPrice.toLocaleString()}`;
   }
 
   // Get participant summary text
@@ -146,7 +141,7 @@ export class CustomerDetailsComponent implements OnInit {
   private loadDefaultTourInformation(): void {
     // Set default tour information when no booking data is available
     this.tourName = 'Vietnam Art & Culture Tour – This Is Home';
-    this.tourImageUrl = 'https://cdn.getyourguide.com/image/format=auto,fit=crop,gravity=auto,quality=60,width=65,height=65/tour_img/5c9e27e2d47d4.jpeg';
+    this.tourImageUrl = '/city-image/da-nang.jpg'; // Use image from tour service
     this.tourDate = 'Saturday, September 6, 2025';
     this.tourSession = '6:00 AM';
     this.tourParticipants = [
@@ -195,7 +190,7 @@ export class CustomerDetailsComponent implements OnInit {
   private simulateTourData(): void {
     // Simulate a realistic tour booking
     this.tourName = 'Vietnam Art & Culture Tour – This Is Home';
-    this.tourImageUrl = 'https://cdn.getyourguide.com/image/format=auto,fit=crop,gravity=auto,quality=60,width=65,height=65/tour_img/5c9e27e2d47d4.jpeg';
+    this.tourImageUrl = '/city-image/da-nang.jpg'; // Use image from tour service
     this.tourDate = 'Saturday, September 6, 2025';
     this.tourSession = '8:45 AM';
     this.tourParticipants = [
@@ -237,8 +232,19 @@ export class CustomerDetailsComponent implements OnInit {
   goToPayment() {
     if (this.isFormValid()) {
       console.log('Customer Details:', this.customerDetails);
-      // Logic to save data can be added here
-      this.router.navigate(['/checkout/payment']);
+      
+      // Pass tour information to payment component
+      const orderState = {
+        tourId: this.tourInfo?.tourId || 4,
+        tourName: this.tourName,
+        imageUrl: this.tourImageUrl,
+        selectedDate: this.tourDate,
+        selectedSession: this.tourSession,
+        participants: this.tourParticipants,
+        totalPrice: this.tourTotalPrice
+      };
+      
+      this.router.navigate(['/checkout/payment'], { state: orderState });
     } else {
       console.log('Vui lòng điền đầy đủ thông tin bắt buộc');
     }
