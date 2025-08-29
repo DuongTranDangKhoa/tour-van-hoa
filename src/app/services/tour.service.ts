@@ -12,7 +12,7 @@ export class TourService {
       name: 'Khám phá Sapa - Nóc nhà Đông Dương',
       description: 'Hành trình khám phá vùng núi Tây Bắc với những thửa ruộng bậc thang tuyệt đẹp, văn hóa dân tộc độc đáo và khí hậu mát mẻ quanh năm.',
       duration: '3 ngày 2 đêm',
-      price: 2500000,
+      price: 102.04,
       imageUrl: 'https://images.unsplash.com/photo-1551632811-561732d1e306?w=800',
       destination: 'Sapa, Lào Cai',
       rating: 4.8,
@@ -28,7 +28,7 @@ export class TourService {
       name: 'Du lịch biển Nha Trang - Đảo ngọc',
       description: 'Khám phá vẻ đẹp của biển Nha Trang với những bãi biển cát trắng, nước biển xanh trong và các hoạt động giải trí dưới nước.',
       duration: '4 ngày 3 đêm',
-      price: 3200000,
+      price: 130.61,
       imageUrl: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800',
       destination: 'Nha Trang, Khánh Hòa',
       rating: 4.6,
@@ -44,7 +44,7 @@ export class TourService {
       name: 'Hành trình miền Tây sông nước',
       description: 'Trải nghiệm cuộc sống miền Tây Nam Bộ với những con sông, chợ nổi và văn hóa ẩm thực độc đáo.',
       duration: '2 ngày 1 đêm',
-      price: 1800000,
+      price: 73.47,
       imageUrl: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800',
       destination: 'Cần Thơ, An Giang',
       rating: 4.5,
@@ -86,7 +86,7 @@ Package 1: 7-seater – $307/tour | 16-seater – $635/tour.
 
 Package 2: 7-seater – $42/tour | 16-seater – $35/tour.
 
-Full program: SGD $296 per person (excludes international flights).
+Full program: USD $296 per person (excludes international flights).
 🏨 Accommodation (multi-day option): 3–4 star hotels, double rooms (single available upon request), with Wi-Fi & TV.
 🍴 Meals included: Hotel breakfast, 4 lunches, 3 dinners (including Welcome Dinner & Gala Dinner).
 🦽 Accessibility: Wheelchair-friendly venues.
@@ -108,7 +108,7 @@ Every experience is designed to connect you deeply with Vietnam's heritage — f
 
 🌿 Whether you're a culture enthusiast, a family seeking meaningful bonding, or a traveler craving authentic encounters — this tour promises lasting memories of Vietnam's soul.`,
       duration: '1 ngày (9 giờ)',
-      price: 296000000, // SGD $296 converted to VND (approximately)
+      price: 296.00, // USD $296 per person
       imageUrl: '/city-image/da-nang.jpg',
       destination: 'Da Nang - Hoi An',
       rating: 4.9,
@@ -117,7 +117,7 @@ Every experience is designed to connect you deeply with Vietnam's heritage — f
       category: 'Cultural',
       departureDate: 'Daily',
       languages: ['Vietnamese', 'English'],
-      tourProgram: '💰 Pricing:\nPackage 1: 7-seater – $307/tour | 16-seater – $635/tour.\nPackage 2: 7-seater – $42/tour | 16-seater – $35/tour.\nFull program: SGD $296 per person (excludes international flights).\n\n🏨 Accommodation (multi-day option): 3–4 star hotels, double rooms (single available upon request), with Wi-Fi & TV.\n🍴 Meals included: Hotel breakfast, 4 lunches, 3 dinners (including Welcome Dinner & Gala Dinner).\n🦽 Accessibility: Wheelchair-friendly venues.\n📌 Included: Entrance fees, English-speaking guides, all workshops, transportation, meals, and gift set.\n❌ Not included: Personal expenses, shopping, phone calls, additional drinks/meals, international flights.\n📲 Booking & Contact:\nWebsite: tih.nhi.sg\nEmail: danh@nhi.sg\nWhatsApp: +84 367666618',
+      tourProgram: '💰 Pricing:\nPackage 1: 7-seater – $307/tour | 16-seater – $635/tour.\nPackage 2: 7-seater – $42/tour | 16-seater – $35/tour.\nFull program: USD $296 per person (excludes international flights).\n\n🏨 Accommodation (multi-day option): 3–4 star hotels, double rooms (single available upon request), with Wi-Fi & TV.\n🍴 Meals included: Hotel breakfast, 4 lunches, 3 dinners (including Welcome Dinner & Gala Dinner).\n🦽 Accessibility: Wheelchair-friendly venues.\n📌 Included: Entrance fees, English-speaking guides, all workshops, transportation, meals, and gift set.\n❌ Not included: Personal expenses, shopping, phone calls, additional drinks/meals, international flights.\n📲 Booking & Contact:\nWebsite: tih.nhi.sg\nEmail: danh@nhi.sg\nWhatsApp: +84 367666618',
       highlights: [
         '🌏 Authentic cultural immersion with local artisans',
         '☕  Hands-on coffee brewing workshop at Hush Workspace',

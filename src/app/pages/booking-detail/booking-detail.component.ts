@@ -296,6 +296,11 @@ export class BookingDetailComponent implements OnInit {
     return total;
   }
 
+  // Convert USD to VND (approximate rate: 1 USD = 24,500 VND)
+  getTotalPriceVND(): number {
+    return Math.round(this.getTotalPrice() * 24500);
+  }
+
   getTicketQuantity(ticketId: string): number {
     const ticket = this.tickets.find(t => t.id === ticketId);
     return ticket?.quantity || 0;
@@ -323,7 +328,7 @@ export class BookingDetailComponent implements OnInit {
           quantity: t.quantity
         })).filter(t => t.quantity > 0),
         addOn: this.addOnQuantity > 0 ? { name: 'Photo Opportunity', price: this.addOnPrice, quantity: this.addOnQuantity } : undefined,
-        totalPrice: this.getTotalPrice()
+        totalPrice: this.getTotalPriceVND()
       };
 
       this.router.navigate(['/checkout/details'], { state: orderState });

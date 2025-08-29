@@ -63,7 +63,7 @@ export class TourCardComponent {
   formatPrice(): string {
     return this.tour.price.toLocaleString('vi-VN', {
       style: 'currency',
-      currency: 'VND',
+      currency: 'USD',
       minimumFractionDigits: 0
     });
   }

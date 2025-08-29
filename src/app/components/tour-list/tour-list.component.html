@@ -16,7 +16,7 @@
       </div>
 
       <div class="filter-options">
-        <select [(ngModel)]="selectedCategory" (change)="onCategoryChange()">
+        <select [(ngModel)]="selectedCategory" (change)="onCategoryChange()" title="Category filter">
           <option value="">Tất cả danh mục</option>
           <option value="Adventure">Adventure</option>
           <option value="Cultural">Cultural</option>
@@ -25,7 +25,7 @@
           <option value="City">City</option>
         </select>
 
-        <select [(ngModel)]="selectedDifficulty" (change)="onDifficultyChange()">
+        <select [(ngModel)]="selectedDifficulty" (change)="onDifficultyChange()" title="Difficulty filter">
           <option value="">Tất cả độ khó</option>
           <option value="Easy">Dễ</option>
           <option value="Medium">Trung bình</option>
@@ -33,16 +33,18 @@
         </select>
 
         <div class="price-range">
-          <label>Khoảng giá:</label>
+          <label for="price-range">Khoảng giá (USD):</label>
           <input 
+            id="price-range"
             type="range" 
             min="0" 
-            max="5000000" 
-            step="500000"
+            max="2000" 
+            step="50"
             [(ngModel)]="maxPrice"
             (input)="onPriceChange()"
+            title="Max price in USD"
           >
-          <span>{{ maxPrice | currency:'VND':'symbol':'1.0-0' }}</span>
+          <span>{{ maxPrice | currency:'USD':'symbol':'1.0-0' }}</span>
         </div>
       </div>
     </div>

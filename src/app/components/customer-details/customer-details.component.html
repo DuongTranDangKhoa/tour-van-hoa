@@ -72,7 +72,7 @@
                       <div class="phone-number-input phone-number-input--always-visible-country-input">
                         <span class="select-label">Nationality*</span>
                         <div class="gyg-select">
-                          <select class="gyg-select-field" [(ngModel)]="customerDetails.country" name="country" required>
+                          <select class="gyg-select-field" [(ngModel)]="customerDetails.country" name="country" required aria-label="Select your nationality">
                             <option value="VN">Vietnam (+84)</option>
                             <option value="US">United States (+1)</option>
                             <option value="UK">United Kingdom (+44)</option>
@@ -219,12 +219,12 @@
                   <div class="cart-item__activity-container--main-info">
                     <div class="cart-item__activity-container--main-info--image">
                       <picture class="c-image c-image--loaded c-image--radius-1x">
-                        <img class="c-image__img c-image__img--crop" src="https://cdn.getyourguide.com/image/format=auto,fit=crop,gravity=auto,quality=60,width=65,height=65/tour_img/5c9e27e2d47d4.jpeg" alt="Art and Culture 1" width="64" height="64">
+                        <img class="c-image__img c-image__img--crop" [src]="tourImageUrl" [alt]="tourName" title="Tour image" [title]="tourName" width="64" height="64">
                       </picture>
                     </div>
                     <div class="cart-item__activity-container-main-info--details">
                       <h4 class="cart-item__activity-container--main-info--title" data-test-id="cart-item-title">
-                        Art and Culture
+                        {{ tourName }}
                       </h4>
                       <div class="cart-item__description--rating">
                         <div class="c-activity-rating c-activity-rating--compact darker-yellow-experiment">
@@ -251,15 +251,19 @@
                     <div class="cart-item__description--details">
                       <div class="cart-item__description--details--entry">
                         <span class="c-icon"><span class="i-tickets c-icon__c-tickets" aria-hidden="true"></span></span>
-                        <div>language: Vietnamese</div>
+                        <div>Language: {{ getTourLanguage() }}</div>
+                      </div>
+                      <div class="cart-item__description--details--entry">
+                        <span class="c-icon"><span class="i-dollar c-icon__c-dollar" aria-hidden="true">💰</span></span>
+                        <div>Base Price: {{ getFormattedTourBasePrice() }}</div>
                       </div>
                       <div class="cart-item__description--details--entry">
                         <span class="c-icon"><span class="i-clock c-icon__c-clock" aria-hidden="true"></span></span>
-                        <div>Saturday, September 6, 2025 at 6:00 AM</div>
+                        <div>{{ tourDate }} at {{ tourSession }}</div>
                       </div>
                       <div class="cart-item__description--details--entry">
                         <span class="c-icon"><span class="i-users c-icon__c-users" aria-hidden="true"></span></span>
-                        <div>1 adult (Age 30 - 69)</div>
+                        <div>{{ getParticipantSummary() }}</div>
                       </div>
                     </div>
                   </div>
@@ -267,13 +271,15 @@
               </div>
             </div>
           </section>
+     
           <div class="expanded order-summary__total">
             <div class="order-summary__total__label">
-              <div>Total</div>
+              <div> Total</div>
             </div>
             <div class="order-summary__total__price">
               <div class="price price--big" data-test-id="order-summary-total">
-                <div>₫7,670,400</div>
+                <div>{{ getFormattedTotalPriceUSD() }}</div>
+              
               </div>
               <div class="order-summary__total__price__no-fees">
                 <span class="taxes-included-message">All taxes and fees included</span>
