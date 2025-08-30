@@ -8,6 +8,14 @@
 
 /* Tickets */
 .ticket-selection {
+  background: #fafbfc;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  
   /* Ensure ticket cards span the full available width of the widget */
   .ticket-item { width: 100%; box-sizing: border-box; }
   .ticket-item, .add-on-item {

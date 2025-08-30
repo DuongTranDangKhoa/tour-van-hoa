@@ -215,19 +215,13 @@
 }
 
 .map-and-info-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
   margin-bottom: 40px;
   
-  .info-column {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    
-    .help-section,
-    
-    
+  .help-section,
+  .getting-there-section {
     .info-header {
       display: flex;
       align-items: flex-start;
@@ -262,6 +256,42 @@
             .unit {
               text-decoration: underline;
               font-weight: 500;
+            }
+          }
+        }
+        
+        .address-map-row {
+          display: flex;
+          align-items: flex-start;
+          gap: 20px;
+          margin-top: 12px;
+          
+          .address-info {
+            flex: 1;
+            
+            .address {
+              margin: 0;
+              font-size: 14px;
+              color: #666;
+              line-height: 1.6;
+              
+              .unit {
+                text-decoration: underline;
+                font-weight: 500;
+              }
+            }
+          }
+          
+          .inline-map {
+            flex-shrink: 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            
+            iframe {
+              border-radius: 8px;
+              width: 200px;
+              height: 150px;
             }
           }
         }
@@ -306,36 +336,29 @@
     }
   }
   
-  .map-column {
-    .map-embed {
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-      height: 400px;
-      
-      iframe {
-        border-radius: 12px;
-        width: 100%;
-        height: 100%;
-      }
-    }
-  }
-  
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
     
-    .info-column {
-      gap: 20px;
-      
-      .help-section,
-      .getting-there-section {
-        padding: 20px;
+    .help-section,
+    .getting-there-section {
+      .info-header {
+        .info-content {
+          .address-map-row {
+            flex-direction: column;
+            gap: 16px;
+            
+            .inline-map {
+              align-self: center;
+              
+              iframe {
+                width: 100%;
+                max-width: 300px;
+                height: 200px;
+              }
+            }
+          }
+        }
       }
-    }
-    
-    .map-column .map-embed {
-      height: 300px;
     }
   }
 }

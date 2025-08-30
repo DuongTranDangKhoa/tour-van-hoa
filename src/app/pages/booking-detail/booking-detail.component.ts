@@ -393,4 +393,8 @@ export class BookingDetailComponent implements OnInit {
   isTicketInfoVisible(ticketId: string): boolean {
     return this.visibleTicketInfo.has(ticketId);
   }
+
+  hasSelectedTickets(): boolean {
+    return this.tickets.some(ticket => ticket.quantity > 0);
+  }
 }
