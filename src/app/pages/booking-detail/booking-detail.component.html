@@ -3,60 +3,27 @@
   <div class="tour-hero-section" *ngIf="tour" (click)="openImageGallery()">
     <div class="media-section">
       <!-- Left section - 50% -->
-      <div class="main-image-section" 
-           style="transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
-           onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.12)'"
-           onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
-        <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image" class="hero-image" 
-             style="transition: transform 0.3s ease;"
-             onmouseover="this.style.transform='scale(1.08)'"
-             onmouseout="this.style.transform='scale(1)'">
-        <button class="play-button" 
-                style="transition: all 0.3s ease; cursor: pointer;"
-                onmouseover="this.style.transform='scale(1.1)'; this.style.background='rgba(0,0,0,0.9)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.3)'"
-                onmouseout="this.style.transform='scale(1)'; this.style.background='rgba(0,0,0,0.8)'; this.style.boxShadow='none'">
+      <div class="main-image-section">
+        <img src="/city-image/TRUONG_6M0A2586.jpg" [alt]="tour.name" title="Tour image" class="hero-image">
+        <button class="play-button">
           <i class="icon">▶️</i>
         </button>
       </div>
       
       <!-- Right section - 50% divided into 4 equal parts -->
       <div class="image-grid-section">
-        <div class="grid-item" 
-             style="transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
-             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'; this.style.zIndex='2'"
-             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'; this.style.zIndex='1'">
-          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image" 
-               style="transition: transform 0.3s ease;"
-               onmouseover="this.style.transform='scale(1.1)'"
-               onmouseout="this.style.transform='scale(1)'">
+        <div class="grid-item">
+          <img src="/city-image/6M0A2532.JPG" [alt]="tour.name" title="Tour image">
           <div class="overlay-text">Tour Van Hoa presents</div>
         </div>
-        <div class="grid-item top-right-border" 
-             style="transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
-             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'; this.style.zIndex='2'"
-             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'; this.style.zIndex='1'">
-          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image" 
-               style="transition: transform 0.3s ease;"
-               onmouseover="this.style.transform='scale(1.1)'"
-               onmouseout="this.style.transform='scale(1)'">
+        <div class="grid-item top-right-border">
+          <img src="/city-image/6M0A0688.JPG" [alt]="tour.name" title="Tour image">
         </div>
-        <div class="grid-item" 
-             style="transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
-             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'; this.style.zIndex='2'"
-             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'; this.style.zIndex='1'">
-          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image" 
-               style="transition: transform 0.3s ease;"
-               onmouseover="this.style.transform='scale(1.1)'"
-               onmouseout="this.style.transform='scale(1)'">
+        <div class="grid-item">
+          <img src="/city-image/6M0A0599.JPG" [alt]="tour.name" title="Tour image">
         </div>
-        <div class="grid-item bot-right-border" 
-             style="transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
-             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'; this.style.zIndex='2'"
-             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'; this.style.zIndex='1'">
-          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image" 
-               style="transition: transform 0.3s ease;"
-               onmouseover="this.style.transform='scale(1.1)'"
-               onmouseout="this.style.transform='scale(1)'">
+        <div class="grid-item bot-right-border">
+          <img src="/city-image/6M0A0493.JPG" [alt]="tour.name" title="Tour image">
           <div class="gallery-btn">
             <i class="icon">📷</i>
             <span>Thư viện</span>
@@ -139,35 +106,7 @@
             </div>
           </div>
         </div> 
-      <div class="user-photo-gallery">
-        <h2>User Photo Gallery</h2>
-        <div class="photo-grid" (click)="openImageGallery()">
-          <div class="photo-item">
-            <img src="assets/minecraft-experience.jpg" alt="Minecraft Experience Screen">
-            <div class="photo-overlay">
-              <span class="photo-title">Minecraft Experience</span>
-            </div>
-          </div>
-          <div class="photo-item">
-            <img src="assets/minecraft-bee.jpg" alt="Minecraft Bee Statue">
-            <div class="photo-overlay">
-              <span class="photo-title">Minecraft Bee</span>
-            </div>
-          </div>
-          <div class="photo-item">
-            <img src="assets/minecraft-creeper.jpg" alt="Boy on Creeper Statue">
-            <div class="photo-overlay">
-              <span class="photo-title">Creeper Adventure</span>
-            </div>
-          </div>
-          <div class="photo-item">
-            <img src="assets/minecraft-structure.jpg" alt="Minecraft Blue Structure">
-            <div class="photo-overlay">
-              <span class="photo-title">Mysterious Structure</span>
-            </div>
-          </div>
-        </div>
-      </div>
+   
 
       <div class="user-reviews-section" >
         <h2>User reviews</h2>
@@ -281,7 +220,35 @@
           </div>
         </div>
       </div>
-      
+         <div class="user-photo-gallery">
+        <h2>User Photo Gallery</h2>
+        <div class="photo-grid" (click)="openImageGallery()">
+          <div class="photo-item">
+            <img src="/city-image/6M0A2901.JPG" alt="Minecraft Experience Screen">
+            <div class="photo-overlay">
+              <span class="photo-title">Minecraft Experience</span>
+            </div>
+          </div>
+          <div class="photo-item">
+            <img src="/city-image/6M0A2900.JPG" alt="Minecraft Bee Statue">
+            <div class="photo-overlay">
+              <span class="photo-title">Minecraft Bee</span>
+            </div>
+          </div>
+          <div class="photo-item">
+            <img src="/city-image/6M0A0646.JPG" alt="Boy on Creeper Statue">
+            <div class="photo-overlay">
+              <span class="photo-title">Creeper Adventure</span>
+            </div>
+          </div>
+          <div class="photo-item">
+            <img src="/city-image/6M0A0529.JPG" alt="Minecraft Blue Structure">
+            <div class="photo-overlay">
+              <span class="photo-title">Mysterious Structure</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Right Panel: Booking Widget and Notification -->

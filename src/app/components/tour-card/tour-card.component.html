@@ -1,7 +1,7 @@
 <div class="event-card" (click)="onCardClick()">
   <div class="event-image">
-    <img [src]="tour.imageUrl" [alt]="tour.name" onerror="this.src='assets/images/placeholder-event.jpg'">
-    <button class="favorite-btn" (click)="toggleWishlist(); $event.stopPropagation();">
+    <img src="/city-image/TRUONG_6M0A2586.jpg" [alt]="tour.name" [title]="tour.name" onerror="this.src='assets/images/placeholder-event.jpg'">
+    <button type="button" class="favorite-btn" (click)="toggleWishlist(); $event.stopPropagation();" [title]="isInWishlist() ? 'Remove from wishlist' : 'Add to wishlist'">
       <i class="fas fa-heart" [class.active]="isInWishlist()"></i>
     </button>
   </div>

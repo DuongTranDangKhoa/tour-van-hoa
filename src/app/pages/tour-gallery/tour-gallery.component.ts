@@ -30,7 +30,6 @@ import { Tour } from '../../models/tour';
                [class.active]="i === currentIndex"
                (click)="selectImage(i)">
             <img [src]="image" [alt]="tour?.name">
-            <div class="play-overlay" *ngIf="i < 3">▶</div>
           </div>
         </div>
       </div>
@@ -76,13 +75,11 @@ import { Tour } from '../../models/tour';
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s;
       z-index: 1001;
     }
 
     .close-btn:hover {
       background: rgba(0, 0, 0, 1);
-      transform: scale(1.1);
     }
 
     .main-image-section {
@@ -116,13 +113,11 @@ import { Tour } from '../../models/tour';
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s;
       color: #666;
     }
 
     .nav-btn:hover {
       background: white;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
     .nav-btn:disabled {
@@ -155,13 +150,10 @@ import { Tour } from '../../models/tour';
       overflow: hidden;
       cursor: pointer;
       border: 3px solid transparent;
-      transition: all 0.2s;
       flex-shrink: 0;
     }
 
-    .thumbnail:hover {
-      transform: scale(1.05);
-    }
+
 
     .thumbnail.active {
       border-color: #007bff;
@@ -272,14 +264,17 @@ export class TourGalleryComponent implements OnInit {
 
   generateTourImages(): void {
     if (this.tour) {
-      // Tạo mảng hình ảnh từ tour (có thể thay thế bằng API thực tế)
+      // Danh sách hình ảnh từ hero section
       this.images = [
-        this.tour.imageUrl,
-        this.tour.imageUrl, // Có thể thay bằng hình ảnh khác
-        this.tour.imageUrl,
-        this.tour.imageUrl,
-        this.tour.imageUrl,
-        this.tour.imageUrl
+        '/city-image/TRUONG_6M0A2586.jpg',      // Hình chính
+        '/city-image/6M0A2532.JPG',              // Grid item 1
+        '/city-image/6M0A0688.JPG',              // Grid item 2  
+        '/city-image/6M0A0599.JPG',              // Grid item 3
+        '/city-image/6M0A0493.JPG',              // Grid item 4
+        '/city-image/6M0A2901.JPG',              // User gallery 1
+        '/city-image/6M0A2900.JPG',              // User gallery 2
+        '/city-image/6M0A0646.JPG',              // User gallery 3
+        '/city-image/6M0A0529.JPG'               // User gallery 4
       ];
     }
   }
