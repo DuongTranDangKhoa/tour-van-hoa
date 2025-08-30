@@ -210,12 +210,17 @@ export class BookingDetailComponent implements OnInit {
         disabled: isPastDate
       });
     }
+
+    // Tự động chọn ngày gần nhất có thể book được
+    this.autoSelectNearestAvailableDate();
   }
 
   prevMonth(): void {
     if (this.visibleMonthStartIndex >= 3) {
       this.visibleMonthStartIndex -= 3;
       // Không thay đổi currentMonth và currentYear, chỉ thay đổi visible months
+      // Reset selectedDate để tự động chọn ngày mới
+      this.selectedDate = null;
       this.generateCalendar();
     }
   }
@@ -224,6 +229,8 @@ export class BookingDetailComponent implements OnInit {
     if (this.visibleMonthStartIndex + 3 < this.availableMonths.length) {
       this.visibleMonthStartIndex += 3;
       // Không thay đổi currentMonth và currentYear, chỉ thay đổi visible months
+      // Reset selectedDate để tự động chọn ngày mới
+      this.selectedDate = null;
       this.generateCalendar();
     }
   }
@@ -259,6 +266,8 @@ export class BookingDetailComponent implements OnInit {
       }
     }
     
+    // Reset selectedDate khi chuyển tháng để tự động chọn ngày mới
+    this.selectedDate = null;
     this.generateCalendar();
   }
 
@@ -267,6 +276,31 @@ export class BookingDetailComponent implements OnInit {
       this.days.forEach(d => d.selected = false);
       day.selected = true;
       this.selectedDate = new Date(this.currentYear, this.currentMonth, parseInt(day.day));
+    }
+  }
+
+  // Tự động chọn ngày gần nhất có thể book được
+  autoSelectNearestAvailableDate(): void {
+    // Tìm ngày đầu tiên có thể book được (không disabled và có availability)
+    const availableDay = this.days.find(day => 
+      day.day && !day.disabled && day.availability !== 'none'
+    );
+
+    if (availableDay) {
+      // Nếu chưa có ngày nào được chọn, tự động chọn ngày đầu tiên có thể
+      if (!this.selectedDate) {
+        this.selectDate(availableDay);
+      } else {
+        // Kiểm tra xem ngày đã chọn có còn trong tháng hiện tại không
+        const selectedDayInCurrentMonth = this.days.find(day => 
+          day.day && day.selected
+        );
+        
+        // Nếu không có ngày nào được chọn trong tháng hiện tại, chọn ngày đầu tiên
+        if (!selectedDayInCurrentMonth) {
+          this.selectDate(availableDay);
+        }
+      }
     }
   }
 

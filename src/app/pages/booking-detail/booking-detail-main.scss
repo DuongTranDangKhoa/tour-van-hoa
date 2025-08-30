@@ -252,9 +252,9 @@
   border: none;
 
   h2 {
-    font-size: 24px;
-    font-weight: 700;
-    color: #1a1a1a;
+    font-size: 28px; /* Tăng từ 24px lên 28px */
+    font-weight: 800; /* Tăng từ 700 lên 800 */
+    color: #000000; /* Đổi từ #1a1a1a thành #000000 (đen đậm hơn) */
     margin-bottom: 20px;
     padding-bottom: 10px;
     border-bottom: 1px solid #e5e5e5;
@@ -270,25 +270,26 @@
     &:last-child { margin-bottom: 0; }
 
     h2 {
-      font-size: 20px;
-      font-weight: 600;
-      color: #1a1a1a;
+      font-size: 24px; /* Tăng từ 20px lên 24px */
+      font-weight: 700; /* Tăng từ 600 lên 700 */
+      color: #000000; /* Đổi từ #1a1a1a thành #000000 (đen đậm hơn) */
       margin-bottom: 15px;
       border-bottom: none;
       padding-bottom: 0;
     }
 
     p {
-      font-size: 16px;
+      font-size: 18px; /* Tăng từ 16px lên 18px */
       line-height: 1.6;
-      color: #4a4a4a;
+      color: #1a1a1a; /* Đổi từ #4a4a4a thành #1a1a1a (đậm hơn) */
+      font-weight: 500; /* Thêm font-weight để đậm hơn */
     }
     
     .tour-program-content {
       font-family: inherit;
-      font-size: 14px;
+      font-size: 16px; /* Tăng từ 14px lên 16px */
       line-height: 1.6;
-      color: #4a4a4a;
+      color: #1a1a1a; /* Đổi từ #4a4a4a thành #1a1a1a (đậm hơn) */
       background: none;
       border: none;
       border-radius: 0;
@@ -298,6 +299,7 @@
       word-wrap: break-word;
       max-height: 400px;
       overflow-y: auto;
+      font-weight: 500; /* Thêm font-weight để đậm hơn */
     }
 
     ul {
@@ -306,16 +308,17 @@
       margin: 0;
 
       li {
-        font-size: 16px;
-        color: #4a4a4a;
+        font-size: 18px; /* Tăng từ 16px lên 18px */
+        color: #1a1a1a; /* Đổi từ #4a4a4a thành #1a1a1a (đậm hơn) */
         margin-bottom: 10px;
         display: flex;
         align-items: center;
         gap: 10px;
+        font-weight: 500; /* Thêm font-weight để đậm hơn */
 
         i {
           color: #007bff;
-          font-size: 18px;
+          font-size: 20px; /* Tăng từ 18px lên 20px */
           min-width: 20px;
         }
 
@@ -333,9 +336,10 @@
     li {
       padding: 8px 0;
       border-bottom: 1px solid #f0f0f0;
-      font-size: 14px;
+      font-size: 16px; /* Tăng từ 14px lên 16px */
       line-height: 1.5;
-      color: #555;
+      color: #1a1a1a; /* Đổi từ #555 thành #1a1a1a (đậm hơn) */
+      font-weight: 500; /* Thêm font-weight để đậm hơn */
       
       &:last-child {
         border-bottom: none;
