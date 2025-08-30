@@ -5,9 +5,6 @@
       <!-- Left section - 50% -->
       <div class="main-image-section">
         <img src="/city-image/TRUONG_6M0A2586.jpg" [alt]="tour.name" title="Tour image" class="hero-image">
-        <button class="play-button">
-          <i class="icon">▶️</i>
-        </button>
       </div>
       
       <!-- Right section - 50% divided into 4 equal parts -->
@@ -53,7 +50,7 @@
           <div class="description-content">
             <div class="intro-section">
               <h3>Intro Description</h3>
-              <p>✨ Step into the heart of Central Vietnam with the Vietnam Art & Culture Tour by This Is Home — a full-day cultural journey designed to connect you with the country’s authentic heritage. From hands-on craft workshops to exploring the Cham Towers, every moment reveals the timeless beauty of Vietnam’s traditions. Guided by passionate locals, this immersive adventure blends creativity, cuisine, and community, leaving you with unforgettable memories of Vietnam’s soul.
+              <p class="description-text">✨ Step into the heart of Central Vietnam with the Vietnam Art & Culture Tour by This Is Home — a full-day cultural journey designed to connect you with the country’s authentic heritage. From hands-on craft workshops to exploring the Cham Towers, every moment reveals the timeless beauty of Vietnam’s traditions. Guided by passionate locals, this immersive adventure blends creativity, cuisine, and community, leaving you with unforgettable memories of Vietnam’s soul.
               </p>
             </div>
             
@@ -258,7 +255,7 @@
         <form [formGroup]="bookingForm" (ngSubmit)="onBookTour()">
           <!-- Calendar Section -->
           <div class="calendar-section">
-            <h3>Chọn ngày và giờ</h3>
+            <h3>Select date and time</h3>
             <div class="month-nav">
               <button type="button" (click)="prevMonth()" class="nav-btn" [disabled]="!canGoPrevMonth()">‹</button>
               
@@ -304,7 +301,7 @@
             <!-- Divider between calendar and session selection -->
             <div class="calendar-session-divider">
               <div class="divider-line"></div>
-              <span class="divider-text">Chọn giờ</span>
+              <span class="divider-text">Select time</span>
               <div class="divider-line"></div>
             </div>
 
@@ -330,7 +327,7 @@
                         [disabled]="!canGoPrevSession()">
                   ‹
                 </button>
-                
+
                 <div class="session-buttons">
                   <button type="button" 
                           class="session-btn" 
@@ -340,7 +337,7 @@
                     {{ session }}
                   </button>
                 </div>
-                
+
                 <button type="button" 
                         class="nav-btn" 
                         (click)="nextSession()" 
@@ -372,7 +369,7 @@
           </div>
 
           <!-- Submit Button -->
-          <button type="submit" class="book-button" [disabled]="isSubmitting || !selectedDate || !selectedSession">
+          <button type="submit" class="book-button" [disabled]="!canBookTour()">
             {{ getTotalPrice() | currency:'USD':'symbol':'1.2-2' }} — Book Now
           </button>
         </form>

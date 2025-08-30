@@ -237,136 +237,168 @@
     }
   }
 
-  .session-selection {
-    margin-bottom: 24px;
+/* Session Selection - Updated to match time-button style */
+.session-selection {
+  margin-bottom: 24px;
 
-    .session-header {
+  .session-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 16px;
+
+    .currency-note {
+      color: #6b7280;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .legend {
       display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 16px;
+      flex-direction: row;
+      gap: 16px;
+      font-size: 14px;
 
-      .currency-note {
-        color: #6b7280;
-        font-size: 14px;
-        font-weight: 500;
-      }
-
-      .legend {
+      .legend-item {
         display: flex;
-        flex-direction: row;
-        gap: 16px;
-        font-size: 14px;
-
-        .legend-item {
-          display: flex;
-          align-items: center;
-          gap: 8px;
+        align-items: center;
+        gap: 8px;
+        
+        .legend-line {
+          width: 20px;
+          height: 3px;
+          border-radius: 2px;
+        }
+        
+        .legend-line.low { background: #ef4444; }
+        .legend-line.best { background: #8b5cf6; }
+        
+        .legend-text {
+          font-weight: 500;
           
-          .legend-line {
-            width: 20px;
-            height: 3px;
-            border-radius: 2px;
+          &:first-child {
+            color: #ec4899;
           }
           
-          .legend-line.low { background: #ef4444; }
-          .legend-line.best { background: #8b5cf6; }
-          
-          .legend-text {
-            font-weight: 500;
-            
-            &:first-child {
-              color: #ec4899;
-            }
-            
-            &:last-child {
-              color: #8b5cf6;
-            }
+          &:last-child {
+            color: #8b5cf6;
           }
         }
       }
     }
+  }
 
-    .session-navigation {
-      display: grid;
-      grid-template-columns: 36px 1fr 36px;
-      align-items: center;
-      column-gap: 12px;
-      margin-bottom: 16px;
+  .session-navigation {
+    display: grid;
+    grid-template-columns: 36px 1fr 36px;
+    align-items: center;
+    column-gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .session-nav-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #e5e5e5;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #1a1a1a;
+    transition: all 0.2s;
+    flex-shrink: 0;
+
+    &:hover:not(:disabled) { border-color: #007bff; color: #007bff; }
+    &:disabled { opacity: 0.3; cursor: not-allowed; color: #ccc; }
+  }
+
+  .session-buttons {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    flex: 1;
+    justify-content: center;
+    padding: 0 8px;
+    scroll-padding-left: 12px;
+    scroll-padding-right: 12px;
+    align-items: center;
+  }
+
+  /* Updated session-btn to match time-button style */
+  .session-btn {
+    /* Default/Unactive state */
+    background-color: #f1f5f9;
+    color: #1f2937;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    position: relative;
+    cursor: pointer;
+    padding: 0.75rem 1.5rem;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    white-space: nowrap;
+    min-width: 80px;
+    text-align: center;
+    font-size: 14px;
+
+    /* Default hover state */
+    &:hover:not(:disabled):not(.active) { 
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      background-color: #e2e8f0;
+    }
+    
+    /* Active/Selected state - only applied when .active class is present */
+    &.active { 
+      background-color: transparent !important;
+      color: #3b82f6 !important;
+      border: 2px solid #3b82f6 !important;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
     }
 
-    .session-nav-btn {
-      width: 32px;
-      height: 32px;
-      border: 1px solid #e5e5e5;
-      border-radius: 50%;
-      background: white;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 16px;
-      color: #1a1a1a;
-      transition: all 0.2s;
-      flex-shrink: 0;
-
-      &:hover:not(:disabled) { border-color: #007bff; color: #007bff; }
-      &:disabled { opacity: 0.3; cursor: not-allowed; color: #ccc; }
+    /* Corner triangle - only show when active */
+    &.active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 16px 16px 0;
+      border-color: transparent #3b82f6 transparent transparent;
     }
 
-    .session-buttons {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      flex: 1;
-      justify-content: center;
-      padding: 0 8px;
-      scroll-padding-left: 12px;
-      scroll-padding-right: 12px;
-      align-items: center;
+    /* Active hover state */
+    &.active:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
     }
 
-    .session-btn {
-      padding: 10px 20px;
-      border: 1px solid #e0e0e0;
-      background: white;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: 500;
-      transition: all 0.2s ease;
-      white-space: nowrap;
-      min-width: 80px;
-      text-align: center;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-
-      &:hover:not(:disabled) { 
-        border-color: #007bff; 
-        background-color: #f8f9ff; 
-        transform: translateY(-1px);
-        box-shadow: 0 2px 6px rgba(0, 123, 255, 0.2);
-      }
+    &:disabled {
+      background-color: #f9fafb;
+      color: #9ca3af;
+      cursor: not-allowed;
+      opacity: 0.6;
       
-      &.active { 
-        background-color: #007bff; 
-        color: white; 
-        border-color: #007bff;
-        box-shadow: 0 2px 8px rgba(0, 123, 255, 0.3);
+      &:hover {
+        transform: none;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        background-color: #f9fafb;
       }
     }
   }
+}
 
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .calendar-session-divider {
-      margin: 20px 0 16px 0;
-      gap: 12px;
-      
-      .divider-text {
-        font-size: 13px;
-        padding: 0 6px;
-      }
-    }
-    
+/* Responsive Design */
+@media (max-width: 768px) {
+  .session-selection {
     .session-navigation {
       grid-template-columns: 36px 1fr 36px;
       column-gap: 12px;
@@ -379,32 +411,24 @@
     }
     
     .session-btn {
-      padding: 8px 16px;
+      padding: 0.6rem 1.2rem;
       font-size: 13px;
       min-width: 70px;
     }
   }
-  
-  @media (max-width: 480px) {
-    .calendar-session-divider {
-      margin: 16px 0 12px 0;
-      gap: 8px;
-      
-      .divider-text {
-        font-size: 12px;
-        padding: 0 4px;
-      }
-    }
-    
+}
+
+@media (max-width: 480px) {
+  .session-selection {
     .session-navigation {
       grid-template-columns: 32px 1fr 32px;
       column-gap: 8px;
     }
     
     .session-btn {
-      padding: 6px 12px;
+      padding: 0.5rem 1rem;
       font-size: 12px;
       min-width: 60px;
     }
   }
-
+}
