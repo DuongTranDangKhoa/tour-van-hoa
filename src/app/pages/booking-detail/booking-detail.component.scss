@@ -22,6 +22,35 @@
       font-weight: 600;
       margin-bottom: 15px;
       color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin-bottom: 12px;
+      text-align: justify;
+    }
+    
+    li {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #333;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin-bottom: 8px;
+      text-align: justify;
+      
+      &.pricing-detail {
+        padding-left: 20px;
+        font-size: 16px;
+        color: #333;
+        text-align: justify;
+        font-weight: 500;
+        line-height: 1.6;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
     }
   }
   
@@ -33,19 +62,22 @@
       
       p {
         padding: 8px 0;
-        font-size: 14px;
-        line-height: 1.5;
+        font-size: 16px;
+        line-height: 1.6;
         text-align: justify;
-        margin: 0;
+        margin: 0 0 12px 0;
+        color: #333;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         
         &.pricing-detail,
         &.contact-detail {
           padding-left: 20px;
-          font-size: 16px; /* Tăng từ 13px lên 16px */
-          color: #000000; /* Đổi từ #666 thành #000000 (đen đậm hơn) */
+          font-size: 16px;
+          color: #333;
           text-align: justify;
-          font-weight: 600; /* Tăng font-weight để đậm hơn */
-          line-height: 1.5; /* Thêm line-height để dễ đọc */
+          font-weight: 500;
+          line-height: 1.6;
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
       }
     }
