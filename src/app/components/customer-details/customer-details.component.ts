@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -34,10 +34,17 @@ interface OrderState {
   imports: [
     CommonModule,
     FormsModule
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.Default
 })
-export class CustomerDetailsComponent implements OnInit {
+export class CustomerDetailsComponent implements OnInit, OnDestroy {
   showSpecialRequestInfo = false;
+
+  // Countdown timer
+  countdownMinutes: number = 2; // 2 phút
+  countdownSeconds: number = 0;
+  countdownInterval: any = null;
+  isCountdownActive: boolean = true;
 
   // Tour information from booking
   tourInfo: OrderState | null = null;
@@ -68,7 +75,8 @@ export class CustomerDetailsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -80,19 +88,73 @@ export class CustomerDetailsComponent implements OnInit {
     if (navState?.tourId) {
       this.tourInfo = navState;
       this.loadTourInformation();
-      return;
-    }
-
-    if (histState?.tourId) {
+    } else if (histState?.tourId) {
       this.tourInfo = histState;
       this.loadTourInformation();
-      return;
+    } else {
+      // Fallback to default/demo when no state is available
+      this.loadDefaultTourInformation();
+      this.simulateTourData();
     }
-
-    // Fallback to default/demo when no state is available
-    this.loadDefaultTourInformation();
-    this.simulateTourData();
+    
+    // Luôn luôn khởi động countdown timer sau khi load data
+    this.startCountdown();
   }
+
+  ngOnDestroy(): void {
+    this.stopCountdown();
+  }
+
+  // Khởi tạo countdown timer
+  startCountdown(): void {
+    // Reset countdown values
+    this.countdownMinutes = 2;
+    this.countdownSeconds = 0;
+    
+    // Clear any existing interval
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+      this.countdownInterval = null;
+    }
+    
+    // Force change detection ngay lập tức để hiển thị 02:00
+    this.cdr.detectChanges();
+    
+    this.countdownInterval = setInterval(() => {
+      if (this.countdownSeconds > 0) {
+        this.countdownSeconds--;
+      } else if (this.countdownMinutes > 0) {
+        this.countdownMinutes--;
+        this.countdownSeconds = 59;
+      } else {
+        // Hết thời gian, chuyển về trang booking detail
+        this.stopCountdown();
+        this.router.navigate(['/booking-detail']);
+        return;
+      }
+      
+      // Force change detection để cập nhật UI
+      this.cdr.detectChanges();
+    }, 1000);
+  }
+
+  // Dừng countdown timer
+  stopCountdown(): void {
+    if (this.countdownInterval) {
+      clearInterval(this.countdownInterval);
+      this.countdownInterval = null;
+    }
+    this.isCountdownActive = false;
+  }
+
+  // Format countdown time
+  getFormattedCountdown(): string {
+    const minutes = this.countdownMinutes.toString().padStart(2, '0');
+    const seconds = this.countdownSeconds.toString().padStart(2, '0');
+    return `${minutes}:${seconds}`;
+  }
+
+
 
   private loadTourInformation(): void {
     if (this.tourInfo) {

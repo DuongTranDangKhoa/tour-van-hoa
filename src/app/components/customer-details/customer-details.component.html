@@ -24,9 +24,12 @@
     <section class="checkout-page-layout__main-content" data-test-id="checkout-section">
       <!-- Warning Box -->
       <div class="warning-box" style="background-color: #ffebee; padding: 16px; border-radius: 4px; margin: 20px 0;">
-        <div style="display: flex; align-items: center;">
-          <span class="c-icon" style="margin-right: 8px;"><span class="i-alert c-icon__c-alert" aria-hidden="true"></span></span>
-          <span>⏱️We will hold your spot for 02:00 minutes.</span>
+        <div style="display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; align-items: center;">
+            <span class="c-icon" style="margin-right: 8px;"><span class="i-alert c-icon__c-alert" aria-hidden="true"></span></span>
+            <span>⏱️We will hold your spot for <strong>{{ getFormattedCountdown() }}</strong> minutes.</span>
+          </div>
+
         </div>
       </div>
 

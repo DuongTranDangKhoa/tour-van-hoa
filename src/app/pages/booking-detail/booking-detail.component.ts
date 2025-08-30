@@ -38,6 +38,7 @@ export class BookingDetailComponent implements OnInit {
   tour: Tour | null = null;
   bookingForm: FormGroup;
   isSubmitting = false;
+  showNotification = false;
 
   // Calendar data
   currentMonth = 0;
@@ -396,5 +397,21 @@ export class BookingDetailComponent implements OnInit {
 
   hasSelectedTickets(): boolean {
     return this.tickets.some(ticket => ticket.quantity > 0);
+  }
+
+  scrollToBooking(): void {
+    const bookingSection = document.querySelector('.booking-section');
+    if (bookingSection) {
+      bookingSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  onScroll(): void {
+    const bookingWidget = document.querySelector('.booking-widget');
+    if (bookingWidget) {
+      const rect = bookingWidget.getBoundingClientRect();
+      // Hiển thị notification khi booking widget không còn trong viewport
+      this.showNotification = rect.bottom < 0;
+    }
   }
 }

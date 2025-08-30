@@ -50,18 +50,7 @@
   }
 }
 
-.tour-hero-section {
-  cursor: pointer;
-  transition: transform 0.2s ease;
-  
-  &:hover {
-    transform: scale(1.02);
-  }
-  
-  .media-section {
-    // ... existing code ...
-  }
-}
+
 
 .month-nav {
   display: flex;

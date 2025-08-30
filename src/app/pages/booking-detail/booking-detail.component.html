@@ -1,29 +1,62 @@
-<div class="booking-detail-page">
+<div class="booking-detail-page" (window:scroll)="onScroll()">
   <!-- Top Section: Tour Images -->
   <div class="tour-hero-section" *ngIf="tour" (click)="openImageGallery()">
     <div class="media-section">
       <!-- Left section - 50% -->
-      <div class="main-image-section">
-        <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image" class="hero-image">
-        <button class="play-button">
+      <div class="main-image-section" 
+           style="transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
+           onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.12)'"
+           onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'">
+        <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image" class="hero-image" 
+             style="transition: transform 0.3s ease;"
+             onmouseover="this.style.transform='scale(1.08)'"
+             onmouseout="this.style.transform='scale(1)'">
+        <button class="play-button" 
+                style="transition: all 0.3s ease; cursor: pointer;"
+                onmouseover="this.style.transform='scale(1.1)'; this.style.background='rgba(0,0,0,0.9)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.3)'"
+                onmouseout="this.style.transform='scale(1)'; this.style.background='rgba(0,0,0,0.8)'; this.style.boxShadow='none'">
           <i class="icon">▶️</i>
         </button>
       </div>
       
       <!-- Right section - 50% divided into 4 equal parts -->
       <div class="image-grid-section">
-        <div class="grid-item">
-          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image">
+        <div class="grid-item" 
+             style="transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
+             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'; this.style.zIndex='2'"
+             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'; this.style.zIndex='1'">
+          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image" 
+               style="transition: transform 0.3s ease;"
+               onmouseover="this.style.transform='scale(1.1)'"
+               onmouseout="this.style.transform='scale(1)'">
           <div class="overlay-text">Tour Van Hoa presents</div>
         </div>
-        <div class="grid-item top-right-border">
-          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image">
+        <div class="grid-item top-right-border" 
+             style="transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
+             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'; this.style.zIndex='2'"
+             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'; this.style.zIndex='1'">
+          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image" 
+               style="transition: transform 0.3s ease;"
+               onmouseover="this.style.transform='scale(1.1)'"
+               onmouseout="this.style.transform='scale(1)'">
         </div>
-        <div class="grid-item">
-          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image">
+        <div class="grid-item" 
+             style="transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
+             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'; this.style.zIndex='2'"
+             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'; this.style.zIndex='1'">
+          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image" 
+               style="transition: transform 0.3s ease;"
+               onmouseover="this.style.transform='scale(1.1)'"
+               onmouseout="this.style.transform='scale(1)'">
         </div>
-        <div class="grid-item bot-right-border">
-          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image">
+        <div class="grid-item bot-right-border" 
+             style="transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: pointer;"
+             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'; this.style.zIndex='2'"
+             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none'; this.style.zIndex='1'">
+          <img [src]="tour.imageUrl" [alt]="tour.name" title="Tour image" 
+               style="transition: transform 0.3s ease;"
+               onmouseover="this.style.transform='scale(1.1)'"
+               onmouseout="this.style.transform='scale(1)'">
           <div class="gallery-btn">
             <i class="icon">📷</i>
             <span>Thư viện</span>
@@ -251,128 +284,148 @@
       
     </div>
 
-    <!-- Right Panel: Booking Widget - feverup style -->
-    <div class="booking-widget">
-      <form [formGroup]="bookingForm" (ngSubmit)="onBookTour()">
-        <!-- Calendar Section -->
-        <div class="calendar-section">
-          <h3>Chọn ngày và giờ</h3>
-          <div class="month-nav">
-            <button type="button" (click)="prevMonth()" class="nav-btn" [disabled]="!canGoPrevMonth()">‹</button>
-            
-            <!-- Hiển thị 3 tháng -->
-            <div class="month-buttons">
-              <button type="button" 
-                      *ngFor="let month of getVisibleMonths(); let i = index"
-                      (click)="selectMonth(month.value, month.year)" 
-                      [class.active]="month.value === currentMonth && month.year === currentYear"
-                      class="month-btn">
-                {{ month.label }}
-              </button>
-            </div>
-            
-            <button type="button" (click)="nextMonth()" class="nav-btn" [disabled]="!canGoNextMonth()">›</button>
-          </div>
-
-          <div class="weekdays">
-            <div class="day">SU</div>
-            <div class="day">MO</div>
-            <div class="day">TU</div>
-            <div class="day">WE</div>
-            <div class="day">TH</div>
-            <div class="day">FR</div>
-            <div class="day">SA</div>
-          </div>
-
-          <div class="calendar-days">
-            <div class="day-cell" *ngFor="let day of days" 
-                 [class.selected]="day.selected"
-                 [class.low-availability]="day.availability === 'low'"
-                 [class.best-price]="day.availability === 'best'"
-                 [class.empty]="!day.day"
-                 [class.disabled]="day.disabled"
-                 (click)="selectDate(day)">
-              <div class="corner-ribbon" *ngIf="day.selected"></div>
-              <div class="day-number">{{ day.day }}</div>
-              <!-- <div class="day-price" *ngIf="day.day && !day.disabled">${{ day.price }}</div> -->
-              <!-- <div class="bottom-indicator"></div> -->
-            </div>
-          </div>
-
-          <!-- Divider between calendar and session selection -->
-          <div class="calendar-session-divider">
-            <div class="divider-line"></div>
-          </div>
-
-          <!-- Session Selection -->
-          <div class="session-selection">
-              <!-- <div class="session-header">
-                <div class="currency-note">All prices shown in British pounds</div>
-                <div class="legend">
-                  <div class="legend-item">
-                    <span class="legend-line low"></span>
-                    <span class="legend-text">Low availability</span>
-                  </div>
-                  <div class="legend-item">
-                    <span class="legend-line best"></span>
-                    <span class="legend-text">Best price</span>
-                  </div>
-                </div>
-              </div> -->
-            <div class="session-navigation">
-              <button type="button" 
-                      class="nav-btn" 
-                      (click)="prevSession()" 
-                      [disabled]="!canGoPrevSession()">
-                ‹
-              </button>
+    <!-- Right Panel: Booking Widget and Notification -->
+    <div class="booking-section">
+      <!-- Booking Widget -->
+      <div class="booking-widget">
+        <form [formGroup]="bookingForm" (ngSubmit)="onBookTour()">
+          <!-- Calendar Section -->
+          <div class="calendar-section">
+            <h3>Chọn ngày và giờ</h3>
+            <div class="month-nav">
+              <button type="button" (click)="prevMonth()" class="nav-btn" [disabled]="!canGoPrevMonth()">‹</button>
               
-              <div class="session-buttons">
+              <!-- Hiển thị 3 tháng -->
+              <div class="month-buttons">
                 <button type="button" 
-                        class="session-btn" 
-                        *ngFor="let session of getVisibleSessions()"
-                        (click)="selectSession(session)"
-                        [class.active]="selectedSession === session">
-                  {{ session }}
+                        *ngFor="let month of getVisibleMonths(); let i = index"
+                        (click)="selectMonth(month.value, month.year)" 
+                        [class.active]="month.value === currentMonth && month.year === currentYear"
+                        class="month-btn">
+                  {{ month.label }}
                 </button>
               </div>
               
-              <button type="button" 
-                      class="nav-btn" 
-                      (click)="nextSession()" 
-                      [disabled]="!canGoNextSession()">
-                ›
-              </button>
+              <button type="button" (click)="nextMonth()" class="nav-btn" [disabled]="!canGoPrevMonth()">›</button>
             </div>
-          </div>
-        </div>
 
-        <!-- Divider between calendar and tickets -->
-        <div class="section-divider"></div>
-
-        <!-- Ticket Selection -->
-        <div class="ticket-selection">
-          <div class="ticket-item available" *ngFor="let ticket of tickets">
-            <div class="ticket-info">
-              <h4 class="ticket-name">{{ ticket.name }}</h4>
-              <span class="ticket-price">{{ ticket.price | currency:'USD':'symbol':'1.2-2' }}</span>
+            <div class="weekdays">
+              <div class="day">SU</div>
+              <div class="day">MO</div>
+              <div class="day">TU</div>
+              <div class="day">WE</div>
+              <div class="day">TH</div>
+              <div class="day">FR</div>
+              <div class="day">SA</div>
             </div>
-            <div class="ticket-action">
-              <div class="quantity-selector">
-                <button type="button" class="quantity-btn minus" (click)="adjustQuantity(ticket.id, -1)" [disabled]="getTicketQuantity(ticket.id) === 0">−</button>
-                <span class="quantity-display">{{ getTicketQuantity(ticket.id) }}</span>
-                <button type="button" class="quantity-btn plus" (click)="adjustQuantity(ticket.id, 1)">+</button>
+
+            <div class="calendar-days">
+              <div class="day-cell" *ngFor="let day of days" 
+                   [class.selected]="day.selected"
+                   [class.low-availability]="day.availability === 'low'"
+                   [class.best-price]="day.availability === 'best'"
+                   [class.empty]="!day.day"
+                   [class.disabled]="day.disabled"
+                   (click)="selectDate(day)">
+                <div class="corner-ribbon" *ngIf="day.selected"></div>
+                <div class="day-number">{{ day.day }}</div>
+                <!-- <div class="day-price" *ngIf="day.day && !day.disabled">${{ day.price }}</div> -->
+                <!-- <div class="bottom-indicator"></div> -->
+              </div>
+            </div>
+
+            <!-- Divider between calendar and session selection -->
+            <div class="calendar-session-divider">
+              <div class="divider-line"></div>
+              <span class="divider-text">Chọn giờ</span>
+              <div class="divider-line"></div>
+            </div>
+
+            <!-- Session Selection -->
+            <div class="session-selection">
+                <!-- <div class="session-header">
+                  <div class="currency-note">All prices shown in British pounds</div>
+                  <div class="legend">
+                    <div class="legend-item">
+                      <span class="legend-line low"></span>
+                      <span class="legend-text">Low availability</span>
+                    </div>
+                    <div class="legend-item">
+                      <span class="legend-line best"></span>
+                      <span class="legend-text">Best price</span>
+                    </div>
+                  </div>
+                </div> -->
+              <div class="session-navigation">
+                <button type="button" 
+                        class="nav-btn" 
+                        (click)="prevSession()" 
+                        [disabled]="!canGoPrevSession()">
+                  ‹
+                </button>
+                
+                <div class="session-buttons">
+                  <button type="button" 
+                          class="session-btn" 
+                          *ngFor="let session of getVisibleSessions()"
+                          (click)="selectSession(session)"
+                          [class.active]="selectedSession === session">
+                    {{ session }}
+                  </button>
+                </div>
+                
+                <button type="button" 
+                        class="nav-btn" 
+                        (click)="nextSession()" 
+                        [disabled]="!canGoNextSession()">
+                  ›
+                </button>
               </div>
             </div>
           </div>
+
+          <!-- Divider between calendar and tickets -->
+          <div class="section-divider"></div>
+
+          <!-- Ticket Selection -->
+          <div class="ticket-selection">
+            <div class="ticket-item available" *ngFor="let ticket of tickets">
+              <div class="ticket-info">
+                <h4 class="ticket-name">{{ ticket.name }}</h4>
+                <span class="ticket-price">{{ ticket.price | currency:'USD':'symbol':'1.2-2' }}</span>
+              </div>
+              <div class="ticket-action">
+                <div class="quantity-selector">
+                  <button type="button" class="quantity-btn minus" (click)="adjustQuantity(ticket.id, -1)" [disabled]="getTicketQuantity(ticket.id) === 0">−</button>
+                  <span class="quantity-display">{{ getTicketQuantity(ticket.id) }}</span>
+                  <button type="button" class="quantity-btn plus" (click)="adjustQuantity(ticket.id, 1)">+</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="book-button" [disabled]="isSubmitting || !selectedDate || !selectedSession">
+            {{ getTotalPrice() | currency:'USD':'symbol':'1.2-2' }} — Book Now
+          </button>
+        </form>
+      </div>
+
+      <!-- Notification Card - Below Booking Widget -->
+      <div class="notification-card" *ngIf="showNotification">
+        <div class="notification-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" fill="#8B5CF6"/>
+            <path d="M16 14L16.5 16.5L19 17L16.5 17.5L16 20L15.5 17.5L13 17L15.5 16.5L16 14Z" fill="#8B5CF6"/>
+            <path d="M8 18L8.25 19.25L9.5 19.5L8.25 19.75L8 21L7.75 19.75L6.5 19.5L7.75 19.25L8 18Z" fill="#8B5CF6"/>
+          </svg>
         </div>
-
-
-        <!-- Submit Button -->
-        <button type="submit" class="book-button" [disabled]="isSubmitting || !selectedDate || !selectedSession">
-          {{ getTotalPrice() | currency:'USD':'symbol':'1.2-2' }} — Book Now
-        </button>
-      </form>
+        <div class="notification-content">
+          <h3>Don't miss out!</h3>
+          <p>Check available dates and tickets</p>
+        </div>
+        <button class="notification-btn" (click)="scrollToBooking()">Tickets</button>
+      </div>
     </div>
   </div>
 </div>
