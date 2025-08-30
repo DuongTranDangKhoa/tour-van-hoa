@@ -305,8 +305,13 @@ export class BookingDetailComponent implements OnInit {
   }
 
   selectSession(session: string): void {
-    this.selectedSession = session;
-  }
+    // Toggle logic: nếu đang chọn session này thì bỏ chọn, nếu không thì chọn
+    if (this.selectedSession === session) {
+      this.selectedSession = null; // Bỏ chọn
+    } else {
+      this.selectedSession = session; // Chọn session mới
+    }
+}
 
   adjustQuantity(ticketId: string, change: number): void {
     const ticket = this.tickets.find(t => t.id === ticketId);
@@ -321,6 +326,18 @@ export class BookingDetailComponent implements OnInit {
   adjustAddOn(change: number): void {
     this.addOnQuantity = Math.max(0, this.addOnQuantity + change);
   }
+  canBookTour(): boolean {
+  // Kiểm tra đã chọn ngày
+  const hasSelectedDate = this.selectedDate !== null;
+  
+  // Kiểm tra đã chọn session
+  const hasSelectedSession = this.selectedSession !== null;
+  
+  // Kiểm tra đã chọn ít nhất 1 vé
+  const hasSelectedTickets = this.tickets.some(ticket => ticket.quantity > 0);
+  
+  return hasSelectedDate && hasSelectedSession && hasSelectedTickets;
+}
 
   getTotalPrice(): number {
     let total = 0;
@@ -342,34 +359,47 @@ export class BookingDetailComponent implements OnInit {
   }
 
   onBookTour(): void {
-    if (!this.selectedDate || !this.selectedSession) {
-      alert('Vui lòng chọn ngày và giờ!');
-      return;
+  // Kiểm tra validation trước khi thực hiện booking
+  if (!this.canBookTour()) {
+    let missingItems = [];
+    
+    if (!this.selectedDate) {
+      missingItems.push('ngày');
     }
-
-    if (!this.isSubmitting) {
-      this.isSubmitting = true;
-      const orderState = {
-        tourId: this.tour?.id || 0,
-        tourName: this.tour?.name || 'Tour',
-        imageUrl: this.tour?.imageUrl,
-        selectedDate: this.selectedDate.toDateString(),
-        selectedSession: this.selectedSession,
-        participants: this.tickets.map(t => ({
-          type: t.id,
-          name: t.name,
-          price: t.price,
-          fee: t.bookingFee,
-          quantity: t.quantity
-        })).filter(t => t.quantity > 0),
-        addOn: this.addOnQuantity > 0 ? { name: 'Photo Opportunity', price: this.addOnPrice, quantity: this.addOnQuantity } : undefined,
-        totalPrice: this.getTotalPriceVND()
-      };
-
-      this.router.navigate(['/checkout/details'], { state: orderState });
-      this.isSubmitting = false;
+    if (!this.selectedSession) {
+      missingItems.push('giờ');
     }
+    if (!this.hasSelectedTickets()) {
+      missingItems.push('vé');
+    }
+    
+    alert(`Vui lòng chọn ${missingItems.join(', ')} trước khi đặt tour!`);
+    return;
   }
+
+  if (!this.isSubmitting) {
+    this.isSubmitting = true;
+    const orderState = {
+      tourId: this.tour?.id || 0,
+      tourName: this.tour?.name || 'Tour',
+      imageUrl: this.tour?.imageUrl,
+      selectedDate: this.selectedDate!.toDateString(), // Dùng ! vì đã validate
+      selectedSession: this.selectedSession!,
+      participants: this.tickets.map(t => ({
+        type: t.id,
+        name: t.name,
+        price: t.price,
+        fee: t.bookingFee,
+        quantity: t.quantity
+      })).filter(t => t.quantity > 0),
+      addOn: this.addOnQuantity > 0 ? { name: 'Photo Opportunity', price: this.addOnPrice, quantity: this.addOnQuantity } : undefined,
+      totalPrice: this.getTotalPriceVND()
+    };
+
+    this.router.navigate(['/checkout/details'], { state: orderState });
+    this.isSubmitting = false;
+  }
+}
 
   generateAvailableSessions(): void {
     this.availableSessions = [];
@@ -416,6 +446,7 @@ export class BookingDetailComponent implements OnInit {
       this.router.navigate(['/tour', this.tour.id, 'gallery']);
     }
   }
+  
 
   toggleTicketInfo(ticketId: string): void {
     if (this.visibleTicketInfo.has(ticketId)) {
